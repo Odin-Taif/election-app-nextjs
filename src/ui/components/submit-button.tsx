@@ -1,7 +1,10 @@
 "use client";
 import { useFormStatus } from "react-dom";
 
-export function SubmitButton() {
+type Props = {
+  title: string;
+};
+export function SubmitButton({ title }: Props) {
   const { pending } = useFormStatus();
 
   return (
@@ -11,7 +14,7 @@ export function SubmitButton() {
         type="submit"
         className="btn btn-accent bg-slate-400 w-full p-2"
       >
-        Sign Up
+        {title}
       </button>
     </div>
   );
