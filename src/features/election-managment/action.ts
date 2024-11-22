@@ -1,6 +1,7 @@
 "use server";
 import { electionFeatureInstance } from "./feature";
 import { CREATE_ELECTION_ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
+import { redirect } from "next/navigation";
 
 export async function createElectionAction(
   state: INITIALSTATE_ELECTION_FORM | undefined,
@@ -21,4 +22,6 @@ export async function createElectionAction(
       errors: errors as CREATE_ELECTION_ERORRS,
     };
   }
+
+  redirect("/nominate-representive");
 }
