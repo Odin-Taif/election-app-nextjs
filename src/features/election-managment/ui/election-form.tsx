@@ -33,8 +33,8 @@ export function ElectionForm() {
               id="name"
               label="Election Name"
               register={register("name")}
-              placeholder={""}
-              type={"Enter the elecation name"}
+              placeholder={"Enter the elecation name"}
+              type={"name"}
               disabled={false}
             />
             <span aria-live="polite" className="text-red-700 p-5">
