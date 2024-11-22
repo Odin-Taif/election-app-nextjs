@@ -1,14 +1,11 @@
 "use client";
 
-type ElectionFieldValues = {
-  name: string;
-};
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { createElectionAction } from "../action";
 import { Heading, Input, SubmitButton } from "@/ui/components";
-import { INITIALSTATE_ELECTION_FORM } from "../types";
+import { ELECTION_FORM_FIELDS, INITIALSTATE_ELECTION_FORM } from "../types";
 
 const initialState: INITIALSTATE_ELECTION_FORM = {
   success: false,
@@ -21,8 +18,8 @@ export function ElectionForm() {
     createElectionAction,
     initialState
   );
-  const { register } = useForm<ElectionFieldValues>({
-    resolver: zodResolver(validationElectionSchema),
+  const { register } = useForm<ELECTION_FORM_FIELDS>({
+    resolver: zodResolver(VALIDATION_SCHEMA),
   });
 
   return (

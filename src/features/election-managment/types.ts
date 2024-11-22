@@ -7,3 +7,7 @@ export type INITIALSTATE_ELECTION_FORM = {
   message: string;
   errors: CREATE_ELECTION_ERORRS;
 };
+
+export type ELECTION_FORM_FIELDS = {
+  name: string;
+};

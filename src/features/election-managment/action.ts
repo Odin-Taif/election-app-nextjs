@@ -1,5 +1,4 @@
 "use server";
-
 import { CREATE_ELECTION_ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
 
 export async function createElectionAction(
@@ -10,7 +9,6 @@ export async function createElectionAction(
     console.log(
       "will talk to the singletone instance of the election managment feature"
     );
-
     console.log(payload);
   } catch (errors: unknown) {
     console.error("create Election Errors:", errors);
