@@ -112,3 +112,4 @@ Beatrice gets an agreement rate of 0% on this election.
 - Failed submissions will have one extra attempt during an upcoming weekend to complete unfinished work.
 - Only send in code that represents your own code skills. We are not looking at assessing how well AI fails this test 🤖 Succeed on your own terms! Anything else is considered cheating, and no more attempts will be given to complete the assignment.
 - This will be the main scoring point that represents your ability to code.
+# election-app-nextjs
