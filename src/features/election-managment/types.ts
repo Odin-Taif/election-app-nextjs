@@ -8,6 +8,6 @@ export type INITIALSTATE_ELECTION_FORM = {
   errors: CREATE_ELECTION_ERORRS;
 };
 
-export type ELECTION_FORM_FIELDS = {
+export type ELECTION = {
   name: string;
 };
