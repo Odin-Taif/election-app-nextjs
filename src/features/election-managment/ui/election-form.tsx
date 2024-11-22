@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import { createElectionAction } from "../action";
 import { Heading, Input, SubmitButton } from "@/ui/components";
 import { ELECTION_FORM_FIELDS, INITIALSTATE_ELECTION_FORM } from "../types";
+import { elecationSchema } from "@/zod-validation/validations-schema";
 
 const initialState: INITIALSTATE_ELECTION_FORM = {
   success: false,
@@ -19,7 +20,7 @@ export function ElectionForm() {
     initialState
   );
   const { register } = useForm<ELECTION_FORM_FIELDS>({
-    resolver: zodResolver(VALIDATION_SCHEMA),
+    resolver: zodResolver(elecationSchema),
   });
 
   return (
