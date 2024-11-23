@@ -15,3 +15,12 @@ export type ERORRS = {
 export type REPRESENTATIVE_FORM_FIELDS = {
   name: string;
 };
+
+export type ELECTION = {
+  name: string;
+  proposal: string;
+};
+
+export type ELECTIONS = {
+  elections: ELECTION[];
+};

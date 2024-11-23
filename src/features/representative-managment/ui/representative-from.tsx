@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import { Heading, Input, SubmitButton } from "@/ui/components";
 import { representativeSchema } from "@/zod-validation/validations-schema";
 import {
+  ELECTIONS,
   INITIALSTATE_REPRESENTATIVE_FORM,
   REPRESENTATIVE_FORM_FIELDS,
 } from "../types";
@@ -17,7 +18,8 @@ const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
   errors: { name: "" },
 };
 
-export function RepresentativeForm() {
+export function RepresentativeForm({ elections }: ELECTIONS) {
+  console.log(elections);
   const [state, formAction, isPending] = useActionState(
     createRepresentativeAction,
     initialState
@@ -42,6 +44,12 @@ export function RepresentativeForm() {
             <span aria-live="polite" className="text-red-700 p-5">
               {state?.errors && JSON.stringify(state.errors.name)}
             </span>
+
+            <ul>
+              {elections.map((election) => (
+                <li key={election.proposal}>{election.name}</li>
+              ))}
+            </ul>
             <SubmitButton title={"Nominate Representive"} />
           </form>
         </div>
