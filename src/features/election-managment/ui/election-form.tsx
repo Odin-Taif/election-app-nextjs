@@ -33,7 +33,6 @@ export function ElectionForm() {
               id="name"
               label="Election Name"
               register={register("name")}
-              placeholder={"Enter elecation name"}
               type={"name"}
               disabled={false}
             />

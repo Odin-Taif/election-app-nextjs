@@ -6,7 +6,6 @@ import { UseFormRegisterReturn } from "react-hook-form";
 type Props = {
   id: string;
   label: string;
-  placeholder: string;
   type: string;
   disabled: boolean;
   register: UseFormRegisterReturn;
@@ -15,7 +14,7 @@ type Props = {
 export function Input({
   id,
   label,
-  placeholder,
+
   type,
   disabled,
   register,
@@ -30,7 +29,6 @@ export function Input({
         id={id}
         disabled={disabled}
         {...register}
-        placeholder={placeholder}
         type={
           type === "password" ? (passwordShown ? "text" : "password") : type
         }

@@ -5,7 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { Heading, Input, SubmitButton } from "@/ui/components";
 import { representativeSchema } from "@/zod-validation/validations-schema";
-import { INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
+import {
+  INITIALSTATE_REPRESENTATIVE_FORM,
+  REPRESENTATIVE_FORM_FIELDS,
+} from "../types";
 import { createRepresentativeAction } from "../action";
 
 const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
@@ -19,7 +22,7 @@ export function RepresentativeForm() {
     createRepresentativeAction,
     initialState
   );
-  const { register } = useForm<INITIALSTATE_REPRESENTATIVE_FORM>({
+  const { register } = useForm<REPRESENTATIVE_FORM_FIELDS>({
     resolver: zodResolver(representativeSchema),
   });
 
@@ -33,7 +36,6 @@ export function RepresentativeForm() {
               id="name"
               label="Representive Name"
               register={register("name")}
-              placeholder={"Enter Representive name"}
               type={"name"}
               disabled={false}
             />

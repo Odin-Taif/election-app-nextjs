@@ -8,11 +8,11 @@ export function SubmitButton({ title }: Props) {
   const { pending } = useFormStatus();
 
   return (
-    <div>
+    <div className="bg-slate-400">
       <button
         disabled={pending}
         type="submit"
-        className="btn btn-accent bg-slate-400 w-full p-2"
+        className="bg-slate-500 w-full p-2"
       >
         {title}
       </button>
