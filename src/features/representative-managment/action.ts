@@ -1,20 +1,18 @@
 "use server";
 
-import { representiveFeatureInstance } from "./feature";
+import { revalidatePath } from "next/cache";
+
 import { ERORRS, INITIALSTATE_REPRESENTATIVE_FORM } from "./types";
+import { repersentativeFeature } from "./feature";
 
 export async function createRepresentativeAction(
   state: INITIALSTATE_REPRESENTATIVE_FORM | undefined,
   payload: FormData
 ) {
   try {
-    // console.log(
-    //   "will talk to the singletone instance of the representative managment feature"
-    // );
-
     console.log(payload);
 
-    representiveFeatureInstance.service.createRepresentativeService(payload);
+    repersentativeFeature.service.createRepresentativeService(payload);
   } catch (errors: unknown) {
     console.error("create Election Errors:", errors);
     return {
@@ -23,4 +21,7 @@ export async function createRepresentativeAction(
       errors: errors as ERORRS,
     };
   }
+
+  revalidatePath("/nominate-representive");
+  // redirect("/nominate-representive");
 }

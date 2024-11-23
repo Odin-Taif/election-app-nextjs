@@ -8,7 +8,7 @@ import {
   representativeSchema,
   REPRESENTIVE_VALIDATION_SCHEMA_TYPE,
 } from "@/zod-validation/validations-schema";
-import { ELECTION_SELECTION, INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
+import { INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
 import { createRepresentativeAction } from "../action";
 import { SelectElection } from ".";
 
@@ -19,11 +19,10 @@ const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
 };
 
 export type Props = {
-  elections: ELECTION_SELECTION[];
+  elections: { name: string }[];
 };
 
 export function RepresentativeForm({ elections }: Props) {
-  console.log(elections);
   const [state, formAction] = useActionState(
     createRepresentativeAction,
     initialState

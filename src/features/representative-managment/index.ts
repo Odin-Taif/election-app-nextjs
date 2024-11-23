@@ -1,1 +1,1 @@
-export * from "./service";
+export { repersentativeFeature } from "./feature";

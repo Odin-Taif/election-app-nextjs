@@ -1,7 +1,7 @@
 import { createRepository } from "./repository";
 import { createService } from "./service";
 
-function craeteFeature() {
+export function createFeature() {
   const repository = createRepository();
   const service = createService(repository);
   return {
@@ -9,4 +9,4 @@ function craeteFeature() {
   };
 }
 
-export const representiveFeatureInstance = craeteFeature();
+export const repersentativeFeature = createFeature();

@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { electionFeatureInstance } from "./feature";
 import { ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
 import { redirect } from "next/navigation";
@@ -18,6 +19,6 @@ export async function createElectionAction(
       errors: errors as ERORRS,
     };
   }
-
+  revalidatePath("/nominate-representive");
   redirect("/nominate-representive");
 }
