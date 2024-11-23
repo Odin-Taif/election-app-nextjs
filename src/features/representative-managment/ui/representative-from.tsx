@@ -27,6 +27,7 @@ export function RepresentativeForm({ elections }: Props) {
     createRepresentativeAction,
     initialState
   );
+
   const {
     register,
     control,
@@ -49,7 +50,7 @@ export function RepresentativeForm({ elections }: Props) {
               disabled={false}
             />
             <span aria-live="polite" className="text-red-700 p-5">
-              {state?.errors && JSON.stringify(state.errors.name)}
+              {errors.name && JSON.stringify(errors.name)}
             </span>
             <Controller
               name="election"

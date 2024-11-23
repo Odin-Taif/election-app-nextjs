@@ -1,24 +1,22 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { electionFeatureInstance } from "./feature";
-import { ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
 import { redirect } from "next/navigation";
+import { electionSchema } from "@/zod-validation/validations-schema";
 
-export async function createElectionAction(
-  state: INITIALSTATE_ELECTION_FORM | undefined,
-  payload: FormData
-) {
-  try {
-    console.log(payload);
-    electionFeatureInstance.service.createElectionService(payload);
-  } catch (errors: unknown) {
-    console.error("create Election Errors:", errors);
+export async function createElectionAction(prevState: any, payload: FormData) {
+  const validation = electionSchema.safeParse({
+    name: payload.get("name"),
+    proposal: payload.get("proposal"),
+  });
+
+  if (validation.success) {
+    await electionFeatureInstance.service.createElectionService(payload);
+    redirect("/nominate-representive");
+  } else {
     return {
-      success: false,
-      message: "Signup failed",
-      errors: errors as ERORRS,
+      errors: validation.error.issues,
     };
   }
-  revalidatePath("/nominate-representive");
-  redirect("/nominate-representive");
 }
