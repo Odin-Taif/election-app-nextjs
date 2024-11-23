@@ -3,8 +3,8 @@ import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
 
 export function createRepository() {
-  async function setRepesentativeInDb({ name }: REPRESENTATIVE) {
-    await db.insert(repesentativeTable).values({ name });
+  async function setRepesentativeInDb({ name, election }: REPRESENTATIVE) {
+    await db.insert(repesentativeTable).values({ name, election });
   }
 
   return {

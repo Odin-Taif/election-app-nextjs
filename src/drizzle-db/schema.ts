@@ -8,4 +8,5 @@ export const electionsTable = pgTable("elections", {
 export const repesentativeTable = pgTable("repesentative", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
+  election: varchar({ length: 255 }).notNull(),
 });

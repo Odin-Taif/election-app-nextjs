@@ -4,7 +4,8 @@ import { Repository } from "./repository";
 export function createService(repository: Repository) {
   function createRepresentativeService(formData: FormData) {
     const name = formData.get("name")?.toString();
-    const userValidated = representativeSchema.safeParse({ name });
+    const election = formData.get("election")?.toString();
+    const userValidated = representativeSchema.safeParse({ name, election });
     if (!userValidated.success) {
       const errors = userValidated.error.flatten().fieldErrors;
       const errorMessages: Record<string, string> = {};
@@ -12,6 +13,10 @@ export function createService(repository: Repository) {
       if (errors.name) {
         errorMessages.name =
           "Name is required and should be at least 3 characters long.";
+      }
+
+      if (errors.election) {
+        errorMessages.election = "Election is required ";
       }
 
       return {

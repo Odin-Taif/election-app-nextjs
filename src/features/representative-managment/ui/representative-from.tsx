@@ -52,7 +52,6 @@ export function RepresentativeForm({ elections }: Props) {
             <span aria-live="polite" className="text-red-700 p-5">
               {state?.errors && JSON.stringify(state.errors.name)}
             </span>
-
             <Controller
               name="election"
               control={control}

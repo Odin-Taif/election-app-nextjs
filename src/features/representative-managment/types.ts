@@ -1,5 +1,6 @@
 export type REPRESENTATIVE = {
   name: string;
+  election: string;
 };
 
 export type INITIALSTATE_REPRESENTATIVE_FORM = {
