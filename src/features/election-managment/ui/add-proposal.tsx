@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createElectionAction } from "../action";
+import { createProposalAction } from "../action";
 import {
   ErrorMessages,
   findErrors,
@@ -10,29 +10,30 @@ import {
   SubmitButton,
 } from "@/ui/components";
 
-export function ElectionForm() {
-  const [formState, formAction, loading] = useActionState(
-    createElectionAction,
+export function ProposalForm() {
+  const [formState, formAction, isLoading] = useActionState(
+    createProposalAction,
     {
       errors: [],
     }
   );
-  const nameErrors = findErrors("name", formState?.errors ?? []);
+
+  const proposalErrors = findErrors("proposal", formState?.errors ?? []);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
       <div className="bg-gray-100 text-black rounded m-auto p-3 w-full max-w-md sm:p-8  md:max-w-lg  md:p-8 lg:max-w-xl xl:max-w-2xl">
         <div className="flex flex-col gap-2">
-          <Heading title="Election Form!" />
+          <Heading title="Proposal Form!" />
           <form action={formAction}>
             <Input
-              id="name"
-              name="name"
+              id="proposal"
+              name="proposal"
               type="text"
               disabled={false}
-              label={"Set up an election"}
+              label={"Add a proposal for the Proposal"}
             />
-            <ErrorMessages errors={nameErrors} />
-            <SubmitButton title={"Create Election"} loading={loading} />
+            <ErrorMessages errors={proposalErrors} />
+            <SubmitButton title={"Create Proposal"} loading={isLoading} />
           </form>
         </div>
       </div>

@@ -15,17 +15,15 @@ const SchemaProposal = z
   .min(3, "Name must be at least 3 characters long")
   .max(40, "Name must be at most 40 characters long");
 
-export const electionSchema = z.object({
+export const addElectionSchema = z.object({
   name: nameSchema,
-  proposal: SchemaProposal,
 });
-
 export const representativeSchema = z.object({
   name: nameSchema,
   election: eleactionNameSchema,
 });
 
-export type ELECTION_VALIDATION_SCHEMA_TYPE = z.infer<typeof electionSchema>;
+export type ELECTION_VALIDATION_SCHEMA_TYPE = z.infer<typeof addElectionSchema>;
 export type REPRESENTIVE_VALIDATION_SCHEMA_TYPE = z.infer<
   typeof representativeSchema
 >;

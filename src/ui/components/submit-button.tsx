@@ -1,16 +1,14 @@
 "use client";
-import { useFormStatus } from "react-dom";
 
 type Props = {
   title: string;
+  loading: boolean;
 };
-export function SubmitButton({ title }: Props) {
-  const { pending } = useFormStatus();
-
+export function SubmitButton({ title, loading }: Props) {
   return (
     <div className="bg-slate-400">
       <button
-        disabled={pending}
+        disabled={loading}
         type="submit"
         className="bg-slate-500 w-full p-2"
       >

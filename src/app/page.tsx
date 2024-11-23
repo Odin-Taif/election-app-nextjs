@@ -6,6 +6,7 @@ export default async function Home() {
     <Container>
       <h2>Election page</h2>
       <ElectionForm />
+      
     </Container>
   );
 }

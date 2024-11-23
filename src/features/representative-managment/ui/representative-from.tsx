@@ -5,16 +5,19 @@ import { useActionState } from "react";
 import { Heading, Input, SubmitButton } from "@/ui/components";
 import { createRepresentativeAction } from "../action";
 import { SelectElection } from ".";
-import { ErrorMessages, findErrors } from "@/zod-validation/validation-errors";
+import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 
 export type Props = {
   elections: { name: string }[];
 };
 
 export function RepresentativeForm({ elections }: Props) {
-  const [formState, formAction] = useActionState(createRepresentativeAction, {
-    errors: [],
-  });
+  const [formState, formAction, loading] = useActionState(
+    createRepresentativeAction,
+    {
+      errors: [],
+    }
+  );
   const nameErrors = findErrors("name", formState?.errors ?? []);
   const electionErrors = findErrors("election", formState?.errors ?? []);
 
@@ -48,7 +51,7 @@ export function RepresentativeForm({ elections }: Props) {
               )}
             />
             <ErrorMessages errors={electionErrors} />
-            <SubmitButton title={"Nominate Representive"} />
+            <SubmitButton title={"Nominate Representive"} loading={loading} />
           </form>
         </div>
       </div>
