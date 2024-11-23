@@ -5,8 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { createElectionAction } from "../action";
 import { Heading, Input, SubmitButton } from "@/ui/components";
-import { ELECTION_FORM_FIELDS, INITIALSTATE_ELECTION_FORM } from "../types";
-import { electionSchema } from "@/zod-validation/validations-schema";
+import { INITIALSTATE_ELECTION_FORM } from "../types";
+import {
+  ELECTION_VALIDATION_SCHEMA_TYPE,
+  electionSchema,
+} from "@/zod-validation/validations-schema";
 
 const initialState: INITIALSTATE_ELECTION_FORM = {
   success: false,
@@ -19,7 +22,7 @@ export function ElectionForm() {
     createElectionAction,
     initialState
   );
-  const { register } = useForm<ELECTION_FORM_FIELDS>({
+  const { register } = useForm<ELECTION_VALIDATION_SCHEMA_TYPE>({
     resolver: zodResolver(electionSchema),
   });
 

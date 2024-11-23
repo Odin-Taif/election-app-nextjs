@@ -1,12 +1,13 @@
 import { RepresentativeForm } from ".";
+import { ELECTION_SELECTION } from "../types";
 
 export async function ChoseElectionForRepresentative() {
   // let elections = await db.select().from(posts)
 
-  const elections = [
-    { proposal: "1", name: "soso" },
-    { proposal: "2", name: "soso" },
-    { proposal: "3", name: "soso" },
+  const elections: ELECTION_SELECTION[] = [
+    { name: "soso" },
+    { name: "soso" },
+    { name: "soso" },
   ];
 
   return (

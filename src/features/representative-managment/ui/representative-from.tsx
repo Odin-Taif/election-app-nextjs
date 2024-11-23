@@ -1,16 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { Heading, Input, SubmitButton } from "@/ui/components";
-import { representativeSchema } from "@/zod-validation/validations-schema";
 import {
-  ELECTIONS,
-  INITIALSTATE_REPRESENTATIVE_FORM,
-  REPRESENTATIVE_FORM_FIELDS,
-} from "../types";
+  representativeSchema,
+  REPRESENTIVE_VALIDATION_SCHEMA_TYPE,
+} from "@/zod-validation/validations-schema";
+import { ELECTION_SELECTION, INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
 import { createRepresentativeAction } from "../action";
+import { SelectElection } from ".";
 
 const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
   success: false,
@@ -18,13 +18,21 @@ const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
   errors: { name: "" },
 };
 
-export function RepresentativeForm({ elections }: ELECTIONS) {
+export type Props = {
+  elections: ELECTION_SELECTION[];
+};
+
+export function RepresentativeForm({ elections }: Props) {
   console.log(elections);
-  const [state, formAction, isPending] = useActionState(
+  const [state, formAction] = useActionState(
     createRepresentativeAction,
     initialState
   );
-  const { register } = useForm<REPRESENTATIVE_FORM_FIELDS>({
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useForm<REPRESENTIVE_VALIDATION_SCHEMA_TYPE>({
     resolver: zodResolver(representativeSchema),
   });
 
@@ -45,11 +53,26 @@ export function RepresentativeForm({ elections }: ELECTIONS) {
               {state?.errors && JSON.stringify(state.errors.name)}
             </span>
 
-            <ul>
-              {elections.map((election) => (
-                <li key={election.proposal}>{election.name}</li>
-              ))}
-            </ul>
+            <Controller
+              name="election"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <SelectElection
+                  options={elections}
+                  label="Select election"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+
+            {errors.election?.message && (
+              <strong className="text-error px-2 form__error-message">
+                Bootcamp option is {errors.election.message.toString()}
+              </strong>
+            )}
+
             <SubmitButton title={"Nominate Representive"} />
           </form>
         </div>

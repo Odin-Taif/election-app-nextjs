@@ -12,7 +12,3 @@ export type ELECTION = {
   name: string;
   proposal: string;
 };
-export type ELECTION_FORM_FIELDS = {
-  name: string;
-  proposal: string;
-};
