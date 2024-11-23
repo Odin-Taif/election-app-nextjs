@@ -3,24 +3,24 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
-import { createElectionAction } from "../action";
 import { Heading, Input, SubmitButton } from "@/ui/components";
-import {} from "../types";
-import { elecationSchema } from "@/zod-validation/validations-schema";
+import { representativeSchema } from "@/zod-validation/validations-schema";
+import { INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
+import { createRepresentativeAction } from "../action";
 
-const initialState: INITIALSTATE_ELECTION_FORM = {
+const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
   success: false,
   message: "",
   errors: { name: "" },
 };
 
-export function ElectionForm() {
+export function RepresentativeForm() {
   const [state, formAction, isPending] = useActionState(
-    createRepresentiveAction,
+    createRepresentativeAction,
     initialState
   );
-  const { register } = useForm<ELECTION_FORM_FIELDS>({
-    resolver: zodResolver(elecationSchema),
+  const { register } = useForm<INITIALSTATE_REPRESENTATIVE_FORM>({
+    resolver: zodResolver(representativeSchema),
   });
 
   return (

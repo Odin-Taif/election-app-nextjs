@@ -1,6 +1,6 @@
 "use server";
 import { electionFeatureInstance } from "./feature";
-import { CREATE_ELECTION_ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
+import { ERORRS, INITIALSTATE_ELECTION_FORM } from "./types";
 import { redirect } from "next/navigation";
 
 export async function createElectionAction(
@@ -19,7 +19,7 @@ export async function createElectionAction(
     return {
       success: false,
       message: "Signup failed",
-      errors: errors as CREATE_ELECTION_ERORRS,
+      errors: errors as ERORRS,
     };
   }
 

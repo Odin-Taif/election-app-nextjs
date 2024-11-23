@@ -1,12 +1,14 @@
 "use server";
 
-export async function createElectionAction(
-  state: INITIALSTATE_REPRESENTIVE_FORM | undefined,
+import { ERORRS, INITIALSTATE_REPRESENTATIVE_FORM } from "./types";
+
+export async function createRepresentativeAction(
+  state: INITIALSTATE_REPRESENTATIVE_FORM | undefined,
   payload: FormData
 ) {
   try {
     console.log(
-      "will talk to the singletone instance of the election managment feature"
+      "will talk to the singletone instance of the representative managment feature"
     );
     console.log(payload);
   } catch (errors: unknown) {
@@ -14,7 +16,7 @@ export async function createElectionAction(
     return {
       success: false,
       message: "Signup failed",
-      errors: errors as CREATE_REPRESENTIVE_ERORRS,
+      errors: errors as ERORRS,
     };
   }
 }

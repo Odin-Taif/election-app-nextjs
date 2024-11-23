@@ -1,5 +1,12 @@
+import { createRepository } from "./repository";
+import { createService } from "./service";
+
 function craeteFeature() {
-  return {};
+  const repository = createRepository();
+  const service = createService(repository);
+  return {
+    service,
+  };
 }
 
 export const representiveFeatureInstance = craeteFeature();
