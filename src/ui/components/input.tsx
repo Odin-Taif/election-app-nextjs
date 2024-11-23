@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type Props = {

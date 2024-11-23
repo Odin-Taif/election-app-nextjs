@@ -44,7 +44,7 @@ export function ElectionForm() {
             <Input
               id="proposal"
               label="Add Proposal for the election."
-              register={register("proposals")}
+              register={register("proposal")}
               type={"text"}
               disabled={false}
             />

@@ -8,11 +8,7 @@ export async function createElectionAction(
   payload: FormData
 ) {
   try {
-    console.log(
-      "will talk to the singletone instance of the election managment feature"
-    );
     console.log(payload);
-
     electionFeatureInstance.service.createElectionService(payload);
   } catch (errors: unknown) {
     console.error("create Election Errors:", errors);

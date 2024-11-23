@@ -10,8 +10,9 @@ export type INITIALSTATE_ELECTION_FORM = {
 
 export type ELECTION = {
   name: string;
+  proposal: string;
 };
 export type ELECTION_FORM_FIELDS = {
   name: string;
-  proposals: string;
+  proposal: string;
 };
