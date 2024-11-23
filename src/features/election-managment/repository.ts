@@ -4,7 +4,8 @@ import { db } from "@/drizzle-db";
 
 export function createRepository() {
   async function initiateElectionInDb({ name, proposal }: ELECTION) {
-    await db.insert(elections).values({ name, proposal });
+    const proposals = ["Proposal 1", "Proposal 2", "Proposal 3"];
+    await db.insert(elections).values({ name, proposals });
   }
 
   return {
