@@ -33,12 +33,21 @@ export function ElectionForm() {
               id="name"
               label="Election Name"
               register={register("name")}
-              type={"name"}
+              type={"text"}
               disabled={false}
             />
-            <span aria-live="polite" className="text-red-700 p-5">
+
+            {/* <span aria-live="polite" className="text-red-700 p-5">
               {state?.errors && JSON.stringify(state.errors.name)}
-            </span>
+            </span> */}
+
+            <Input
+              id="proposal"
+              label="Add Proposal for the election."
+              register={register("proposals")}
+              type={"text"}
+              disabled={false}
+            />
             <SubmitButton title={"Create Election"} />
           </form>
         </div>

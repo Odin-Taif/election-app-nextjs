@@ -13,4 +13,5 @@ export type ELECTION = {
 };
 export type ELECTION_FORM_FIELDS = {
   name: string;
+  proposals: string;
 };
