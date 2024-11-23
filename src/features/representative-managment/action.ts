@@ -1,27 +1,26 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
-import { ERORRS, INITIALSTATE_REPRESENTATIVE_FORM } from "./types";
+import { representativeSchema } from "@/zod-validation/validations-schema";
 import { repersentativeFeature } from "./feature";
-
+import { redirect } from "next/navigation";
 export async function createRepresentativeAction(
-  state: INITIALSTATE_REPRESENTATIVE_FORM | undefined,
+  prevState: any,
   payload: FormData
 ) {
-  try {
-    console.log(payload);
-
-    repersentativeFeature.service.createRepresentativeService(payload);
-  } catch (errors: unknown) {
-    console.error("create Election Errors:", errors);
+  const validation = representativeSchema.safeParse({
+    name: payload.get("name"),
+    election: payload.get("election"),
+  });
+  if (validation.success) {
+    await repersentativeFeature.service.createRepresentativeService(
+      validation.data
+    );
+    revalidatePath("/nominate-representive");
+    // redirect("/nominate-representive");
+  } else {
     return {
-      success: false,
-      message: "Signup failed",
-      errors: errors as ERORRS,
+      errors: validation.error.issues,
     };
   }
-
-  revalidatePath("/nominate-representive");
-  // redirect("/nominate-representive");
 }

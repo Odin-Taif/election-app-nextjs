@@ -1,6 +1,4 @@
 "use server";
-
-import { revalidatePath } from "next/cache";
 import { electionFeatureInstance } from "./feature";
 import { redirect } from "next/navigation";
 import { electionSchema } from "@/zod-validation/validations-schema";

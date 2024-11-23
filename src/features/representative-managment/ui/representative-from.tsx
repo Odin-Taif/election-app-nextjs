@@ -1,40 +1,24 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { Heading, Input, SubmitButton } from "@/ui/components";
-import {
-  representativeSchema,
-  REPRESENTIVE_VALIDATION_SCHEMA_TYPE,
-} from "@/zod-validation/validations-schema";
-import { INITIALSTATE_REPRESENTATIVE_FORM } from "../types";
 import { createRepresentativeAction } from "../action";
 import { SelectElection } from ".";
-
-const initialState: INITIALSTATE_REPRESENTATIVE_FORM = {
-  success: false,
-  message: "",
-  errors: { name: "" },
-};
+import { ErrorMessages, findErrors } from "@/zod-validation/validation-errors";
 
 export type Props = {
   elections: { name: string }[];
 };
 
 export function RepresentativeForm({ elections }: Props) {
-  const [state, formAction] = useActionState(
-    createRepresentativeAction,
-    initialState
-  );
-
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useForm<REPRESENTIVE_VALIDATION_SCHEMA_TYPE>({
-    resolver: zodResolver(representativeSchema),
+  const [formState, formAction] = useActionState(createRepresentativeAction, {
+    errors: [],
   });
+  const nameErrors = findErrors("name", formState?.errors ?? []);
+  const electionErrors = findErrors("election", formState?.errors ?? []);
+
+  const { control } = useForm();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
@@ -45,13 +29,11 @@ export function RepresentativeForm({ elections }: Props) {
             <Input
               id="name"
               label="Representive Name"
-              register={register("name")}
+              name="name"
               type={"name"}
               disabled={false}
             />
-            <span aria-live="polite" className="text-red-700 p-5">
-              {errors.name && JSON.stringify(errors.name)}
-            </span>
+            <ErrorMessages errors={nameErrors} />
             <Controller
               name="election"
               control={control}
@@ -65,13 +47,7 @@ export function RepresentativeForm({ elections }: Props) {
                 />
               )}
             />
-
-            {errors.election?.message && (
-              <strong className="text-error px-2 form__error-message">
-                Bootcamp option is {errors.election.message.toString()}
-              </strong>
-            )}
-
+            <ErrorMessages errors={electionErrors} />
             <SubmitButton title={"Nominate Representive"} />
           </form>
         </div>
