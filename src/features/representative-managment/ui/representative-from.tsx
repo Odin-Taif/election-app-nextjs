@@ -3,7 +3,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
-import { createRepresentativeAction } from "../action";
+import { RepresentativeFormAction } from "../action";
 import { SelectElection } from ".";
 import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";
@@ -14,7 +14,7 @@ export type Props = {
 
 export function RepresentativeForm({ electionNames }: Props) {
   const [formState, formAction, loading] = useActionState(
-    createRepresentativeAction,
+    RepresentativeFormAction,
     {
       success: true,
       errors: [],

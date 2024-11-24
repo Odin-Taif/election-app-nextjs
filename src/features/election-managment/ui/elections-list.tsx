@@ -1,8 +1,9 @@
 import { Heading } from "@/ui/components";
 import Link from "next/link";
-import { ElectionCard, AddProposal, RepresentativesList } from ".";
+import { ElectionCard, AddProposal } from ".";
 import { AddRepresentative } from "@/features/representative-managment/ui";
 import { electionFeatureInstance } from "../feature";
+import RepresentativesList from "@/features/representative-managment/ui/representative-list";
 
 export async function ElectionsList() {
   const elections = await electionFeatureInstance.service.getElections();

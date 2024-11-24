@@ -7,7 +7,7 @@ type Props = {
   electionName: string;
 };
 
-export async function RepresentativesList({ electionName }: Props) {
+export default async function RepresentativesList({ electionName }: Props) {
   const representatives: REPRESENTATIVE[] =
     await repersentativeFeature.service.getRepresentativesByElectionName(
       electionName
@@ -20,7 +20,7 @@ export async function RepresentativesList({ electionName }: Props) {
       />
       {representatives.length === 0 ? (
         <div className="text-center text-red-600 mt-4">
-          No representatives available! Add some...
+          No representatives available! Nominate some...
         </div>
       ) : (
         <div className="flex flex-wrap">

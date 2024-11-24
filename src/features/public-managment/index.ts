@@ -1,0 +1,1 @@
+export { electionFeatureInstance } from "./feature";
