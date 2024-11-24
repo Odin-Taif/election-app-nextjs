@@ -1,5 +1,11 @@
 import { Repository } from "./repository";
+import { PublicVoter } from "./types";
 
 export function createService(repository: Repository) {
-  return {};
+  async function seedPublicVotesTable(voter: PublicVoter) {
+    return await repository.seedVoterInDb(voter);
+  }
+  return {
+    seedPublicVotesTable,
+  };
 }

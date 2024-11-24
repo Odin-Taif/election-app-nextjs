@@ -9,4 +9,4 @@ function craeteFeature() {
   };
 }
 
-export const electionFeatureInstance = craeteFeature();
+export const publicFeatureInstance = craeteFeature();

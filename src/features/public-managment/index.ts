@@ -1,1 +1,1 @@
-export { electionFeatureInstance } from "./feature";
+export { publicFeatureInstance } from "./feature";
