@@ -13,17 +13,13 @@ const electionNameSchema = z
   .refine((value) => value.trim().length > 0, {
     message: "You must select an election option",
   });
-const SchemaProposal = z
-  .string()
-  .min(3, "Name must be at least 3 characters long")
-  .max(40, "Name must be at most 40 characters long");
 
 export const addElectionSchema = z.object({
   name: z.string().min(1, "Election name is required"),
 });
 export const addProposalSchema = z.object({
   election_id: z.number(),
-  proposal: SchemaProposal,
+  proposal: z.string().min(2, "proposal name is required"),
 });
 export const representativeSchema = z.object({
   name: nameSchema,

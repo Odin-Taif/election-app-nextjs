@@ -27,11 +27,12 @@ export async function createElectionAction(prevState, payload: FormData) {
   }
 }
 
-export async function createProposalAction(prevState: any, payload: FormData) {
-  console.log(payload);
+export async function createProposalAction(prevState, payload: FormData) {
+  const election_id = parseInt(payload.get("election_id") as string, 10);
+  const proposal = payload.get("proposal") as string;
   const validation = addProposalSchema.safeParse({
-    proposal: payload.get("proposal"),
-    election_id: payload.get("election_id"),
+    election_id,
+    proposal,
   });
 
   if (validation.success) {

@@ -7,9 +7,10 @@ type ProposalsListProps = {
 };
 
 export async function ProposalsList({ election_id }: ProposalsListProps) {
+  console.log(election_id);
   const proposals =
     await electionFeatureInstance.service.getProposalsForElection(election_id);
-  // console.log(proposals, "proposalas");
+  console.log(proposals, "proposalas");
 
   return (
     <>
