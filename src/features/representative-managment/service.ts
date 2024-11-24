@@ -3,7 +3,7 @@ import { REPRESENTATIVE } from "./types";
 
 export function createService(repository: Repository) {
   async function createRepresentativeService(representive: REPRESENTATIVE) {
-    return await repository.setRepesentativeInDb(representive);
+    return await repository.setRepresentativeInDb(representive);
   }
   async function getElectionNamesToRunFor() {
     return await repository.getElectionNamesFromDb();

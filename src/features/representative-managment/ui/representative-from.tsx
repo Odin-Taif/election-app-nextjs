@@ -15,12 +15,24 @@ export function RepresentativeForm({ electionNames }: Props) {
   const [formState, formAction, loading] = useActionState(
     createRepresentativeAction,
     {
+      success: true,
       errors: [],
+      message: "",
     }
   );
-  const nameErrors = findErrors("name", formState?.errors ?? []);
-  const emailErrors = findErrors("email", formState?.errors ?? []);
-  const electionErrors = findErrors("election", formState?.errors ?? []);
+
+  const nameErrors = findErrors(
+    "name",
+    Array.isArray(formState?.errors) ? formState.errors : []
+  );
+  const emailErrors = findErrors(
+    "email",
+    Array.isArray(formState?.errors) ? formState.errors : []
+  );
+  const electionErrors = findErrors(
+    "election",
+    Array.isArray(formState?.errors) ? formState.errors : []
+  );
 
   const { control } = useForm();
 
@@ -60,6 +72,13 @@ export function RepresentativeForm({ electionNames }: Props) {
               )}
             />
             <ErrorMessages errors={electionErrors} />
+            {formState.success ? (
+              <strong className="text-green-500  m-2">
+                {formState.message}
+              </strong>
+            ) : (
+              <strong className="text-red-500  m-2">{formState.message}</strong>
+            )}
             <SubmitButton
               title={"Nominate a Representative"}
               loading={loading}
