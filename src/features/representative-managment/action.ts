@@ -17,14 +17,13 @@ export async function createRepresentativeAction(prevState, payload: FormData) {
         validation.data
       );
     if (userExist.success) {
+      revalidatePath("/elections-registry");
       return {
         success: true,
         errors: userExist.error,
         message: userExist.message,
       };
     }
-    console.log(userExist, "user exist");
-    revalidatePath("/nominate-represntative");
     return {
       success: userExist.success,
       errors: userExist.error,

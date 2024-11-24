@@ -36,7 +36,6 @@ export function createRepository() {
       };
     }
   }
-
   async function getElectionNamesFromDb() {
     try {
       return await db.select({ name: elections.name }).from(elections);
@@ -46,9 +45,21 @@ export function createRepository() {
     }
   }
 
+  async function getRepresentativesByElectionNameFromDb(electionName: string) {
+    try {
+      return await db
+        .select()
+        .from(representative)
+        .where(eq(representative.election, electionName));
+    } catch (error) {
+      console.error("Error fetching representative:", error);
+      return [];
+    }
+  }
   return {
     setRepresentativeInDb,
     getElectionNamesFromDb,
+    getRepresentativesByElectionNameFromDb,
   };
 }
 

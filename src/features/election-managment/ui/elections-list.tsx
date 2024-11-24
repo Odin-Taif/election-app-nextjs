@@ -1,43 +1,11 @@
 import { Heading } from "@/ui/components";
-import { ELECTION } from "../types";
 import Link from "next/link";
 import { ElectionCard, AddProposal, RepresentativesList } from ".";
-import { REPRESENTATIVE } from "@/features/representative-managment/types";
 import { AddRepresentative } from "@/features/representative-managment/ui";
+import { electionFeatureInstance } from "../feature";
 
-type Props = {
-  elections: ELECTION[];
-};
-
-const representatives: REPRESENTATIVE[] = [
-  {
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    election: "2024 Presidential Election",
-  },
-  {
-    name: "Bob Smith",
-    email: "bob.smith@example.com",
-    election: "2024 Congressional Election",
-  },
-  {
-    name: "Catherine Lee",
-    email: "catherine.lee@example.com",
-    election: "2024 Senate Election",
-  },
-  {
-    name: "David Brown",
-    email: "david.brown@example.com",
-    election: "2024 Mayoral Election",
-  },
-  {
-    name: "Emma Wilson",
-    email: "emma.wilson@example.com",
-    election: "2024 Gubernatorial Election",
-  },
-];
-
-export async function ElectionsList({ elections }: Props) {
+export async function ElectionsList() {
+  const elections = await electionFeatureInstance.service.getElections();
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
       <Heading title="Elections List" />
@@ -62,7 +30,7 @@ export async function ElectionsList({ elections }: Props) {
               >
                 <ElectionCard election={election} />
                 <AddProposal electionId={election.id} />
-                <RepresentativesList representatives={representatives} />
+                <RepresentativesList electionName={election.name} />
                 <AddRepresentative electionName={election.name} />
               </div>
             ))}

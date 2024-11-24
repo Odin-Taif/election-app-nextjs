@@ -3,8 +3,9 @@ import { Container } from "@/ui/components";
 import { RepresentativeForm } from "@/features/representative-managment/ui";
 
 export default async function ReprensentativePage() {
-  const electionNames =
-    await repersentativeFeature.service.getElectionNamesToRunFor();
+  const electionNames = (
+    await repersentativeFeature.service.getElectionNamesToRunFor()
+  ).map((election: { name: string }) => election.name);
   return (
     <Container>
       <h4> Nomination Section</h4>

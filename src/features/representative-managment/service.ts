@@ -9,8 +9,15 @@ export function createService(repository: Repository) {
     return await repository.getElectionNamesFromDb();
   }
 
+  async function getRepresentativesByElectionName(electionName: string) {
+    return await repository.getRepresentativesByElectionNameFromDb(
+      electionName
+    );
+  }
+
   return {
     createRepresentativeService,
     getElectionNamesToRunFor,
+    getRepresentativesByElectionName,
   };
 }

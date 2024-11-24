@@ -1,13 +1,17 @@
-import Link from "next/link";
 import { REPRESENTATIVE } from "@/features/representative-managment/types";
 import { MdPeopleOutline, MdPerson } from "react-icons/md";
 import { SectionHeading } from "@/ui/components";
+import { repersentativeFeature } from "@/features/representative-managment";
 
 type Props = {
-  representatives: REPRESENTATIVE[];
+  electionName: string;
 };
 
-export async function RepresentativesList({ representatives }: Props) {
+export async function RepresentativesList({ electionName }: Props) {
+  const representatives: REPRESENTATIVE[] =
+    await repersentativeFeature.service.getRepresentativesByElectionName(
+      electionName
+    );
   return (
     <div className="py-4 my-10">
       <SectionHeading
@@ -16,14 +20,7 @@ export async function RepresentativesList({ representatives }: Props) {
       />
       {representatives.length === 0 ? (
         <div className="text-center text-red-600 mt-4">
-          No representatives available.
-          <div className="mt-10">
-            <Link href={"/nominate-representative"}>
-              <button className="w-full bg-gradient-to-r from-gray-500 to-black hover:from-gray-600 hover:to-black text-white font-bold py-2 px-4 rounded shadow-md transition-all duration-300 transform hover:scale-105 focus:ring-4 focus:ring-gray-300">
-                Add some representatives for the election
-              </button>
-            </Link>
-          </div>
+          No representatives available! Add some...
         </div>
       ) : (
         <div className="flex flex-wrap">

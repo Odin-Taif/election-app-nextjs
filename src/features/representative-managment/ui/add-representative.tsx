@@ -35,7 +35,7 @@ export function AddRepresentative({ electionName }: Props) {
   return (
     <>
       <SectionHeading
-        title={" Add Representative"}
+        title={" Nominate Representative"}
         icon={<IoMdPersonAdd size={30} />}
       />
 
