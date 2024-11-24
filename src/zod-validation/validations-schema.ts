@@ -18,6 +18,10 @@ const SchemaProposal = z
 export const addElectionSchema = z.object({
   name: nameSchema,
 });
+export const addProposalSchema = z.object({
+  electionId: z.string(),
+  proposal: SchemaProposal,
+});
 export const representativeSchema = z.object({
   name: nameSchema,
   election: eleactionNameSchema,

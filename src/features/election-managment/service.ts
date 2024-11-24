@@ -1,5 +1,5 @@
 import { Repository } from "./repository";
-import { INITIAT_EELECTION } from "./types";
+import { ADD_PROPOSAL, INITIAT_EELECTION } from "./types";
 
 export function createService(repository: Repository) {
   async function createElectionService(election: INITIAT_EELECTION) {
@@ -9,8 +9,12 @@ export function createService(repository: Repository) {
   async function getElections() {
     return await repository.getElectionsFromDb();
   }
+  async function addProposalService(electionProposal: ADD_PROPOSAL) {
+    return await repository.addProposalToElection(electionProposal);
+  }
   return {
     createElectionService,
     getElections,
+    addProposalService,
   };
 }

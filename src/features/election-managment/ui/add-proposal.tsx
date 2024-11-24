@@ -5,12 +5,14 @@ import { createProposalAction } from "../action";
 import {
   ErrorMessages,
   findErrors,
-  Heading,
   Input,
   SubmitButton,
 } from "@/ui/components";
 
-export function ProposalForm() {
+type Props = {
+  electionId: number;
+};
+export function ProposalForm({ electionId }: Props) {
   const [formState, formAction, isLoading] = useActionState(
     createProposalAction,
     {
@@ -20,23 +22,19 @@ export function ProposalForm() {
 
   const proposalErrors = findErrors("proposal", formState?.errors ?? []);
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
-      <div className="bg-gray-100 text-black rounded m-auto p-3 w-full max-w-md sm:p-8  md:max-w-lg  md:p-8 lg:max-w-xl xl:max-w-2xl">
-        <div className="flex flex-col gap-2">
-          <Heading title="Proposal Form!" />
-          <form action={formAction}>
-            <Input
-              id="proposal"
-              name="proposal"
-              type="text"
-              disabled={false}
-              label={"Add a proposal for the Proposal"}
-            />
-            <ErrorMessages errors={proposalErrors} />
-            <SubmitButton title={"Create Proposal"} loading={isLoading} />
-          </form>
-        </div>
-      </div>
+    <div>
+      <form action={formAction}>
+        <input type="hidden" name="electionId" value={electionId} />
+        <Input
+          id="proposal"
+          name="proposal"
+          type="text"
+          disabled={false}
+          label={"Add a proposal for the Proposal"}
+        />
+        <ErrorMessages errors={proposalErrors} />
+        <SubmitButton title={"Create Proposal"} loading={isLoading} />
+      </form>
     </div>
   );
 }
