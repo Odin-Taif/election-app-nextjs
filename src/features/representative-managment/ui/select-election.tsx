@@ -1,8 +1,6 @@
-import { ELECTION_SELECTION } from "../types";
-
 type Props = {
   label: string;
-  options: ELECTION_SELECTION[];
+  options: string[];
   value: string;
   onChange: (value: string) => void;
 };
@@ -25,8 +23,8 @@ export function SelectElection({ value, onChange, options, label }: Props) {
         </option>
         {options &&
           options.map((value, index) => (
-            <option key={index} value={value.name}>
-              {value.name} |
+            <option key={index} value={value}>
+              {value}
             </option>
           ))}
       </select>

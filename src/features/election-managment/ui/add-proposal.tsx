@@ -22,7 +22,7 @@ export function ProposalForm({ electionId }: Props) {
 
   const proposalErrors = findErrors("proposal", formState?.errors ?? []);
   return (
-    <div>
+    <>
       <form action={formAction}>
         <input type="hidden" name="electionId" value={electionId} />
         <Input
@@ -35,6 +35,6 @@ export function ProposalForm({ electionId }: Props) {
         <ErrorMessages errors={proposalErrors} />
         <SubmitButton title={"Add Proposal"} loading={isLoading} />
       </form>
-    </div>
+    </>
   );
 }

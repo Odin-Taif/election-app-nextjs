@@ -4,3 +4,4 @@ export * from "./input";
 export * from "./loader";
 export * from "./submit-button";
 export * from "./validation-errors";
+export * from "./section-heading";

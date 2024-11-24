@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { REPRESENTATIVE } from "@/features/representative-managment/types";
 import { MdPerson } from "react-icons/md";
+import { SectionHeading } from "@/ui/components";
 
 type Props = {
   representatives: REPRESENTATIVE[];
@@ -9,13 +10,10 @@ type Props = {
 export async function ElectionRepresentatives({ representatives }: Props) {
   return (
     <div className="bg-gray-100 py-4 my-10">
-      <div className="my-2 flex flex-row text-left items-center justify-center">
-        <MdPerson size={30} />
-        <h5 className="text-sm mx-2 font-semibold text-gray-800">
-          Representatives list
-        </h5>
-      </div>
-
+      <SectionHeading
+        title={"Representatives list"}
+        icon={<MdPerson size={30} />}
+      />
       {representatives.length === 0 ? (
         <div className="text-center text-red-600 mt-4">
           No representatives available.

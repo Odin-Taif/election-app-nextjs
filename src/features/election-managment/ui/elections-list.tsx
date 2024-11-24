@@ -3,6 +3,7 @@ import { ELECTION } from "../types";
 import Link from "next/link";
 import { ElectionCard, ProposalForm, ElectionRepresentatives } from ".";
 import { REPRESENTATIVE } from "@/features/representative-managment/types";
+import { RepresentativeForm } from "@/features/representative-managment/ui";
 
 type Props = {
   elections: ELECTION[];
@@ -37,6 +38,7 @@ const representatives: REPRESENTATIVE[] = [
 ];
 
 export async function ElectionsList({ elections }: Props) {
+  const electionNames = elections && elections.map((election) => election.name);
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
       <Heading title="Elections List" />
@@ -62,6 +64,7 @@ export async function ElectionsList({ elections }: Props) {
                 <ElectionCard election={election} />
                 <ProposalForm electionId={election.id} />
                 <ElectionRepresentatives representatives={representatives} />
+                <RepresentativeForm electionNames={electionNames} />
               </div>
             ))}
           </div>
