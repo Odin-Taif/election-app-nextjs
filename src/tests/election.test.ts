@@ -1,11 +1,42 @@
 import { describe, it } from "node:test";
 import { deepEqual } from "node:assert/strict";
 import { ELECTION } from "@/features/election-managment/types";
+import assert from "node:assert";
+
+const timeSpanForElection: number = 4;
+const electionsZero: ELECTION[] = [];
+const electionsOne: ELECTION[] = [
+  {
+    id: 1,
+    name: "election-1",
+    proposals: [],
+  },
+];
+
+const electionsMany: ELECTION[] = [
+  {
+    id: 1,
+    name: "election-1",
+    proposals: [],
+  },
+
+  {
+    id: 2,
+    name: "election-1",
+    proposals: [],
+  },
+];
 
 describe("elections", () => {
   it("should return nothing to vote on | 0 case scenario", async () => {
-    const elections: ELECTION[] = [];
+    deepEqual(electionsZero, []);
+  });
 
-    deepEqual(elections, []);
+  it("should return one election is set up | 1 case scenario", async () => {
+    assert(electionsOne.length == 1);
+  });
+
+  it("should return two elections you can vote one | 2 case scenario", async () => {
+    assert(electionsMany.length > 1);
   });
 });

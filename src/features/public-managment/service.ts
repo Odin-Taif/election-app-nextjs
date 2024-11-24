@@ -1,8 +1,8 @@
 import { Repository } from "./repository";
-import { PublicVoter } from "./types";
+import { PUBLIC_VOTER } from "./types";
 
 export function createService(repository: Repository) {
-  async function seedPublicVotesTable(voter: PublicVoter) {
+  async function seedPublicVotesTable(voter: PUBLIC_VOTER) {
     return await repository.seedVoterInDb(voter);
   }
   return {
