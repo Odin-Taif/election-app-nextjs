@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const elections = pgTable("elections", {
-  id: serial("id").primaryKey(),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   status: varchar("status", { length: 50 }),
   created_at: timestamp("created_at").defaultNow(),
