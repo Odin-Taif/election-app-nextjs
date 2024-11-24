@@ -12,7 +12,7 @@ import {
 type Props = {
   electionId: number;
 };
-export function ProposalForm({ electionId }: Props) {
+export function AddProposal({ electionId }: Props) {
   const [formState, formAction, isLoading] = useActionState(
     createProposalAction,
     {

@@ -1,7 +1,7 @@
 import { Heading } from "@/ui/components";
 import { ELECTION } from "../types";
 import Link from "next/link";
-import { ElectionCard, ProposalForm, ElectionRepresentatives } from ".";
+import { ElectionCard, AddProposal, RepresentativesList } from ".";
 import { REPRESENTATIVE } from "@/features/representative-managment/types";
 import { AddRepresentative } from "@/features/representative-managment/ui";
 
@@ -61,8 +61,8 @@ export async function ElectionsList({ elections }: Props) {
                 className="bg-white text-center shadow-md rounded-lg p-4 m-2 border border-gray-200"
               >
                 <ElectionCard election={election} />
-                <ProposalForm electionId={election.id} />
-                <ElectionRepresentatives representatives={representatives} />
+                <AddProposal electionId={election.id} />
+                <RepresentativesList representatives={representatives} />
                 <AddRepresentative electionName={election.name} />
               </div>
             ))}

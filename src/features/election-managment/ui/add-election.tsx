@@ -10,7 +10,7 @@ import {
   SubmitButton,
 } from "@/ui/components";
 
-export function ElectionForm() {
+export function AddElection() {
   const [formState, formAction, loading] = useActionState(
     createElectionAction,
     {

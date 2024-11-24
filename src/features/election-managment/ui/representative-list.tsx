@@ -7,11 +7,11 @@ type Props = {
   representatives: REPRESENTATIVE[];
 };
 
-export async function ElectionRepresentatives({ representatives }: Props) {
+export async function RepresentativesList({ representatives }: Props) {
   return (
     <div className="py-4 my-10">
       <SectionHeading
-        title={"Representatives list"}
+        title={"Representatives"}
         icon={<MdPeopleOutline size={30} />}
       />
       {representatives.length === 0 ? (

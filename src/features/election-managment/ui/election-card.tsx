@@ -1,4 +1,3 @@
-import { MdHowToVote } from "react-icons/md";
 import { BiDownvote } from "react-icons/bi";
 import { ELECTION } from "../types";
 import { Heading, SectionHeading } from "@/ui/components";
@@ -13,10 +12,7 @@ export async function ElectionCard({ election }: ElectionCardProps) {
       <Heading title={election.name} />
       {election.proposals && election.proposals.length > 0 ? (
         <div className="text-sm text-gray-700 list-disc">
-          <SectionHeading
-            title={"Election Proposals"}
-            icon={<BiDownvote size={30} />}
-          />
+          <SectionHeading title={"Proposals"} icon={<BiDownvote size={30} />} />
           {election.proposals.map((proposal, index) => (
             <div
               key={index}
