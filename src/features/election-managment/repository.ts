@@ -1,11 +1,11 @@
 import { elections } from "@/drizzle-db/schema";
 import { ADD_PROPOSAL, INITIAT_EELECTION } from "./types";
 import { db } from "@/drizzle-db";
-import { sql } from "drizzle-orm";
+import { sql, desc } from "drizzle-orm";
 
 export function createRepository() {
   async function initiateElectionInDb({ name }: INITIAT_EELECTION) {
-    await db.insert(elections).values({ name });
+    await db.insert(elections).values({ name, createdAt: new Date() });
   }
   async function addProposalToElection({ electionId, proposal }: ADD_PROPOSAL) {
     await db.execute(
@@ -19,7 +19,10 @@ export function createRepository() {
 
   async function getElectionsFromDb() {
     try {
-      return await db.select().from(elections);
+      return await db
+        .select()
+        .from(elections)
+        .orderBy(desc(elections.createdAt));
     } catch (error) {
       console.error("Error fetching elections:", error);
       return [];
