@@ -17,7 +17,8 @@ export async function createElectionAction(prevState: any, payload: FormData) {
     await electionFeatureInstance.service.createElectionService(
       validation.data
     );
-    revalidatePath("/");
+    revalidatePath("/elections-registry");
+    redirect("/elections-registry");
   } else {
     return {
       errors: validation.error.issues,
@@ -35,7 +36,7 @@ export async function createProposalAction(prevState: any, payload: FormData) {
 
   if (validation.success) {
     await electionFeatureInstance.service.addProposalService(validation.data);
-    revalidatePath("/");
+    revalidatePath("/elections-registry");
   } else {
     return {
       errors: validation.error.issues,

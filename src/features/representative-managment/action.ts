@@ -17,8 +17,8 @@ export async function createRepresentativeAction(
     await repersentativeFeature.service.createRepresentativeService(
       validation.data
     );
-    revalidatePath("/nominate-representive");
-    // redirect("/nominate-representive");
+    revalidatePath("/nominate-represntative");
+    // redirect("/nominate-represntative");
   } else {
     return {
       errors: validation.error.issues,

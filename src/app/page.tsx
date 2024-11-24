@@ -12,8 +12,8 @@ export default async function Home() {
     <Container>
       <h4>Election page</h4>
       <ElectionForm />
-      <ElectionsList elections={elections} />
-      <RepresentativeForm electionNames={electionNames} />
+      {/* <ElectionsList elections={elections} />
+      <RepresentativeForm electionNames={electionNames} /> */}
     </Container>
   );
 }

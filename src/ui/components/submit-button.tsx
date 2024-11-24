@@ -10,7 +10,7 @@ export function SubmitButton({ title, loading }: Props) {
       <button
         disabled={loading}
         type="submit"
-        className="bg-slate-500 font-bold w-full p-2 text-white"
+        className="bg-gradient-to-l from-gray-500 to-black hover:from-gray-600 hover:to-black font-bold w-full p-2 text-white shadow-md transition-all duration-300 transform"
       >
         {title}
       </button>

@@ -26,13 +26,13 @@ export function RepresentativeForm({ electionNames }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
-      <Heading title="Representive Form!" />
+      <Heading title="Representative Form!" />
       <div className="bg-gray-100 text-black rounded m-auto p-3 w-full max-w-md sm:p-8  md:max-w-lg  md:p-8 lg:max-w-xl xl:max-w-2xl">
         <div className="flex flex-col gap-2">
           <form action={formAction}>
             <Input
               id="name"
-              label="Representive Name"
+              label="Representative Name"
               name="name"
               type={"name"}
               disabled={false}
@@ -40,7 +40,7 @@ export function RepresentativeForm({ electionNames }: Props) {
             <ErrorMessages errors={nameErrors} />
             <Input
               id="email"
-              label="Representive Email"
+              label="Representative Email"
               name="email"
               type={"email"}
               disabled={false}
@@ -53,14 +53,17 @@ export function RepresentativeForm({ electionNames }: Props) {
               render={({ field: { value, onChange } }) => (
                 <SelectElection
                   options={electionNames}
-                  label="Select election"
+                  label="Select an election"
                   value={value}
                   onChange={onChange}
                 />
               )}
             />
             <ErrorMessages errors={electionErrors} />
-            <SubmitButton title={"Nominate Representive"} loading={loading} />
+            <SubmitButton
+              title={"Nominate a Representative"}
+              loading={loading}
+            />
           </form>
         </div>
       </div>
