@@ -6,8 +6,9 @@ export const elections = pgTable("elections", {
   createdAt: timestamp().defaultNow(),
   proposals: varchar({ length: 255 }).array(),
 });
-export const repesentative = pgTable("repesentative", {
+export const representative = pgTable("representative", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar({ length: 255 }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   election: varchar({ length: 255 }).notNull(),
 });

@@ -2,14 +2,17 @@ import { z } from "zod";
 
 const nameSchema = z
   .string()
+  .trim()
   .min(3, "Name must be at least 3 characters long")
   .max(40, "Name must be at most 40 characters long");
 
-const eleactionNameSchema = z
+const emailSchema = z.string().email("Correct email is required");
+
+const electionNameSchema = z
   .string()
-  .min(3, "Name must be at least 3 characters long")
-  .max(40, "Name must be at most 40 characters long");
-
+  .refine((value) => value.trim().length > 0, {
+    message: "You must select an election option",
+  });
 const SchemaProposal = z
   .string()
   .min(3, "Name must be at least 3 characters long")
@@ -24,7 +27,8 @@ export const addProposalSchema = z.object({
 });
 export const representativeSchema = z.object({
   name: nameSchema,
-  election: eleactionNameSchema,
+  email: emailSchema,
+  election: electionNameSchema,
 });
 
 export type ELECTION_VALIDATION_SCHEMA_TYPE = z.infer<typeof addElectionSchema>;

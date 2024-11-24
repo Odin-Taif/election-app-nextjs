@@ -1,10 +1,14 @@
-import { elections, repesentative } from "@/drizzle-db/schema";
+import { elections, representative } from "@/drizzle-db/schema";
 import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
 
 export function createRepository() {
-  async function setRepesentativeInDb({ name, election }: REPRESENTATIVE) {
-    await db.insert(repesentative).values({ name, election });
+  async function setRepesentativeInDb({
+    name,
+    email,
+    election,
+  }: REPRESENTATIVE) {
+    await db.insert(representative).values({ name, email, election });
   }
 
   async function getElectionNamesFromDb() {

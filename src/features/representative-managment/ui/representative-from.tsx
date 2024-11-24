@@ -19,6 +19,7 @@ export function RepresentativeForm({ electionNames }: Props) {
     }
   );
   const nameErrors = findErrors("name", formState?.errors ?? []);
+  const emailErrors = findErrors("email", formState?.errors ?? []);
   const electionErrors = findErrors("election", formState?.errors ?? []);
 
   const { control } = useForm();
@@ -37,6 +38,14 @@ export function RepresentativeForm({ electionNames }: Props) {
               disabled={false}
             />
             <ErrorMessages errors={nameErrors} />
+            <Input
+              id="email"
+              label="Representive Email"
+              name="email"
+              type={"email"}
+              disabled={false}
+            />
+            <ErrorMessages errors={emailErrors} />
             <Controller
               name="election"
               control={control}

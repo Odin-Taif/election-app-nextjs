@@ -1,5 +1,6 @@
 export type REPRESENTATIVE = {
   name: string;
+  email: string;
   election: string;
 };
 

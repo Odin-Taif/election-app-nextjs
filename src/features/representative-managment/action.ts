@@ -10,6 +10,7 @@ export async function createRepresentativeAction(
 ) {
   const validation = representativeSchema.safeParse({
     name: payload.get("name"),
+    email: payload.get("email"),
     election: payload.get("election"),
   });
   if (validation.success) {
