@@ -33,7 +33,7 @@ export function ProposalForm({ electionId }: Props) {
           label={"Add a proposal for the election"}
         />
         <ErrorMessages errors={proposalErrors} />
-        <SubmitButton title={"Create Proposal"} loading={isLoading} />
+        <SubmitButton title={"Add Proposal"} loading={isLoading} />
       </form>
     </div>
   );

@@ -1,9 +1,7 @@
 import { Heading } from "@/ui/components";
 import { ELECTION } from "../types";
-import { ProposalForm } from "./add-proposal";
 import Link from "next/link";
-import { MdHowToVote } from "react-icons/md";
-import { BiDownvote } from "react-icons/bi";
+import { ElectionCard, ProposalForm } from ".";
 
 type Props = {
   elections: ELECTION[];
@@ -27,43 +25,12 @@ export async function ElectionsList({ elections }: Props) {
           </div>
         ) : (
           <div className="w-full">
-            {elections.map((election) => (
+            {elections.map((election, index) => (
               <div
-                key={election.id}
+                key={index}
                 className="bg-white text-center shadow-md rounded-lg p-4 m-2 border border-gray-200"
               >
-                <div className="my-2 flex flex-row text-left items-left border-b border-b-gray-200">
-                  <MdHowToVote size={30} color="green" />
-                  <h5 className="text-lg mx-2 font-semibold text-gray-800">
-                    {election.name}
-                  </h5>
-                </div>
-
-                {election.proposals && election.proposals.length > 0 ? (
-                  <div className="text-sm text-gray-700 list-disc">
-                    <div className="my-2 flex flex-row text-left items-center justify-center">
-                      <h5 className="text-sm mx-2 font-semibold text-gray-800">
-                        Election&apos;s Proposals
-                      </h5>
-                      <BiDownvote size={30} />
-                    </div>
-
-                    {election.proposals.map((proposal, index) => (
-                      <div
-                        key={index}
-                        className="py-4 mb-2 bg-gray-100 rounded-md shadow-md hover:shadow-lg hover:bg-gray-150 hover:cursor-pointer transition-all duration-300"
-                      >
-                        {proposal}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div>
-                    <p className="mt-2 text-sm text-gray-500">
-                      No proposals for this election yet!
-                    </p>
-                  </div>
-                )}
+                <ElectionCard election={election} />
                 <ProposalForm electionId={election.id} />
               </div>
             ))}
