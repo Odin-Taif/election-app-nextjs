@@ -1,9 +1,5 @@
 import { electionFeatureInstance } from "@/features/election-managment";
-import {
-  ElectionForm,
-  ElectionsList,
-  ProposalForm,
-} from "@/features/election-managment/ui";
+import { ElectionForm, ElectionsList } from "@/features/election-managment/ui";
 
 import { Container } from "@/ui/components";
 
@@ -12,7 +8,7 @@ export default async function Home() {
 
   return (
     <Container>
-      <h2>Election page</h2>
+      <h4>Election page</h4>
       <ElectionForm />
       <ElectionsList elections={elections} />
     </Container>

@@ -27,9 +27,14 @@ export async function ElectionsList({ elections }: Props) {
                 </h3>
 
                 {election.proposals && election.proposals.length > 0 ? (
-                  <div className="mt-2 text-sm text-gray-700 list-disc pl-5">
+                  <div className="text-sm text-gray-700 list-disc">
                     {election.proposals.map((proposal, index) => (
-                      <div key={index}>{proposal}</div>
+                      <div
+                        key={index}
+                        className="py-4 mb-2 bg-white rounded-md shadow-md hover:shadow-lg hover:bg-gray-50 hover:cursor-pointer transition-all duration-300"
+                      >
+                        {proposal}
+                      </div>
                     ))}
                   </div>
                 ) : (

@@ -11,17 +11,17 @@ type Props = {
 
 export function Input({ id, name, label, type, disabled }: Props) {
   return (
-    <div className="w-full relative my-2">
+    <div className="w-full relative my-4 ">
       <input
         id={id}
         name={name}
         disabled={disabled}
         type={type}
-        className={`peer relative z-10 w-full p-4 pl-4 font-light bg-transparent border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed `}
+        className="peer relative z-10 w-full p-4 pl-4 font-light bg-transparent border-2 border-green-700 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed"
       />
 
       <label
-        className={`absolute text-sm duration-150 transform -translate-y-4 top-5 left-4 z-9 origin-[0] peer-placeholder-shown:scale-75 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 `}
+        className="absolute text-sm text-gray-500 duration-150 transform -translate-y-4 top-5 left-4 z-9 origin-[0] peer-placeholder-shown:scale-75 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 "
         htmlFor={id}
       >
         {label}
