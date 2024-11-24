@@ -7,7 +7,7 @@ export default async function ReprensentativePage() {
     await repersentativeFeature.service.getElectionNamesToRunFor();
   return (
     <Container>
-      <h4> nomination page</h4>
+      <h4> Nomination Section</h4>
       <RepresentativeForm electionNames={electionNames} />
     </Container>
   );
