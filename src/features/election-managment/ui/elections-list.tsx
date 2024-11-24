@@ -1,11 +1,40 @@
 import { Heading } from "@/ui/components";
 import { ELECTION } from "../types";
 import Link from "next/link";
-import { ElectionCard, ProposalForm } from ".";
+import { ElectionCard, ProposalForm, ElectionRepresentatives } from ".";
+import { REPRESENTATIVE } from "@/features/representative-managment/types";
 
 type Props = {
   elections: ELECTION[];
 };
+
+const representatives: REPRESENTATIVE[] = [
+  {
+    name: "Alice Johnson",
+    email: "alice.johnson@example.com",
+    election: "2024 Presidential Election",
+  },
+  {
+    name: "Bob Smith",
+    email: "bob.smith@example.com",
+    election: "2024 Congressional Election",
+  },
+  {
+    name: "Catherine Lee",
+    email: "catherine.lee@example.com",
+    election: "2024 Senate Election",
+  },
+  {
+    name: "David Brown",
+    email: "david.brown@example.com",
+    election: "2024 Mayoral Election",
+  },
+  {
+    name: "Emma Wilson",
+    email: "emma.wilson@example.com",
+    election: "2024 Gubernatorial Election",
+  },
+];
 
 export async function ElectionsList({ elections }: Props) {
   return (
@@ -32,6 +61,7 @@ export async function ElectionsList({ elections }: Props) {
               >
                 <ElectionCard election={election} />
                 <ProposalForm electionId={election.id} />
+                <ElectionRepresentatives representatives={representatives} />
               </div>
             ))}
           </div>
