@@ -7,9 +7,11 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const elections = pgTable("elections", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: serial("id").primaryKey(),
   name: varchar({ length: 255 }).notNull(),
-  createdAt: timestamp().defaultNow(),
+  status: varchar("status", { length: 50 }),
+  created_at: timestamp("created_at").defaultNow(),
+  concluded_at: timestamp("concluded_at"),
   proposals: varchar({ length: 255 }).array(),
 });
 export const representative = pgTable("representative", {

@@ -2,9 +2,20 @@ import { describe, it } from "node:test";
 import { deepEqual } from "node:assert/strict";
 import { PUBLIC_VOTER } from "@/features/public-managment/types";
 
+const publicVotersZero: PUBLIC_VOTER[] = [];
+const publicVotersOne: PUBLIC_VOTER[] = [
+  {
+    id: 1,
+    name: "odin",
+  },
+];
+
 describe("Public Voters", () => {
   it("should return no people in this country | 0 case scenario", async () => {
-    const representative: PUBLIC_VOTER[] = [];
-    deepEqual(representative, []);
+    deepEqual(publicVotersZero, []);
+  });
+
+  it.skip("should return no people in this country | 1 case scenario", async () => {
+    deepEqual(publicVotersOne, []);
   });
 });

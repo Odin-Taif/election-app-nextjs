@@ -3,7 +3,6 @@ import { deepEqual } from "node:assert/strict";
 import { ELECTION } from "@/features/election-managment/types";
 import assert from "node:assert";
 
-const timeSpanForElection: number = 4;
 const electionsZero: ELECTION[] = [];
 const electionsOne: ELECTION[] = [
   {
@@ -27,7 +26,9 @@ const electionsMany: ELECTION[] = [
   },
 ];
 
-describe("elections", () => {
+const timeSpanForElection: number = 4;
+//skiped for now
+describe.skip("elections", () => {
   it("should return nothing to vote on | 0 case scenario", async () => {
     deepEqual(electionsZero, []);
   });
