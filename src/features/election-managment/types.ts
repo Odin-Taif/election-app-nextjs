@@ -1,6 +1,7 @@
 export type ELECTION = {
+  id: number;
   name: string;
-  proposal: string;
+  proposals: string[];
 };
 
 export type INITIAT_EELECTION = {

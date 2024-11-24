@@ -7,8 +7,18 @@ export function createRepository() {
     await db.insert(elections).values({ name });
   }
 
+  async function getElectionsFromDb() {
+    try {
+      return await db.select().from(elections);
+    } catch (error) {
+      console.error("Error fetching elections:", error);
+      return [];
+    }
+  }
+
   return {
     initiateElectionInDb,
+    getElectionsFromDb,
   };
 }
 

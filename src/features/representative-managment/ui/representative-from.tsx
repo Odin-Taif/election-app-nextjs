@@ -8,10 +8,10 @@ import { SelectElection } from ".";
 import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 
 export type Props = {
-  elections: { name: string }[];
+  electionNames: { name: string }[];
 };
 
-export function RepresentativeForm({ elections }: Props) {
+export function RepresentativeForm({ electionNames }: Props) {
   const [formState, formAction, loading] = useActionState(
     createRepresentativeAction,
     {
@@ -43,7 +43,7 @@ export function RepresentativeForm({ elections }: Props) {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <SelectElection
-                  options={elections}
+                  options={electionNames}
                   label="Select election"
                   value={value}
                   onChange={onChange}

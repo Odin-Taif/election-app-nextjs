@@ -3,7 +3,7 @@ import { RepresentativeForm } from "@/features/representative-managment/ui";
 import { Container } from "@/ui/components";
 
 export default async function ReprensentativePage() {
-  const elections =
+  const electionNames =
     await repersentativeFeature.service.getElectionNamesToRunFor();
 
   return (
@@ -11,7 +11,7 @@ export default async function ReprensentativePage() {
       <h2>Representative page</h2>
       <h1>Dynamic Election List</h1>
 
-      <RepresentativeForm elections={elections} />
+      <RepresentativeForm electionNames={electionNames} />
     </Container>
   );
 }

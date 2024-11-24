@@ -2,6 +2,7 @@
 import { electionFeatureInstance } from "./feature";
 import { redirect } from "next/navigation";
 import { addElectionSchema } from "@/zod-validation/validations-schema";
+import { revalidatePath } from "next/cache";
 
 export async function createElectionAction(prevState: any, payload: FormData) {
   console.log(payload);
@@ -13,7 +14,7 @@ export async function createElectionAction(prevState: any, payload: FormData) {
     await electionFeatureInstance.service.createElectionService(
       validation.data
     );
-    redirect("/elections");
+    revalidatePath("/");
   } else {
     return {
       errors: validation.error.issues,
