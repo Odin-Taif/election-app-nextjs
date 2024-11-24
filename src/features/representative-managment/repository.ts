@@ -7,7 +7,7 @@ export function createRepository() {
   async function setRepresentativeInDb({
     name,
     email,
-    election,
+    election_id,
   }: REPRESENTATIVE) {
     try {
       const existingRepresentative = await db
@@ -26,7 +26,7 @@ export function createRepository() {
       await db.insert(representative).values({
         name,
         email,
-        election_id: election ?? null,
+        election_id: election_id ?? null,
       });
 
       return {
@@ -52,13 +52,13 @@ export function createRepository() {
     }
   }
 
-  async function getRepresentativesByElectionNameFromDb(electionName: string) {
+  async function getRepresentativesByElectionNameFromDb(election_id: number) {
     try {
       return await db
         .select()
         .from(representative)
         .innerJoin(elections, eq(representative.id, elections.id))
-        .where(eq(elections.name, electionName));
+        .where(eq(representative.election_id, election_id));
     } catch (error) {
       console.error("Error fetching representative:", error);
       return [];

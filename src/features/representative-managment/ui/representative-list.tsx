@@ -4,13 +4,13 @@ import { SectionHeading } from "@/ui/components";
 import { repersentativeFeature } from "@/features/representative-managment";
 
 type Props = {
-  electionName: string;
+  election_id: number;
 };
 
-export default async function RepresentativesList({ electionName }: Props) {
-  const representatives: REPRESENTATIVE[] =
-    await repersentativeFeature.service.getRepresentativesByElectionName(
-      electionName
+export default async function RepresentativesList({ election_id }: Props) {
+  const representatives =
+    await repersentativeFeature.service.getRepresentativesByElection(
+      election_id
     );
   return (
     <div className="py-4 my-10">

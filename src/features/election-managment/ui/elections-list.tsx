@@ -31,7 +31,7 @@ export async function ElectionsList() {
               >
                 <ProposalsList election_id={election.id} />
                 <AddProposal election_id={election.id} />
-                {/* <RepresentativesList electionName={election.name} /> */}
+                <RepresentativesList election_id={election.id} />
                 <AddRepresentative election_id={election.id} />
               </div>
             ))}

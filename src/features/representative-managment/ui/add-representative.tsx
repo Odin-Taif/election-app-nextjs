@@ -7,7 +7,7 @@ import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";
 
 type Props = {
-  election_id: string;
+  election_id: number;
 };
 export function AddRepresentative({ election_id }: Props) {
   const [formState, formAction, loading] = useActionState(
