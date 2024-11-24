@@ -1,18 +1,15 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
 import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
 import { createRepresentativeAction } from "../action";
-import { SelectElection } from ".";
 import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";
 
-export type Props = {
-  electionNames: string[];
+type Props = {
+  electionName: string;
 };
-
-export function RepresentativeForm({ electionNames }: Props) {
+export function AddRepresentative({ electionName }: Props) {
   const [formState, formAction, loading] = useActionState(
     createRepresentativeAction,
     {
@@ -30,13 +27,11 @@ export function RepresentativeForm({ electionNames }: Props) {
     "email",
     Array.isArray(formState?.errors) ? formState.errors : []
   );
+
   const electionErrors = findErrors(
     "election",
     Array.isArray(formState?.errors) ? formState.errors : []
   );
-
-  const { control } = useForm();
-
   return (
     <>
       <SectionHeading
@@ -53,6 +48,7 @@ export function RepresentativeForm({ electionNames }: Props) {
           disabled={false}
         />
         <ErrorMessages errors={nameErrors} />
+
         <Input
           id="email"
           label="Representative Email"
@@ -61,20 +57,17 @@ export function RepresentativeForm({ electionNames }: Props) {
           disabled={false}
         />
         <ErrorMessages errors={emailErrors} />
-        <Controller
+
+        <input
+          id="election"
           name="election"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { value, onChange } }) => (
-            <SelectElection
-              options={electionNames}
-              label="Select an election"
-              value={value}
-              onChange={onChange}
-            />
-          )}
+          type="text"
+          disabled={false}
+          defaultValue={electionName}
+          hidden
         />
         <ErrorMessages errors={electionErrors} />
+
         {formState.success ? (
           <strong className="text-green-500  m-2">{formState.message}</strong>
         ) : (

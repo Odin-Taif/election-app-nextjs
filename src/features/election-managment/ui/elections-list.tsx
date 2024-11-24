@@ -3,7 +3,10 @@ import { ELECTION } from "../types";
 import Link from "next/link";
 import { ElectionCard, ProposalForm, ElectionRepresentatives } from ".";
 import { REPRESENTATIVE } from "@/features/representative-managment/types";
-import { RepresentativeForm } from "@/features/representative-managment/ui";
+import {
+  AddRepresentative,
+  RepresentativeForm,
+} from "@/features/representative-managment/ui";
 
 type Props = {
   elections: ELECTION[];
@@ -64,7 +67,8 @@ export async function ElectionsList({ elections }: Props) {
                 <ElectionCard election={election} />
                 <ProposalForm electionId={election.id} />
                 <ElectionRepresentatives representatives={representatives} />
-                <RepresentativeForm electionNames={electionNames} />
+                <AddRepresentative electionName={election.name} />
+                {/* <RepresentativeForm electionNames={electionNames} /> */}
               </div>
             ))}
           </div>
