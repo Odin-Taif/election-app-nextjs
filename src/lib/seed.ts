@@ -14,7 +14,6 @@ function generatePublicVotes(numberOfVoters: number): PublicVoter[] {
       name,
     });
   });
-
   return votes;
 }
 
@@ -25,5 +24,4 @@ export async function seedPublicVotes(numberOfVoters: number) {
   }
   console.log("done");
 }
-
-seedPublicVotes(1);
+seedPublicVotes(10);
