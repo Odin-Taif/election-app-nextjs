@@ -7,7 +7,8 @@ import {
 } from "@/zod-validation/validations-schema";
 import { revalidatePath } from "next/cache";
 
-export async function createElectionAction(prevState: any, payload: FormData) {
+export async function createElectionAction(prevState, payload: FormData) {
+  console.log(payload);
   const validation = addElectionSchema.safeParse({
     name: payload.get("name"),
   });
@@ -16,6 +17,7 @@ export async function createElectionAction(prevState: any, payload: FormData) {
     await electionFeatureInstance.service.createElectionService(
       validation.data
     );
+
     revalidatePath("/elections-registry");
     redirect("/elections-registry");
   } else {
@@ -26,9 +28,10 @@ export async function createElectionAction(prevState: any, payload: FormData) {
 }
 
 export async function createProposalAction(prevState: any, payload: FormData) {
+  console.log(payload);
   const validation = addProposalSchema.safeParse({
     proposal: payload.get("proposal"),
-    electionId: payload.get("electionId"),
+    election_id: payload.get("election_id"),
   });
 
   if (validation.success) {

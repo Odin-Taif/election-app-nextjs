@@ -19,10 +19,10 @@ const SchemaProposal = z
   .max(40, "Name must be at most 40 characters long");
 
 export const addElectionSchema = z.object({
-  name: nameSchema,
+  name: z.string().min(1, "Election name is required"),
 });
 export const addProposalSchema = z.object({
-  electionId: z.string(),
+  election_id: z.number(),
   proposal: SchemaProposal,
 });
 export const representativeSchema = z.object({

@@ -10,9 +10,9 @@ import {
 } from "@/ui/components";
 
 type Props = {
-  electionId: number;
+  election_id: number;
 };
-export function AddProposal({ electionId }: Props) {
+export function AddProposal({ election_id }: Props) {
   const [formState, formAction, isLoading] = useActionState(
     createProposalAction,
     {
@@ -24,7 +24,7 @@ export function AddProposal({ electionId }: Props) {
   return (
     <>
       <form action={formAction}>
-        <input type="hidden" name="electionId" value={electionId} />
+        <input type="hidden" name="election_id" value={election_id} />
         <Input
           id="proposal"
           name="proposal"

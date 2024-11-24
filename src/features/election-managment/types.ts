@@ -1,14 +1,16 @@
 export type ELECTION = {
   id: number;
   name: string;
-  proposals: string[] | null;
+  status: string | null;
+  created_at: string;
+  concluded_at: string | null;
+};
+
+export type ELECTION_PROPOSAL = {
+  election_id: number;
+  proposal: string;
 };
 
 export type INITIAT_EELECTION = {
   name: string;
-};
-
-export type ADD_PROPOSAL = {
-  electionId: string;
-  proposal: string;
 };

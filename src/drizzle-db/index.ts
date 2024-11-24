@@ -18,7 +18,7 @@ async function runQuery() {
   const client = await pool.connect();
   try {
     const result = await client.query("SELECT * FROM elections");
-    console.log(result.rows);
+    // console.log(result.rows);
   } finally {
     client.release();
   }

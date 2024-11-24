@@ -1,6 +1,6 @@
 import { Heading } from "@/ui/components";
 import Link from "next/link";
-import { ElectionCard, AddProposal } from ".";
+import { ProposalsList, AddProposal } from ".";
 import { AddRepresentative } from "@/features/representative-managment/ui";
 import { electionFeatureInstance } from "../feature";
 import RepresentativesList from "@/features/representative-managment/ui/representative-list";
@@ -29,10 +29,10 @@ export async function ElectionsList() {
                 key={index}
                 className="bg-white text-center shadow-md rounded-lg p-4 m-2 border border-gray-200"
               >
-                <ElectionCard election={election} />
-                <AddProposal electionId={election.id} />
-                <RepresentativesList electionName={election.name} />
-                <AddRepresentative electionName={election.name} />
+                <ProposalsList election_id={election.id} />
+                <AddProposal election_id={election.id} />
+                {/* <RepresentativesList electionName={election.name} />
+                <AddRepresentative electionName={election.name} /> */}
               </div>
             ))}
           </div>

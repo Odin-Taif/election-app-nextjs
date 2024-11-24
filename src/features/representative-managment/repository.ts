@@ -50,7 +50,8 @@ export function createRepository() {
       return await db
         .select()
         .from(representative)
-        .where(eq(representative.election, electionName));
+        .innerJoin(elections, eq(representative.id, elections.id)) // Join with the elections table
+        .where(eq(elections.name, electionName)); // Filter by the election name
     } catch (error) {
       console.error("Error fetching representative:", error);
       return [];
