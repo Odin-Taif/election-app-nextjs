@@ -7,7 +7,6 @@ import RepresentativesList from "@/features/representative-managment/ui/represen
 
 export async function ElectionsList() {
   const elections = await electionFeatureInstance.service.getElections();
-  console.log(elections);
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
       <Heading title="Elections List" />
@@ -32,8 +31,8 @@ export async function ElectionsList() {
               >
                 <ProposalsList election_id={election.id} />
                 <AddProposal election_id={election.id} />
-                {/* <RepresentativesList electionName={election.name} />
-                <AddRepresentative electionName={election.name} /> */}
+                {/* <RepresentativesList electionName={election.name} /> */}
+                <AddRepresentative election_id={election.id} />
               </div>
             ))}
           </div>

@@ -1,7 +1,7 @@
 export type REPRESENTATIVE = {
   name: string;
   email: string;
-  election: string;
+  election?: number;
 };
 
 export type ELECTION_SELECTION = {

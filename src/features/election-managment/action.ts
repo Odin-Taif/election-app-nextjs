@@ -8,7 +8,6 @@ import {
 import { revalidatePath } from "next/cache";
 
 export async function createElectionAction(prevState, payload: FormData) {
-  console.log(payload);
   const validation = addElectionSchema.safeParse({
     name: payload.get("name"),
   });

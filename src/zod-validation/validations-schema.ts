@@ -8,12 +8,6 @@ const nameSchema = z
 
 const emailSchema = z.string().email("Correct email is required");
 
-const electionNameSchema = z
-  .string()
-  .refine((value) => value.trim().length > 0, {
-    message: "You must select an election option",
-  });
-
 export const addElectionSchema = z.object({
   name: z.string().min(1, "Election name is required"),
 });
@@ -24,7 +18,7 @@ export const addProposalSchema = z.object({
 export const representativeSchema = z.object({
   name: nameSchema,
   email: emailSchema,
-  election: electionNameSchema,
+  election_id: z.number(),
 });
 
 export type ELECTION_VALIDATION_SCHEMA_TYPE = z.infer<typeof addElectionSchema>;

@@ -18,11 +18,17 @@ export function createRepository() {
       if (existingRepresentative.length > 0) {
         return {
           success: false,
-          message: "email is already in use. Please type different email!",
-          error: "email is already in use. Please type different email!",
+          message: "Email is already in use. Please provide a different email.",
+          error: "Email is already in use. Please provide a different email.",
         };
       }
-      await db.insert(representative).values({ name, email, election });
+
+      await db.insert(representative).values({
+        name,
+        email,
+        election_id: election ?? null,
+      });
+
       return {
         success: true,
         message: "Representative added successfully!",
@@ -36,6 +42,7 @@ export function createRepository() {
       };
     }
   }
+
   async function getElectionNamesFromDb() {
     try {
       return await db.select({ name: elections.name }).from(elections);
@@ -50,8 +57,8 @@ export function createRepository() {
       return await db
         .select()
         .from(representative)
-        .innerJoin(elections, eq(representative.id, elections.id)) // Join with the elections table
-        .where(eq(elections.name, electionName)); // Filter by the election name
+        .innerJoin(elections, eq(representative.id, elections.id))
+        .where(eq(elections.name, electionName));
     } catch (error) {
       console.error("Error fetching representative:", error);
       return [];

@@ -5,11 +5,16 @@ import { representativeSchema } from "@/zod-validation/validations-schema";
 import { repersentativeFeature } from "./feature";
 
 export async function createRepresentativeAction(prevState, payload: FormData) {
+  const name = payload.get("name") as string;
+  const email = payload.get("email") as string;
+  const election_id = parseInt(payload.get("election") as string, 10);
   const validation = representativeSchema.safeParse({
-    name: payload.get("name"),
-    email: payload.get("email"),
-    election: payload.get("election"),
+    name,
+    email,
+    election_id,
   });
+
+  console.log(validation.data);
 
   if (validation.success) {
     const userExist =

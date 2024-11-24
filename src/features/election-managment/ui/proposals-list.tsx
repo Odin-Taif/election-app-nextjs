@@ -7,10 +7,8 @@ type ProposalsListProps = {
 };
 
 export async function ProposalsList({ election_id }: ProposalsListProps) {
-  console.log(election_id);
   const proposals =
     await electionFeatureInstance.service.getProposalsForElection(election_id);
-  console.log(proposals, "proposalas");
 
   return (
     <>
@@ -22,7 +20,7 @@ export async function ProposalsList({ election_id }: ProposalsListProps) {
               key={index}
               className="py-4 mb-2 bg-gray-100 rounded-md shadow-md hover:shadow-lg hover:bg-gray-150 hover:cursor-pointer transition-all duration-300"
             >
-              {/* {proposal} */}
+              {proposal.proposal}
             </div>
           ))}
         </div>
