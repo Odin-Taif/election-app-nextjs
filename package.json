@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "tsx --watch --test",
     "seed": "tsx ./src/lib/seed.ts"
   },
   "dependencies": {
