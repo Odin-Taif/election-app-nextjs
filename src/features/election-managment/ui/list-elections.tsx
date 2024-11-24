@@ -8,9 +8,9 @@ type Props = {
 
 export async function ElectionsList({ elections }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-50">
-      <div className="w-full text-black max-w-4xl p-4">
-        <Heading title="Elections List" />
+    <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
+      <Heading title="Elections List" />
+      <div className="bg-gray-100 text-black rounded m-auto p-3 w-full max-w-md sm:p-8  md:max-w-lg  md:p-8 lg:max-w-xl xl:max-w-2xl">
         {elections.length === 0 ? (
           <p className="text-center text-gray-600 mt-4">
             No elections available.
