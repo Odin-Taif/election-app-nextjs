@@ -1,3 +1,157 @@
+### Project Planning and Architecture Overview
+
+#### Introduction
+
+This document outlines the planning and architectural approach for the **Election App**, which aims to provide a seamless platform for managing elections, representatives, and public participation. The application is designed with scalability, maintainability, and modularity in mind, leveraging modern technologies and best practices.
+
+---
+
+![big pic of the app](./public/pigplan.png)
+
+### Project Overview
+
+The application is divided into three core features:
+
+1. **Election Feature**: Handles the creation, management, and results of elections.
+2. **Representative Feature**: Manages the representatives participating in the elections, including their nominations and profiles.
+3. **Public Feature**: Facilitates public engagement, including voting and viewing election-related details.
+
+Each feature is developed independently to maintain modularity, with shared reusable components and a consistent design system across the application.
+
+---
+
+### Architecture and Design
+
+The app follows the **Feature-Sliced Architecture** pattern, organizing code into three distinct layers for each feature:
+
+1. **Presentation Layer (UI)**:
+
+   - Built using **React** (with **Next.js** as the framework).
+   - Includes reusable UI components shared across the app and specific components tailored to each feature.
+   - The pages are framework-agnostic, focusing on reusable, testable components.
+   - Navigation is facilitated by a **Navbar**, allowing users to switch seamlessly between pages.
+
+2. **Service Layer**:
+
+   - Acts as the intermediary between the Presentation and Repository layers.
+   - Controls application flow, handling validation, business logic, and redirection (e.g., validating paths or caching during Next.js actions).
+   - Uses **Zod** for validation to ensure data integrity.
+   - Includes hooks like `useStateAction` for efficient state management and form validation.
+
+3. **Repository Layer**:
+   - Manages database operations, built on **Drizzle ORM**.
+   - Each feature has its own repository, enabling clear separation of concerns.
+   - Seeding functions have been implemented for each table in the database, ensuring that data is seeded in chronological order.
+
+---
+
+### Current Progress
+
+1. **UI Development**:
+
+   - Designed reusable UI components.
+   - Built feature-specific UI components.
+   - Created a **Navbar** to navigate between the four pages of the app.
+
+2. **Feature Implementation**:
+
+   - Developed foundational layers for all three features (Election, Representative, Public).
+   - Integrated Drizzle ORM for database interactions.
+   - Prepared features to scale independently as the project evolves.
+
+3. **Database**:
+
+   - Implemented seed functions for all tables.
+   - Designed the schema to ensure chronological and logical data relationships.
+
+4. **Validation**:
+   - Leveraged **Zod** for schema validation.
+   - Currently exploring moving validation logic to the Service layer for better separation of concerns.
+
+---
+
+### Challenges and Future Improvements
+
+1. **Validation in Service Layer**:
+
+   - Transitioning validation logic from the UI layer to the Service layer while ensuring compatibility with **Next.js** actions and efficient redirection/caching.
+
+2. **Scalability**:
+
+   - Preparing features for independent scaling and further modularization.
+
+3. **Testing**:
+   - Implementing thorough unit and integration tests for all layers.
+
+---
+
+### ReadMe
+
+# Election App
+
+## Overview
+
+The Election App is a modular application for managing elections, representatives, and public participation. It is built with modern web technologies to ensure scalability, maintainability, and an excellent user experience.
+
+## Features
+
+1. **Election Management**:
+
+   - Create and manage elections.
+   - View election results.
+
+2. **Representative Management**:
+
+   - Nominate and manage representatives.
+
+3. **Public Participation**:
+   - Allow the public to vote and view election-related details.
+
+## Architecture
+
+The application follows **Feature-Sliced Architecture**, with a clear separation of concerns:
+
+- **UI Layer**: Reusable and feature-specific components built with React.
+- **Service Layer**: Controls application logic and validation.
+- **Repository Layer**: Manages database operations with Drizzle ORM.
+
+## Tech Stack
+
+- **Frontend**: React, Next.js
+- **ORM**: Drizzle ORM
+- **Validation**: Zod
+- **Database**: PostgreSQL
+
+## Setup
+
+1. **Install Dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+2. **Run the Application**:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Seed the Database**:
+   ```bash
+   npm run seed
+   ```
+
+## Roadmap
+
+1. Migrate validation to the Service layer.
+2. Add caching and redirection logic for enhanced performance.
+3. Expand the database schema to support additional features.
+4. Implement comprehensive unit and integration testing.
+
+---
+
+This document reflects the project's current state and the steps being taken to ensure its growth and success. For more details, see the specific feature directories and documentation.
+
 # Final assignment v2.2
 
 You will build a voting application to visualize the impact of your vote in a representative democracy.
@@ -112,4 +266,5 @@ Beatrice gets an agreement rate of 0% on this election.
 - Failed submissions will have one extra attempt during an upcoming weekend to complete unfinished work.
 - Only send in code that represents your own code skills. We are not looking at assessing how well AI fails this test 🤖 Succeed on your own terms! Anything else is considered cheating, and no more attempts will be given to complete the assignment.
 - This will be the main scoring point that represents your ability to code.
+
 # election-app-nextjs
