@@ -1,6 +1,6 @@
 type IconTextCardProps = {
   title: string;
-  icon: React.ReactNode; // This allows any React element to be passed as an icon
+  icon: React.ReactNode;
 };
 
 export function SectionHeading({ title, icon }: IconTextCardProps) {

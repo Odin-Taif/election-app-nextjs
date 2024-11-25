@@ -9,7 +9,6 @@ import { faker } from "@faker-js/faker";
 function generatePublicVoters(numberOfVoters: number): PUBLIC_VOTER[] {
   const votes: PUBLIC_VOTER[] = [];
   Array.from({ length: numberOfVoters }).forEach(() => {
-    const id = Math.ceil(Math.random() * 100);
     const name = faker.person.fullName();
     votes.push({
       name,
@@ -24,18 +23,16 @@ export const seedElections = async (count: number) => {
       name: `Election ${i + 1}`,
     });
   }
-
   for (const election of elections) {
-    await electionFeatureInstance.service.createElectionService(election); // Insert election into the DB
+    await electionFeatureInstance.service.createElectionService(election);
   }
-
   console.log("Elections seeded successfully");
 };
 export const seedElectionProposals = async (count: number) => {
   const proposals = [];
   for (let i = 0; i < count; i++) {
     proposals.push({
-      election_id: 1, // assuming election_id 1 exists
+      election_id: 1,
       proposal: `Proposal ${i + 1}`,
     });
   }
@@ -57,13 +54,11 @@ export const seedRepresentatives = async (
       election_id: electionId,
     });
   }
-
   for (const representative of representatives) {
     await representativeFeatureInstance.service.createRepresentativeService(
       representative
     );
   }
-
   console.log(`${count} Representatives seeded successfully`);
 };
 export async function seedPublicVoters(numberOfVoters: number) {
