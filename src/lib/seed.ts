@@ -3,7 +3,7 @@ import { representativePublicVotes } from "@/drizzle-db/schema";
 import { electionFeatureInstance } from "@/features/election-managment";
 import { publicFeatureInstance } from "@/features/public-managment";
 import { PUBLIC_VOTER, VOTE } from "@/features/public-managment/types";
-import { repersentativeFeature } from "@/features/representative-managment";
+import { representativeFeatureInstance } from "@/features/representative-managment/feature";
 import { faker } from "@faker-js/faker";
 const publicVoters = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 const electionProposals = [{ id: 1 }, { id: 2 }, { id: 3 }];
@@ -22,26 +22,55 @@ function generatePublicVoters(numberOfVoters: number): PUBLIC_VOTER[] {
   });
   return votes;
 }
-function generateVotes(numberOfVotes: number): VOTE[] {
-  const votes: VOTE[] = [];
-  Array.from({ length: numberOfVotes }).forEach(() => {
-    const public_voter_id =
-      publicVoters[Math.floor(Math.random() * publicVoters.length)].id;
-    const election_proposal_id =
-      electionProposals[Math.floor(Math.random() * electionProposals.length)]
-        .id;
-    const representative_id =
-      representatives[Math.floor(Math.random() * representatives.length)].id;
+export const seedVotes = async (count: number, electionId: number) => {
+  try {
+    // Fetch required data
+    const publicVoters = await publicFeatureInstance.service.getPublicVoters();
+    const electionProposals =
+      await electionFeatureInstance.service.getProposalsForElection(electionId);
+    const representatives =
+      await representativeFeatureInstance.service.getAllRepresentatives();
 
-    votes.push({
-      public_voter_id,
-      election_proposal_id,
-      representative_id,
+    // Validate fetched data
+    if (
+      !publicVoters.length ||
+      !electionProposals.length ||
+      !representatives.length
+    ) {
+      console.error(
+        "Missing data: Ensure voters, proposals, and representatives are seeded first."
+      );
+      return;
+    }
+
+    // Generate votes
+    const votesData = Array.from({ length: count }).map(() => {
+      const public_voter_id =
+        publicVoters[Math.floor(Math.random() * publicVoters.length)].id;
+      const election_proposal_id =
+        electionProposals[Math.floor(Math.random() * electionProposals.length)]
+          .id;
+      const representative_id =
+        representatives[Math.floor(Math.random() * representatives.length)].id;
+
+      return {
+        public_voter_id,
+        election_proposal_id,
+        representative_id,
+      };
     });
-  });
 
-  return votes;
-}
+    // Insert votes into the database
+    for (const vote of votesData) {
+      await db.insert(votes).values(vote);
+    }
+
+    console.log(`${count} votes seeded successfully.`);
+  } catch (error) {
+    console.error("Error seeding votes:", error);
+    throw error;
+  }
+};
 export const seedElections = async (count: number) => {
   const elections = [];
   for (let i = 0; i < count; i++) {
@@ -84,7 +113,7 @@ export const seedRepresentatives = async (
   }
 
   for (const representative of representatives) {
-    await repersentativeFeature.service.createRepresentativeService(
+    await representativeFeatureInstance.service.createRepresentativeService(
       representative
     );
   }
@@ -98,13 +127,7 @@ export async function seedPublicVoters(numberOfVoters: number) {
   }
   console.log("seed PublicVoters is done");
 }
-export async function seedVotes(numberOfVotes: number) {
-  const votes = generateVotes(numberOfVotes);
-  for (const vote of votes) {
-    await publicFeatureInstance.service.seedVotesTable(vote);
-  }
-  console.log("Votes seeded successfully");
-}
+
 export const seedPublicPreferences = async (
   count: number,
   electionId: number
@@ -136,7 +159,7 @@ export const seedPublicPreferences = async (
 };
 export const seedRepresentativePublicVotes = async (count: number) => {
   const representatives =
-    await repersentativeFeature.service.getAllRepresentatives();
+    await representativeFeatureInstance.service.getAllRepresentatives();
   const publicVoters = await publicFeatureInstance.service.getPublicVoters();
 
   if (representatives.length === 0 || publicVoters.length === 0) {
@@ -166,12 +189,13 @@ export const seedRepresentativePublicVotes = async (count: number) => {
 };
 
 const seedAllData = async () => {
-  await seedElections(100);
-  await seedElectionProposals(4);
-  await seedRepresentatives(5, 1);
-  await seedPublicVoters(50);
-  await seedPublicPreferences(5, 1);
-  await seedRepresentativePublicVotes(10);
+  // await seedElections(1);
+  // await seedElectionProposals(2);
+  // await seedRepresentatives(5, 1);
+  // await seedPublicVoters(50);
+  // await seedVotes(1);
+  // await seedPublicPreferences(5, 1);
+  // await seedRepresentativePublicVotes(10);
 };
 
 seedAllData();

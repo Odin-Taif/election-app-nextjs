@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { representativeSchema } from "@/zod-validation/validations-schema";
-import { repersentativeFeature } from "./feature";
+import { representativeFeatureInstance } from "./feature";
 
 export async function createRepresentativeAction(prevState, payload: FormData) {
   const name = payload.get("name") as string;
@@ -16,7 +16,7 @@ export async function createRepresentativeAction(prevState, payload: FormData) {
 
   if (validation.success) {
     const userExist =
-      await repersentativeFeature.service.createRepresentativeService(
+      await representativeFeatureInstance.service.createRepresentativeService(
         validation.data
       );
     if (userExist.success) {
@@ -49,7 +49,7 @@ export async function RepresentativeFormAction(prevState, payload: FormData) {
 
   if (validation.success) {
     const userExist =
-      await repersentativeFeature.service.createRepresentativeService(
+      await representativeFeatureInstance.service.createRepresentativeService(
         validation.data
       );
     if (userExist.success) {

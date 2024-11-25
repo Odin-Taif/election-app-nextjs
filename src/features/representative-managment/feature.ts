@@ -9,4 +9,4 @@ export function createFeature() {
   };
 }
 
-export const repersentativeFeature = createFeature();
+export const representativeFeatureInstance = createFeature();

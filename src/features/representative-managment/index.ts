@@ -1,1 +1,1 @@
-export { repersentativeFeature } from "./feature";
+export { representativeFeatureInstance } from "./feature";
