@@ -81,7 +81,11 @@ The app follows the **Feature-Sliced Architecture** pattern, organizing code int
    - Preparing features for independent scaling and further modularization.
 
 3. **Testing**:
+
    - Implementing thorough unit and integration tests for all layers.
+
+4. **Functoinal core and impretive shell dive in**:
+   - Functional core separated from the imperative shell further seperation and imporving. .
 
 ---
 
