@@ -7,11 +7,11 @@ import { drizzle } from "drizzle-orm/node-postgres";
 // });
 
 // const pool = new Pool({
-//   user: "levantisk",
-//   password: "le123123321!",
+//   user: "",
+//   password: "",
 //   host: "odinobusi.online",
 //   port: 5432,
-//   database: "levantisk",
+//   database: "",
 // });
 
 const pool = new Pool({
@@ -26,11 +26,10 @@ async function runQuery() {
   const client = await pool.connect();
   try {
     const result = await client.query("SELECT * FROM elections");
-    // console.log(result.rows);
+    console.log(result.rows);
   } finally {
     client.release();
   }
 }
 runQuery().catch((err) => console.error(err));
-
 export const db = drizzle(pool, { schema });
