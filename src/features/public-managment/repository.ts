@@ -6,7 +6,6 @@ export function createRepository() {
   async function seedVoterInDb({ name }: PUBLIC_VOTER) {
     await db.insert(publicVoters).values({ name });
   }
-
   async function seedVotesInDb({
     public_voter_id,
     election_proposal_id,
@@ -48,7 +47,6 @@ export function createRepository() {
       throw error;
     }
   }
-
   return {
     seedVoterInDb,
     seedVotesInDb,

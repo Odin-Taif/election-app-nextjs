@@ -1,12 +1,8 @@
 export type ELECTION = {
   id: number;
-
   name: string;
-
   status: string | null;
-
   created_at: Date | null;
-
   concluded_at: Date | null;
 };
 

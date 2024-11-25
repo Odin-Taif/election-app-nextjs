@@ -5,7 +5,6 @@ export function createService(repository: Repository) {
   async function createElectionService(election: INITIAT_EELECTION) {
     await repository.initiateElectionInDb(election);
   }
-
   async function getElections() {
     return await repository.getElectionsFromDb();
   }

@@ -1,15 +1,11 @@
 import { electionProposals, elections, votes } from "@/drizzle-db/schema";
-import { INITIAT_EELECTION } from "./types";
+import { ELECTION_PROPOSAL, INITIAT_EELECTION } from "./types";
 import { db } from "@/drizzle-db";
 import { desc, eq } from "drizzle-orm";
 
 export function createRepository() {
   async function initiateElectionInDb({ name }: INITIAT_EELECTION) {
     return await db.insert(elections).values({ name });
-  }
-  interface ELECTION_PROPOSAL {
-    election_id: number;
-    proposal: string;
   }
   async function addProposalToElection({
     election_id,
