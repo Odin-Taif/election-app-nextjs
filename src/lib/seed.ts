@@ -11,11 +11,9 @@ const representatives = [{ id: 1 }, { id: 2 }];
 
 function generatePublicVoters(numberOfVoters: number): PUBLIC_VOTER[] {
   const votes: PUBLIC_VOTER[] = [];
-
   Array.from({ length: numberOfVoters }).forEach(() => {
     const id = Math.ceil(Math.random() * 100);
     const name = faker.person.fullName();
-
     votes.push({
       name,
     });
