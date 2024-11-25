@@ -1,14 +1,14 @@
 import { representativeFeatureInstance } from "@/features/representative-managment";
-import { Container } from "@/ui/components";
 import { RepresentativeForm } from "@/features/representative-managment/ui";
+import { Page } from "@/ui/pages";
 
-export default async function Page() {
+export default async function NominateRepresentative() {
   const elections =
     await representativeFeatureInstance.service.getElectionsToRunFor();
+
   return (
-    <Container>
-      <h4> Nomination Section</h4>
+    <Page title={"Nomination Section"}>
       <RepresentativeForm elections={elections} />
-    </Container>
+    </Page>
   );
 }

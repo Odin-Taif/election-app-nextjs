@@ -1,12 +1,12 @@
 import { electionFeatureInstance } from "@/features/election-managment";
 import { ElectionsList } from "@/features/election-managment/ui";
-import { Container } from "@/ui/components";
-export default async function Page() {
+import { Page } from "@/ui/pages";
+
+export default async function Registry() {
   const elections = await electionFeatureInstance.service.getElections();
   return (
-    <Container>
-      <h4> Elections</h4>
+    <Page title={"Election Registry"}>
       <ElectionsList elections={elections} />
-    </Container>
+    </Page>
   );
 }
