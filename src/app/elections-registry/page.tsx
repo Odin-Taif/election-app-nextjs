@@ -3,10 +3,7 @@ import { ElectionsList } from "@/features/election-managment/ui";
 import { Page } from "@/ui/pages";
 
 export default async function ElectoinRegistry() {
-  const votesOnProposals =
-    await electionFeatureInstance.service.getVotesCountsOnProposal();
   const elections = await electionFeatureInstance.service.getElections();
-  console.log(votesOnProposals);
   return (
     <Page title={"Election Registry"}>
       <ElectionsList elections={elections} />
