@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-type Props = {};
-
-export function Navbar(props: Props) {
+export function Navbar() {
   const links = [
     { name: "Add Election", url: "/" },
     { name: "Registry", url: "/elections-registry" },

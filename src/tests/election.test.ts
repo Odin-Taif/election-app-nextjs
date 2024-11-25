@@ -26,6 +26,7 @@ const electionsMany: ELECTION[] = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const timeSpanForElection: number = 4;
 //skiped for now
 describe.skip("elections", () => {
