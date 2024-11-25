@@ -18,7 +18,7 @@ export function createRepository() {
         representative_id: representative_id,
       });
       console.log(
-        `Vote inserted: Public Voter ID ${public_voter_id}, Proposal ID ${election_proposal_id}, Representative ID ${representativeId}`
+        `Vote inserted: Public Voter ID ${public_voter_id}, Proposal ID ${election_proposal_id}, Representative ID ${representative_id}`
       );
     } catch (error) {
       console.error("Error inserting vote:", error);

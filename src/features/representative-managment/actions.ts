@@ -7,7 +7,10 @@ import {
 } from "@/zod-validation/validations-schema";
 import { representativeFeatureInstance } from "./feature";
 
-export async function createRepresentativeAction(prevState, payload: FormData) {
+export async function createRepresentativeAction(
+  prevState: unknown,
+  payload: FormData
+) {
   const name = payload.get("name") as string;
   const email = payload.get("email") as string;
   const election_id = parseInt(payload.get("election") as string, 10);
@@ -44,7 +47,10 @@ export async function createRepresentativeAction(prevState, payload: FormData) {
   }
 }
 
-export async function RepresentativeFormAction(prevState, payload: FormData) {
+export async function RepresentativeFormAction(
+  prevState: unknown,
+  payload: FormData
+) {
   const name = payload.get("name") as string;
   const email = payload.get("email") as string;
   const election_id_str = payload.get("election") as string;
