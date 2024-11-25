@@ -6,7 +6,6 @@ type Props = {
 };
 
 export function SelectElection({ value, onChange, options, label }: Props) {
-  // console.log(options);
   return (
     <div>
       <label

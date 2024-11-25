@@ -10,5 +10,5 @@ export type VOTE = {
 export type PREFERNCE = {
   public_voter_id: number;
   election_proposal_id: number;
-  electionId: number; // Added electionId here
+  electionId: number;
 };
