@@ -6,8 +6,8 @@ export function createService(repository: Repository) {
     return await repository.setRepresentativeInDb(representive);
   }
 
-  async function getElectionNamesToRunFor() {
-    return await repository.getElectionNamesFromDb();
+  async function getElectionsToRunFor() {
+    return await repository.getElectionsFromDb();
   }
 
   async function getRepresentativesByElection(election_id: number) {
@@ -20,7 +20,7 @@ export function createService(repository: Repository) {
 
   return {
     createRepresentativeService,
-    getElectionNamesToRunFor,
+    getElectionsToRunFor,
     getRepresentativesByElection,
     getAllRepresentatives,
   };

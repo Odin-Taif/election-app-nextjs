@@ -1,7 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { representativeSchema } from "@/zod-validation/validations-schema";
+import {
+  representativeFromSchema,
+  representativeSchema,
+} from "@/zod-validation/validations-schema";
 import { representativeFeatureInstance } from "./feature";
 
 export async function createRepresentativeAction(prevState, payload: FormData) {
@@ -40,11 +43,16 @@ export async function createRepresentativeAction(prevState, payload: FormData) {
     };
   }
 }
+
 export async function RepresentativeFormAction(prevState, payload: FormData) {
-  const validation = representativeSchema.safeParse({
-    name: payload.get("name"),
-    email: payload.get("email"),
-    election: payload.get("election"),
+  const name = payload.get("name") as string;
+  const email = payload.get("email") as string;
+  const election_id_str = payload.get("election") as string;
+  const election_id = election_id_str ? parseInt(election_id_str, 10) : null;
+  const validation = representativeFromSchema.safeParse({
+    name,
+    email,
+    election_id,
   });
 
   if (validation.success) {

@@ -1,9 +1,13 @@
 export type ELECTION = {
   id: number;
+
   name: string;
+
   status: string | null;
-  created_at: string;
-  concluded_at: string | null;
+
+  created_at: Date | null;
+
+  concluded_at: Date | null;
 };
 
 export type ELECTION_PROPOSAL = {

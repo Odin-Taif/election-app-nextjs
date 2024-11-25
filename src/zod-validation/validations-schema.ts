@@ -21,6 +21,12 @@ export const representativeSchema = z.object({
   election_id: z.number(),
 });
 
+export const representativeFromSchema = z.object({
+  name: nameSchema,
+  email: emailSchema,
+  election_id: z.number().nullable(),
+});
+
 export type ELECTION_VALIDATION_SCHEMA_TYPE = z.infer<typeof addElectionSchema>;
 export type REPRESENTIVE_VALIDATION_SCHEMA_TYPE = z.infer<
   typeof representativeSchema

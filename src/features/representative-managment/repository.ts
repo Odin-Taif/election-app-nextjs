@@ -42,10 +42,12 @@ export function createRepository() {
       };
     }
   }
-
-  async function getElectionNamesFromDb() {
+  // ask marcus if that is okey to fetch election from here | not to decouple
+  async function getElectionsFromDb() {
     try {
-      return await db.select({ name: elections.name }).from(elections);
+      return await db
+        .select({ name: elections.name, id: elections.id })
+        .from(elections);
     } catch (error) {
       console.error("Error fetching elections:", error);
       return [];
@@ -63,6 +65,7 @@ export function createRepository() {
       return [];
     }
   }
+
   async function getAllRepresentativesFromDb() {
     try {
       return await db.select().from(representative);
@@ -74,7 +77,7 @@ export function createRepository() {
 
   return {
     setRepresentativeInDb,
-    getElectionNamesFromDb,
+    getElectionsFromDb,
     getRepresentativesByElectionNameFromDb,
     getAllRepresentativesFromDb,
   };

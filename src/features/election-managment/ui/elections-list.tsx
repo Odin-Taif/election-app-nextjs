@@ -2,11 +2,13 @@ import { Heading } from "@/ui/components";
 import Link from "next/link";
 import { ProposalsList, AddProposal } from ".";
 import { AddRepresentative } from "@/features/representative-managment/ui";
-import { electionFeatureInstance } from "../feature";
 import RepresentativesList from "@/features/representative-managment/ui/representative-list";
+import { ELECTION } from "../types";
 
-export async function ElectionsList() {
-  const elections = await electionFeatureInstance.service.getElections();
+type Props = {
+  elections: ELECTION[];
+};
+export async function ElectionsList({ elections }: Props) {
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
       <Heading title="Elections List" />
