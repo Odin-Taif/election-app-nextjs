@@ -2,16 +2,11 @@ import { BiDownvote } from "react-icons/bi";
 import { SectionHeading } from "@/ui/components";
 import { electionFeatureInstance } from "../feature";
 
-type ProposalsListProps = {
-  election_id: number;
-};
-
-export async function ProposalsList({ election_id }: ProposalsListProps) {
-  const proposals =
-    await electionFeatureInstance.service.getProposalsForElection(election_id);
+export async function ElectionRsult() {
   return (
     <>
-      {proposals && proposals.length > 0 ? (
+      <div>votesOnProposals:</div>
+      {/* {proposals && proposals.length > 0 ? (
         <div className="text-sm text-gray-700 list-disc">
           <SectionHeading title={"Proposals"} icon={<BiDownvote size={30} />} />
           {proposals.map((proposal, index) => (
@@ -29,7 +24,7 @@ export async function ProposalsList({ election_id }: ProposalsListProps) {
             No proposals for this election yet! Add some...
           </p>
         </div>
-      )}
+      )} */}
     </>
   );
 }

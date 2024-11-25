@@ -15,10 +15,15 @@ export function createService(repository: Repository) {
   async function getProposalsForElection(election_id: number) {
     return await repository.getProposalsForElectionFromDb(election_id);
   }
+  async function getVotesCountsOnProposal() {
+    return await repository.getVoteCountsOnProposalFromDb();
+  }
+
   return {
     createElectionService,
     getElections,
     addProposalService,
     getProposalsForElection,
+    getVotesCountsOnProposal,
   };
 }
