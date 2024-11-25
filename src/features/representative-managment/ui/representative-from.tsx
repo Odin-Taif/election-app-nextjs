@@ -3,7 +3,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
-import { RepresentativeFormAction } from "../action";
+import { RepresentativeFormAction } from "../actions";
 import { SelectElection } from ".";
 import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";

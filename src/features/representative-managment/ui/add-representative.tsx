@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
-import { createRepresentativeAction } from "../action";
+import { createRepresentativeAction } from "../actions";
 import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";
 

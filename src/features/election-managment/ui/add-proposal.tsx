@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createProposalAction } from "../action";
+import { createProposalAction } from "../actions";
 import {
   ErrorMessages,
   findErrors,

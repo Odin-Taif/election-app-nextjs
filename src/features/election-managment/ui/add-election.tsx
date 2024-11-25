@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createElectionAction } from "../action";
+import { createElectionAction } from "../actions";
 import {
   ErrorMessages,
   findErrors,
