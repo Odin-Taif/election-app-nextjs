@@ -31,6 +31,7 @@ export async function ElectionsList({ elections }: Props) {
                 key={index}
                 className="bg-white text-center shadow-md rounded-lg p-4 m-2 border border-gray-200"
               >
+                <Heading title={election.name} />
                 <ProposalsList election_id={election.id} />
                 <AddProposal election_id={election.id} />
                 <RepresentativesList election_id={election.id} />
