@@ -7,7 +7,10 @@ import {
 } from "@/zod-validation/validations-schema";
 import { revalidatePath } from "next/cache";
 
-export async function createElectionAction(prevState, payload: FormData) {
+export async function createElectionAction(
+  prevState: unknown,
+  payload: FormData
+) {
   const validation = addElectionSchema.safeParse({
     name: payload.get("name"),
   });
@@ -26,7 +29,10 @@ export async function createElectionAction(prevState, payload: FormData) {
   }
 }
 
-export async function createProposalAction(prevState, payload: FormData) {
+export async function createProposalAction(
+  prevState: unknown,
+  payload: FormData
+) {
   const election_id = parseInt(payload.get("election_id") as string, 10);
   const proposal = payload.get("proposal") as string;
   const validation = addProposalSchema.safeParse({
