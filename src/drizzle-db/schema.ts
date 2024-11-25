@@ -26,8 +26,8 @@ export const representative = pgTable("representative", {
 export const publicVoters = pgTable("public_voters", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar("name", { length: 100 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  created_at: timestamp("created_at").defaultNow(), // Made consistent
+  email: varchar("email", { length: 255 }).unique(),
+  created_at: timestamp("created_at").defaultNow(),
 });
 
 export const votes = pgTable("votes", {

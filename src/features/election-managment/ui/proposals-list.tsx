@@ -26,8 +26,8 @@ export async function ProposalsList({ election_id }: ProposalsListProps) {
         </div>
       ) : (
         <div>
-          <p className="mt-2 text-sm text-gray-500">
-            No proposals for this election yet!
+          <p className="mt-2 text-sm text-red-500">
+            No proposals for this election yet! Add some...
           </p>
         </div>
       )}

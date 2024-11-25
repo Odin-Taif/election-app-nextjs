@@ -1,4 +1,9 @@
 export type PUBLIC_VOTER = {
-  id: number;
   name: string;
+};
+
+export type VOTE = {
+  public_voter_id: number;
+  election_proposal_id: number;
+  representative_id: number;
 };
