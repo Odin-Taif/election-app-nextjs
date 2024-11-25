@@ -6,7 +6,6 @@ import { repersentativeFeature } from "@/features/representative-managment";
 type Props = {
   election_id: number;
 };
-
 export default async function RepresentativesList({ election_id }: Props) {
   const representatives =
     await repersentativeFeature.service.getRepresentativesByElection(

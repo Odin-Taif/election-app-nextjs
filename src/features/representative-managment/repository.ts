@@ -57,7 +57,6 @@ export function createRepository() {
       return await db
         .select()
         .from(representative)
-        .innerJoin(elections, eq(representative.id, elections.id))
         .where(eq(representative.election_id, election_id));
     } catch (error) {
       console.error("Error fetching representative:", error);

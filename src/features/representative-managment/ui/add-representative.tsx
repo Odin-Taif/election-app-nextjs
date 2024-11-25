@@ -68,10 +68,8 @@ export function AddRepresentative({ election_id }: Props) {
         />
         <ErrorMessages errors={electionErrors} />
 
-        {formState.success ? (
+        {formState.success && (
           <strong className="text-green-500  m-2">{formState.message}</strong>
-        ) : (
-          <strong className="text-red-500  m-2">{formState.message}</strong>
         )}
         <SubmitButton title={"Nominate a Representative"} loading={loading} />
       </form>

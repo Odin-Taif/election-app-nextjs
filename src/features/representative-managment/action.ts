@@ -14,8 +14,6 @@ export async function createRepresentativeAction(prevState, payload: FormData) {
     election_id,
   });
 
-  console.log(validation.data);
-
   if (validation.success) {
     const userExist =
       await repersentativeFeature.service.createRepresentativeService(
