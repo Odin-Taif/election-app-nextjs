@@ -52,7 +52,7 @@ export function createRepository() {
         .where(eq(electionProposals.election_id, election_id))
         .orderBy(desc(electionProposals.id));
 
-      return proposals; // Return the list of proposals for the given election_id
+      return proposals;
     } catch (error) {
       console.error("Error fetching proposals for election:", error);
       return [];

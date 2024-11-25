@@ -63,10 +63,20 @@ export function createRepository() {
       return [];
     }
   }
+  async function getAllRepresentativesFromDb() {
+    try {
+      return await db.select().from(representative);
+    } catch (error) {
+      console.error("Error fetching representative:", error);
+      return [];
+    }
+  }
+
   return {
     setRepresentativeInDb,
     getElectionNamesFromDb,
     getRepresentativesByElectionNameFromDb,
+    getAllRepresentativesFromDb,
   };
 }
 
