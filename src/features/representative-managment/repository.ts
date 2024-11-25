@@ -1,5 +1,10 @@
-import { elections, representative } from "@/drizzle-db/schema";
-import { eq } from "drizzle-orm";
+import {
+  electionProposals,
+  elections,
+  representative,
+  votes,
+} from "@/drizzle-db/schema";
+import { eq, desc, sql } from "drizzle-orm";
 import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
 
@@ -42,7 +47,7 @@ export function createRepository() {
       };
     }
   }
-  // ask marcus if that is okey to fetch election from here | not to decouple
+  // ask marcus if that is okey to fetch election from here | not to decouple ||
   async function getElectionsFromDb() {
     try {
       return await db
@@ -75,11 +80,48 @@ export function createRepository() {
     }
   }
 
+  async function getElectionWinners() {
+    try {
+      const results = await db
+        .select({
+          election_id: elections.id,
+          representative_id: representative.id,
+          representative_name: representative.name,
+          total_votes: sql`COUNT(votes.id)`.as("total_votes"),
+        })
+        .from(votes)
+        .innerJoin(
+          electionProposals,
+          eq(electionProposals.id, votes.election_proposal_id)
+        )
+        .innerJoin(elections, eq(elections.id, electionProposals.election_id))
+        .innerJoin(
+          representative,
+          eq(representative.id, votes.representative_id)
+        )
+        .groupBy(elections.id, representative.id, representative.name)
+        .orderBy(desc(sql`total_votes`))
+        .limit(1);
+
+      const winners = results.map((result) => ({
+        election_id: result.election_id,
+        representative_name: result.representative_name,
+        total_votes: result.total_votes,
+      }));
+
+      return winners;
+    } catch (error) {
+      console.error("Error fetching election winners:", error);
+      return [];
+    }
+  }
+
   return {
     setRepresentativeInDb,
     getElectionsFromDb,
     getRepresentativesByElectionNameFromDb,
     getAllRepresentativesFromDb,
+    getElectionWinners,
   };
 }
 

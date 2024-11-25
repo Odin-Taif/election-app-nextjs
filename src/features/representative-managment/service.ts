@@ -17,11 +17,15 @@ export function createService(repository: Repository) {
   async function getAllRepresentatives() {
     return await repository.getAllRepresentativesFromDb();
   }
+  async function getElectionWinners() {
+    return await repository.getElectionWinners();
+  }
 
   return {
     createRepresentativeService,
     getElectionsToRunFor,
     getRepresentativesByElection,
     getAllRepresentatives,
+    getElectionWinners,
   };
 }
