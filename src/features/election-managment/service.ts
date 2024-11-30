@@ -1,9 +1,23 @@
+import { addElectionSchema } from "@/zod-validation/validations-schema";
 import { Repository } from "./repository";
-import { ELECTION_PROPOSAL, INITIAT_EELECTION } from "./types";
+import { ELECTION_PROPOSAL } from "./types";
 
 export function createService(repository: Repository) {
-  async function createElectionService(election: INITIAT_EELECTION) {
-    await repository.initiateElectionInDb(election);
+  async function createElectionService(name: string) {
+    const validation = addElectionSchema.safeParse({ name });
+    if (validation.success) {
+      await repository.initiateElectionInDb(validation.data);
+      return {
+        success: true,
+        message: "Election has been created!",
+      };
+    } else {
+      return {
+        success: false,
+        message: "Operation has faild!",
+        errors: validation.error.issues,
+      };
+    }
   }
   async function getElections() {
     return await repository.getElectionsFromDb();

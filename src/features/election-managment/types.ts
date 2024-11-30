@@ -10,7 +10,3 @@ export type ELECTION_PROPOSAL = {
   election_id: number;
   proposal: string;
 };
-
-export type INITIAT_EELECTION = {
-  name: string;
-};

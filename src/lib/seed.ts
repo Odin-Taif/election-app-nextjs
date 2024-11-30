@@ -1,9 +1,8 @@
 import { db } from "@/drizzle-db";
-import { representativePublicVotes, votes } from "@/drizzle-db/schema";
 import { electionFeatureInstance } from "@/features/election-managment";
 import { publicFeatureInstance } from "@/features/public-managment";
 import { PUBLIC_VOTER } from "@/features/public-managment/types";
-import { representativeFeatureInstance } from "@/features/representative-managment/feature";
+import { representativeFeatureInstance } from "@/features/representative-managment";
 import { faker } from "@faker-js/faker";
 
 function generatePublicVoters(numberOfVoters: number): PUBLIC_VOTER[] {
@@ -175,11 +174,11 @@ export const seedRepresentativePublicVotes = async (count: number) => {
 const seedAllData = async () => {
   await seedElections(1);
   await seedElectionProposals(2);
-  await seedRepresentatives(5, 1);
+  await seedRepresentatives(3, 1);
   await seedPublicVoters(50);
-  await seedVotes(1, 1);
-  await seedPublicPreferences(5, 1);
-  await seedRepresentativePublicVotes(10);
+  await seedVotes(100, 1);
+  await seedPublicPreferences(2, 1);
+  await seedRepresentativePublicVotes(40);
   console.log("Hurrra! Seeding all data is donne!");
 };
 

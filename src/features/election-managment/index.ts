@@ -1,1 +1,1 @@
-export { electionFeatureInstance } from "./feature";
+export { feature } from "./feature";

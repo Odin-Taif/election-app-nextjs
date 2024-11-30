@@ -1,31 +1,18 @@
 "use server";
-import { electionFeatureInstance } from "./feature";
-import { redirect } from "next/navigation";
-import {
-  addElectionSchema,
-  addProposalSchema,
-} from "@/zod-validation/validations-schema";
+import { feature } from "./feature";
+import { addProposalSchema } from "@/zod-validation/validations-schema";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createElectionAction(
   prevState: unknown,
   payload: FormData
 ) {
-  const validation = addElectionSchema.safeParse({
-    name: payload.get("name"),
-  });
-
-  if (validation.success) {
-    await electionFeatureInstance.service.createElectionService(
-      validation.data
-    );
-
+  const name = payload.get("name") as string;
+  const response = await feature.service.createElectionService(name);
+  if (response.success) {
     revalidatePath("/elections-registry");
     redirect("/elections-registry");
-  } else {
-    return {
-      errors: validation.error.issues,
-    };
   }
 }
 
@@ -41,7 +28,7 @@ export async function createProposalAction(
   });
 
   if (validation.success) {
-    await electionFeatureInstance.service.addProposalService(validation.data);
+    await feature.service.addProposalService(validation.data);
     revalidatePath("/elections-registry");
   } else {
     return {
