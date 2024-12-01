@@ -11,6 +11,7 @@
     "seed": "tsx ./src/lib/seed.ts"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.1",
     "@types/pg": "^8.11.10",
     "dotenv": "^16.4.5",

@@ -14,7 +14,11 @@ export async function createElectionAction(
     revalidatePath("/elections-registry");
     redirect("/elections-registry");
   } else {
-    return response.errors;
+    return {
+      success: false,
+      message: response.message || "Adding election failed",
+      errors: response.errors as { name?: string },
+    };
   }
 }
 
@@ -27,5 +31,11 @@ export async function createProposalAction(
   const response = await feature.service.addProposal({ election_id, proposal });
   if (response.success) {
     revalidatePath("/elections-registry");
+  } else {
+    return {
+      success: false,
+      message: response.message || "Adding proposal failed",
+      errors: response.errors as { name?: string },
+    };
   }
 }

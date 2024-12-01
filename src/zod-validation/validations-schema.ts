@@ -9,7 +9,7 @@ const nameSchema = z
 const emailSchema = z.string().email("Correct email is required");
 
 export const addElectionSchema = z.object({
-  name: z.string().min(1, "Election name is required"),
+  name: z.string().min(3, "Election name is required"),
 });
 export const addProposalSchema = z.object({
   election_id: z.number(),

@@ -6,17 +6,10 @@ import { desc, eq } from "drizzle-orm";
 export function createRepository() {
   async function initiateElectionInDb({ name }: { name: string }) {
     try {
-      const result = await db.insert(elections).values({ name });
-      return {
-        success: true,
-        data: result,
-      };
+      await db.insert(elections).values({ name });
     } catch (error) {
       console.error("Error adding an election:", error);
-      return {
-        success: false,
-        error: error,
-      };
+      throw new Error("Failed to add election.");
     }
   }
   async function addProposalToElection({
@@ -24,13 +17,13 @@ export function createRepository() {
     proposal,
   }: ELECTION_PROPOSAL) {
     try {
-      return await db
-        .insert(electionProposals)
-        .values({ election_id, proposal });
+      await db.insert(electionProposals).values({ election_id, proposal });
     } catch (error) {
       console.error("Error adding proposal to election:", error);
+      throw new Error("Failed to add proposal.");
     }
   }
+
   async function getElectionsFromDb() {
     try {
       return await db
@@ -39,7 +32,7 @@ export function createRepository() {
         .orderBy(desc(elections.created_at));
     } catch (error) {
       console.error("Error fetching elections:", error);
-      return [];
+      throw new Error("Error fetching elections.");
     }
   }
   async function getProposalsForElectionFromDb(election_id: number) {
@@ -49,11 +42,10 @@ export function createRepository() {
         .from(electionProposals)
         .where(eq(electionProposals.election_id, election_id))
         .orderBy(desc(electionProposals.id));
-
       return proposals;
     } catch (error) {
       console.error("Error fetching proposals for election:", error);
-      return [];
+      throw new Error("Error fetching proposals for election");
     }
   }
   async function getVoteCountsOnProposalFromDb() {
