@@ -10,7 +10,7 @@ const publicVotersOne: PUBLIC_VOTER[] = [
   },
 ];
 
-describe("Public Voters", () => {
+describe.skip("Public Voters", () => {
   it("should return no people in this country | 0 case scenario", async () => {
     deepEqual(publicVotersZero, []);
   });

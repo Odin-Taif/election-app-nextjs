@@ -9,15 +9,22 @@ export function createService(repository: Repository) {
   async function addElection(name: string) {
     const validation = addElectionSchema.safeParse({ name });
     if (validation.success) {
-      await repository.initiateElectionInDb(validation.data);
-      return {
-        success: true,
-        message: "Election has been created!",
-      };
+      const response = await repository.initiateElectionInDb(validation.data);
+      if (response.success) {
+        return {
+          success: response.success,
+          message: "Election has been created!",
+        };
+      } else {
+        return {
+          success: response.success,
+          message: "Creating an election has failed!",
+        };
+      }
     } else {
       return {
         success: false,
-        message: "Operation has faild!",
+        message: "Validation has faild!",
         errors: validation.error.issues,
       };
     }

@@ -6,9 +6,17 @@ import { desc, eq } from "drizzle-orm";
 export function createRepository() {
   async function initiateElectionInDb({ name }: { name: string }) {
     try {
-      return await db.insert(elections).values({ name });
+      const result = await db.insert(elections).values({ name });
+      return {
+        success: true,
+        data: result,
+      };
     } catch (error) {
       console.error("Error adding an election:", error);
+      return {
+        success: false,
+        error: error,
+      };
     }
   }
   async function addProposalToElection({

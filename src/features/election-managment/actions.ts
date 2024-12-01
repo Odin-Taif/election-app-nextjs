@@ -13,6 +13,8 @@ export async function createElectionAction(
   if (response.success) {
     revalidatePath("/elections-registry");
     redirect("/elections-registry");
+  } else {
+    return response.errors;
   }
 }
 

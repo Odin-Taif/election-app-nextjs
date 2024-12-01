@@ -13,10 +13,10 @@ import {
 export function AddElection() {
   const [formState, formAction, loading] = useActionState(
     createElectionAction,
-    {
-      errors: [],
-    }
+    null
   );
+
+  console.log(formState);
   const nameErrors = findErrors("name", formState?.errors ?? []);
   return (
     <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
@@ -31,7 +31,7 @@ export function AddElection() {
               disabled={false}
               label={"Set up an election"}
             />
-            <ErrorMessages errors={nameErrors} />
+            {/* <ErrorMessages errors={nameErrors} /> */}
             <SubmitButton title={"Create Election"} loading={loading} />
           </form>
         </div>
