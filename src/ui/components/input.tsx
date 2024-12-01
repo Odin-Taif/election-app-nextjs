@@ -11,7 +11,7 @@ type Props = {
 
 export function Input({ id, name, label, type, disabled }: Props) {
   return (
-    <div className="w-full relative my-4 ">
+    <div className="w-full relative my-2 ">
       <input
         id={id}
         name={name}

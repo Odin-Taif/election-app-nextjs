@@ -61,7 +61,7 @@ export function createService(repository: Repository) {
       await repository.addProposalToElection({ election_id, proposal });
       return {
         success: true,
-        message: "Proposal has been created!",
+        message: "Proposal has been added!",
         errors: {},
       };
     } catch (dbError) {

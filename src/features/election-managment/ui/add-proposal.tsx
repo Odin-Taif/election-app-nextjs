@@ -32,7 +32,7 @@ export function AddProposal({ election_id }: Props) {
         </strong>
         {formState && (
           <div
-            className={`mt-4 flex items-center space-x-2 rounded-md p-3 text-sm ${
+            className={`mt-2 flex items-center space-x-2 rounded-md p-3 text-sm ${
               formState.success
                 ? "bg-green-50 text-green-600 dark:bg-green-900 dark:text-green-400"
                 : "bg-red-50 text-red-600 dark:bg-red-900 dark:text-red-400"

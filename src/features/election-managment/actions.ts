@@ -34,6 +34,10 @@ export async function createProposalAction(
   });
   if (response.success) {
     revalidatePath("/elections-registry");
+    return {
+      success: true,
+      message: response.message,
+    };
   } else {
     return {
       success: false,
