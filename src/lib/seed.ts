@@ -1,6 +1,6 @@
 import { PUBLIC_VOTER } from "@/features/public-managment/types";
 import { faker } from "@faker-js/faker";
-export function generatePublicVoters(numberOfVoters: number): PUBLIC_VOTER[] {
+export async function generatePublicVoters(numberOfVoters: number) {
   const votes: PUBLIC_VOTER[] = [];
   Array.from({ length: numberOfVoters }).forEach(() => {
     const name = faker.person.fullName();

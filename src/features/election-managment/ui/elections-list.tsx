@@ -5,10 +5,12 @@ import { AddRepresentative } from "@/features/representative-managment/ui";
 import RepresentativesList from "@/features/representative-managment/ui/representative-list";
 import { ELECTION } from "../types";
 
+import { RunElectionPubli } from "@/features/public-managment/ui/run-election";
+
 type Props = {
   elections: ELECTION[];
 };
-export async function ElectionsList({ elections }: Props) {
+export function ElectionsList({ elections }: Props) {
   return (
     <div className="flex flex-col items-center justify-center mb-5 p-4">
       <Heading title="Elections List" />
@@ -36,6 +38,7 @@ export async function ElectionsList({ elections }: Props) {
                 <AddProposal election_id={election.id} />
                 <RepresentativesList election_id={election.id} />
                 <AddRepresentative election_id={election.id} />
+                <RunElectionPubli election_id={election.id} />
               </div>
             ))}
           </div>

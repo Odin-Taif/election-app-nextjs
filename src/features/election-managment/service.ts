@@ -5,7 +5,7 @@ import {
 import { Repository } from "./repository";
 import { ELECTION_PROPOSAL } from "./types";
 
-export function createService(repository: Repository) {
+export function createService(repository: Repository, publicServices: any) {
   async function addElection(name: string) {
     const validation = addElectionSchema.safeParse({ name });
     if (!validation.success) {
@@ -80,6 +80,13 @@ export function createService(repository: Repository) {
   async function getVotesCountsOnProposal() {
     return await repository.getVoteCountsOnProposalFromDb();
   }
+  async function runElection(election_id: number) {
+    await publicServices.seedPublicVoters(20);
+    await publicServices.getPublicVoters();
+    await publicServices.seedVotes(20, election_id);
+    await publicServices.seedPublicPreference(10, election_id);
+    await publicServices.seedRepresentativePublicVotes(10);
+  }
 
   return {
     addElection,
@@ -87,5 +94,6 @@ export function createService(repository: Repository) {
     addProposal,
     getProposalsForElection,
     getVotesCountsOnProposal,
+    runElection,
   };
 }

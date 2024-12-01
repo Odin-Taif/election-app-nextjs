@@ -1,18 +1,26 @@
 import { generatePublicVoters } from "@/lib/seed";
 import { Repository } from "./repository";
-import { PREFERNCE } from "./types";
 import { publicFeature } from ".";
 import { electionFeature } from "../election-managment";
 import { representativeFeature } from "../representative-managment";
 import { db } from "@/drizzle-db";
 import { publicVotes } from "./schema";
+import { PUBLIC_VOTER } from "./types"; // Replace with actual path to PUBLIC_VOTER type
+import { faker } from "@faker-js/faker";
 
 export function createService(repository: Repository) {
-  async function seedPublicVoters() {
-    const voters = generatePublicVoters(20);
+  async function seedPublicVoters(numberOfVoters: number) {
+    const voters: PUBLIC_VOTER[] = Array.from({ length: numberOfVoters }).map(
+      () => ({
+        name: faker.person.fullName(),
+      })
+    );
+
     for (const voter of voters) {
-      return await repository.seedVoterInDb(voter);
+      await repository.seedVoterInDb(voter); // Assumes this function seeds one voter at a time
     }
+
+    return voters; // Optionally return the list of seeded voters if needed
   }
   async function getPublicVoters() {
     return await repository.getPublicVotersFromDb();
