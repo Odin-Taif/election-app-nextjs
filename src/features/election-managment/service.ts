@@ -88,7 +88,7 @@ export function createService(repository: Repository, publicServices: any) {
     // await publicServices.seedPublicVoters(20);
     // await publicServices.getPublicVoters();
     // await publicServices.seedVotes(20, election_id);
-    await publicServices.seedPublicPreference(10, election_id);
+    await publicServices.seedPublicPreference(20, election_id);
     await publicServices.seedRepresentativePublicVotes(10);
   }
 
