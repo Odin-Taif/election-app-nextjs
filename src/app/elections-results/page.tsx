@@ -1,13 +1,12 @@
-import { electionFeatureInstance } from "@/features/election-managment";
+import { electionFeature } from "@/features/election-managment";
 import { ElectionRsult } from "@/features/election-managment/ui";
-import { representativeFeatureInstance } from "@/features/representative-managment";
+import { representativeFeature } from "@/features/representative-managment";
 import { Page } from "@/ui/pages";
 
 export default async function ElectionResult() {
   const votesOnProposals =
-    await electionFeatureInstance.service.getVotesCountsOnProposal();
-  const winners =
-    await representativeFeatureInstance.service.getElectionWinners();
+    await electionFeature.service.getVotesCountsOnProposal();
+  const winners = await representativeFeature.service.getElectionWinners();
   return (
     <Page title={"Election Results"}>
       <ElectionRsult />

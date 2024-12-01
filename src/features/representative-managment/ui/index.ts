@@ -1,5 +1,3 @@
-export * from "./representative-from";
-export * from "./add-representative-to-election";
 export * from "./add-representative";
 
 // export * from './representative-list'

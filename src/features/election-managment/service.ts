@@ -26,7 +26,6 @@ export function createService(repository: Repository) {
       return {
         success: true,
         message: "Election has been created!",
-        errors: {},
       };
     } catch (dbError) {
       console.error("Database Error:", dbError);
@@ -37,7 +36,6 @@ export function createService(repository: Repository) {
       };
     }
   }
-
   async function addProposal({ election_id, proposal }: ELECTION_PROPOSAL) {
     const validation = addProposalSchema.safeParse({
       election_id,
@@ -73,7 +71,6 @@ export function createService(repository: Repository) {
       };
     }
   }
-
   async function getElections() {
     return await repository.getElectionsFromDb();
   }

@@ -30,10 +30,17 @@ export function createService(repository: Repository) {
       };
     }
     try {
-      await repository.setRepresentativeInDb(validation.data);
+      const response = await repository.addRepresentativeInDb(validation.data);
+      if (response.success) {
+        return {
+          success: response.success,
+          message: response.message,
+        };
+      }
       return {
-        success: true,
-        message: "Representative has been added!",
+        success: response.success,
+        message: response.message,
+        error: response.error,
       };
     } catch (dbError) {
       console.error("Database Error:", dbError);
@@ -46,10 +53,6 @@ export function createService(repository: Repository) {
     }
   }
 
-  async function getElectionsToRunFor() {
-    return await repository.getElectionsFromDb();
-  }
-
   async function getRepresentativesByElection(election_id: number) {
     return await repository.getRepresentativesByElectionNameFromDb(election_id);
   }
@@ -57,15 +60,14 @@ export function createService(repository: Repository) {
   async function getAllRepresentatives() {
     return await repository.getAllRepresentativesFromDb();
   }
-  async function getElectionWinners() {
-    return await repository.getElectionWinners();
-  }
+  // async function getElectionWinners() {
+  //   return await repository.getElectionWinners();
+  // }
 
   return {
     addRepresentative,
-    getElectionsToRunFor,
     getRepresentativesByElection,
     getAllRepresentatives,
-    getElectionWinners,
+    // getElectionWinners,
   };
 }
