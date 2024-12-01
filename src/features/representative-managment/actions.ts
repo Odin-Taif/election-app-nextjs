@@ -1,11 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import {
-  representativeFromSchema,
-  representativeSchema,
-} from "@/zod-validation/validations-schema";
-import { representativeFeatureInstance } from "./feature";
+import { representativeFromSchema } from "@/zod-validation/validations-schema";
+import { feature } from ".";
 
 export async function createRepresentativeAction(
   prevState: unknown,
@@ -14,35 +11,19 @@ export async function createRepresentativeAction(
   const name = payload.get("name") as string;
   const email = payload.get("email") as string;
   const election_id = parseInt(payload.get("election") as string, 10);
-  const validation = representativeSchema.safeParse({
+
+  const response = await feature.service.addRepresentative({
     name,
     email,
     election_id,
   });
-
-  if (validation.success) {
-    const userExist =
-      await representativeFeatureInstance.service.createRepresentativeService(
-        validation.data
-      );
-    if (userExist.success) {
-      revalidatePath("/elections-registry");
-      return {
-        success: true,
-        errors: userExist.error,
-        message: userExist.message,
-      };
-    }
-    return {
-      success: userExist.success,
-      errors: userExist.error,
-      message: userExist.message,
-    };
+  if (response.success) {
+    revalidatePath("/elections-registry");
   } else {
     return {
       success: false,
-      errors: validation.error.issues,
-      message: validation.error.message,
+      message: response.message || "Adding representative failed!",
+      errors: response.errors as { name?: string; email?: string },
     };
   }
 }
@@ -62,10 +43,7 @@ export async function RepresentativeFormAction(
   });
 
   if (validation.success) {
-    const userExist =
-      await representativeFeatureInstance.service.createRepresentativeService(
-        validation.data
-      );
+    const userExist = await feature.service.addRepresentative(validation.data);
     if (userExist.success) {
       revalidatePath("/elections-registry");
       return {

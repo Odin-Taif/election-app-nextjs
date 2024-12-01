@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
 import { RepresentativeFormAction } from "../actions";
 import { SelectElection } from ".";
-import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
+
 import { IoMdPersonAdd } from "react-icons/io";
 
 export type Props = {
@@ -25,18 +25,7 @@ export function RepresentativeForm({ elections }: Props) {
     }
   );
 
-  const nameErrors = findErrors(
-    "name",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
-  const emailErrors = findErrors(
-    "email",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
-  const electionErrors = findErrors(
-    "election",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
+ 
 
   const { control } = useForm();
 
@@ -57,7 +46,6 @@ export function RepresentativeForm({ elections }: Props) {
               type={"name"}
               disabled={false}
             />
-            <ErrorMessages errors={nameErrors} />
             <Input
               id="email"
               label="Representative Email"
@@ -65,7 +53,6 @@ export function RepresentativeForm({ elections }: Props) {
               type={"email"}
               disabled={false}
             />
-            <ErrorMessages errors={emailErrors} />
             <Controller
               name="election"
               control={control}
@@ -79,7 +66,6 @@ export function RepresentativeForm({ elections }: Props) {
                 />
               )}
             />
-            <ErrorMessages errors={electionErrors} />
             {formState.success ? (
               <strong className="text-green-500  m-2">
                 {formState.message}

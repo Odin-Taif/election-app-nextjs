@@ -35,7 +35,7 @@ export async function createProposalAction(
     return {
       success: false,
       message: response.message || "Adding proposal failed",
-      errors: response.errors as { name?: string },
+      errors: response.errors as { proposal?: string },
     };
   }
 }

@@ -2,12 +2,8 @@
 
 import { useActionState } from "react";
 import { createProposalAction } from "../actions";
-import {
-  ErrorMessages,
-  findErrors,
-  Input,
-  SubmitButton,
-} from "@/ui/components";
+import { Input, SubmitButton } from "@/ui/components";
+import { FormState } from ".";
 
 type Props = {
   election_id: number;
@@ -15,12 +11,9 @@ type Props = {
 export function AddProposal({ election_id }: Props) {
   const [formState, formAction, isLoading] = useActionState(
     createProposalAction,
-    {
-      errors: [],
-    }
+    null
   );
 
-  const proposalErrors = findErrors("proposal", formState?.errors ?? []);
   return (
     <>
       <form action={formAction}>
@@ -32,7 +25,14 @@ export function AddProposal({ election_id }: Props) {
           disabled={false}
           label={"Add a proposal for the election"}
         />
-        <ErrorMessages errors={proposalErrors} />
+        <strong
+          aria-live="polite"
+          className="text-red-700 dark:text-red-500 p-5"
+        >
+          {formState?.errors && formState.errors.proposal}
+        </strong>
+
+        {formState && <FormState formState={formState} />}
         <SubmitButton title={"Add Proposal"} loading={isLoading} />
       </form>
     </>

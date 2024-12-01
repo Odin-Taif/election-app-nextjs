@@ -3,8 +3,8 @@
 import { useActionState } from "react";
 import { Input, SectionHeading, SubmitButton } from "@/ui/components";
 import { createRepresentativeAction } from "../actions";
-import { ErrorMessages, findErrors } from "@/ui/components/validation-errors";
 import { IoMdPersonAdd } from "react-icons/io";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   election_id: number;
@@ -12,26 +12,9 @@ type Props = {
 export function AddRepresentative({ election_id }: Props) {
   const [formState, formAction, loading] = useActionState(
     createRepresentativeAction,
-    {
-      success: true,
-      errors: [],
-      message: "",
-    }
+    null
   );
 
-  const nameErrors = findErrors(
-    "name",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
-  const emailErrors = findErrors(
-    "email",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
-
-  const electionErrors = findErrors(
-    "election",
-    Array.isArray(formState?.errors) ? formState.errors : []
-  );
   return (
     <>
       <SectionHeading
@@ -47,8 +30,12 @@ export function AddRepresentative({ election_id }: Props) {
           type={"name"}
           disabled={false}
         />
-        <ErrorMessages errors={nameErrors} />
-
+        <strong
+          aria-live="polite"
+          className="text-red-700 dark:text-red-500 p-5"
+        >
+          {formState?.errors && formState.errors.name}
+        </strong>
         <Input
           id="email"
           label="Representative Email"
@@ -56,8 +43,12 @@ export function AddRepresentative({ election_id }: Props) {
           type={"email"}
           disabled={false}
         />
-        <ErrorMessages errors={emailErrors} />
-
+        <strong
+          aria-live="polite"
+          className="text-red-700 dark:text-red-500 p-5"
+        >
+          {formState?.errors && formState.errors.email}
+        </strong>
         <input
           id="election"
           name="election"
@@ -66,10 +57,25 @@ export function AddRepresentative({ election_id }: Props) {
           defaultValue={election_id}
           hidden
         />
-        <ErrorMessages errors={electionErrors} />
-
-        {formState.success && (
-          <strong className="text-green-500  m-2">{formState.message}</strong>
+        {formState && (
+          <div
+            className={`mt-4 flex items-center space-x-2 rounded-md p-3 text-sm ${
+              formState.success
+                ? "bg-green-50 text-green-600 dark:bg-green-900 dark:text-green-400"
+                : "bg-red-50 text-red-600 dark:bg-red-900 dark:text-red-400"
+            }`}
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <ExclamationCircleIcon
+              className={`h-5 w-5 ${
+                formState.success
+                  ? "text-green-500 dark:text-green-400"
+                  : "text-red-500 dark:text-red-400"
+              }`}
+            />
+            <strong>{formState.message}</strong>
+          </div>
         )}
         <SubmitButton title={"Nominate a Representative"} loading={loading} />
       </form>

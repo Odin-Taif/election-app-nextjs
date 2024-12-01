@@ -1,15 +1,14 @@
 import { MdPeopleOutline, MdPerson } from "react-icons/md";
 import { SectionHeading } from "@/ui/components";
-import { representativeFeatureInstance } from "@/features/representative-managment";
+import { feature } from "@/features/representative-managment";
 
 type Props = {
   election_id: number;
 };
 export default async function RepresentativesList({ election_id }: Props) {
-  const representatives =
-    await representativeFeatureInstance.service.getRepresentativesByElection(
-      election_id
-    );
+  const representatives = await feature.service.getRepresentativesByElection(
+    election_id
+  );
   return (
     <div className="py-4 my-10">
       <SectionHeading
