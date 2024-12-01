@@ -9,4 +9,4 @@ function craeteFeature() {
   };
 }
 
-export const publicFeatureInstance = craeteFeature();
+export const publicFeature = craeteFeature();

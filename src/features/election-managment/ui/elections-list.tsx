@@ -10,7 +10,7 @@ type Props = {
 };
 export async function ElectionsList({ elections }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center mb-5 bg-gray-200 p-4">
+    <div className="flex flex-col items-center justify-center mb-5 p-4">
       <Heading title="Elections List" />
       <div className="bg-gray-100 text-black rounded p-5 w-full max-w-md sm:p-8 md:max-w-lg lg:max-w-xl xl:max-w-2xl shadow-lg">
         {elections.length === 0 ? (

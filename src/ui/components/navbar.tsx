@@ -6,7 +6,6 @@ export function Navbar() {
     { name: "Add Election", url: "/" },
     { name: "Registry", url: "/elections-registry" },
     { name: "Election Results", url: "/elections-results" },
-    { name: "Add Representative", url: "/nominate-representative" },
   ];
 
   return (
