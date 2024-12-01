@@ -1,6 +1,6 @@
-import { publicPreferences, publicVoters, votes } from "./schema";
-import { db } from "@/drizzle-db";
+import { publicPreferences, publicVoters, publicVotes } from "./schema";
 import { PREFERNCE, PUBLIC_VOTER, VOTE } from "./types";
+import { db } from "@/drizzle-db";
 
 export function createRepository() {
   async function seedVoterInDb({ name }: PUBLIC_VOTER) {
@@ -12,7 +12,7 @@ export function createRepository() {
     representative_id,
   }: VOTE) {
     try {
-      await db.insert(votes).values({
+      await db.insert(publicVotes).values({
         public_voter_id: public_voter_id,
         election_proposal_id: election_proposal_id,
         representative_id: representative_id,

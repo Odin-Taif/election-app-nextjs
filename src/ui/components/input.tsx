@@ -17,7 +17,7 @@ export function Input({ id, name, label, type, disabled }: Props) {
         name={name}
         disabled={disabled}
         type={type}
-        className="peer relative z-10 w-full p-4 pl-4 font-light bg-transparent border-2 border-black rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed"
+        className="peer relative z-10 w-full p-4 pl-4 font-light text-black bg-transparent border-2 border-black rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed"
       />
 
       <label

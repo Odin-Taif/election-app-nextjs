@@ -15,14 +15,7 @@ export const publicPreferences = pgTable("public_preferences", {
   preferred_proposal_id: integer("preferred_proposal_id").notNull(),
 });
 
-export const representative = pgTable("representative", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  email: varchar({ length: 255 }).notNull().unique(),
-  name: varchar({ length: 255 }).notNull(),
-  election_id: integer("election_id"),
-});
-
-export const votes = pgTable("votes", {
+export const publicVotes = pgTable("public_votes", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   public_voter_id: integer("public_voter_id").notNull(),
   election_proposal_id: integer("election_proposal_id").notNull(),
