@@ -75,17 +75,25 @@ export function createService(repository: Repository, publicServices: any) {
     return await repository.getElectionsFromDb();
   }
   async function getProposalsForElection(election_id: number) {
-    return await repository.getProposalsForElectionFromDb(election_id);
+    const preferredProposalId = await repository.getProposalsForElectionFromDb(
+      election_id
+    );
+    return preferredProposalId;
   }
-  async function getVotesCountsOnProposal() {
-    return await repository.getVoteCountsOnProposalFromDb();
+  async function getProposalById(proposalId: number) {
+    const proposal = await repository.getProposalByIdFromDb(proposalId);
+    return proposal;
   }
   async function runElection(election_id: number) {
-    await publicServices.seedPublicVoters(20);
-    await publicServices.getPublicVoters();
-    await publicServices.seedVotes(20, election_id);
+    // await publicServices.seedPublicVoters(20);
+    // await publicServices.getPublicVoters();
+    // await publicServices.seedVotes(20, election_id);
     await publicServices.seedPublicPreference(10, election_id);
     await publicServices.seedRepresentativePublicVotes(10);
+  }
+
+  async function getResult(election_id: number) {
+    return await publicServices.getHighestPreferredProposal(election_id);
   }
 
   return {
@@ -93,7 +101,8 @@ export function createService(repository: Repository, publicServices: any) {
     getElections,
     addProposal,
     getProposalsForElection,
-    getVotesCountsOnProposal,
     runElection,
+    getResult,
+    getProposalById,
   };
 }

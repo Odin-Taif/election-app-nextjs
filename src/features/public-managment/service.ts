@@ -1,12 +1,12 @@
-import { generatePublicVoters } from "@/lib/seed";
 import { Repository } from "./repository";
 import { publicFeature } from ".";
 import { electionFeature } from "../election-managment";
 import { representativeFeature } from "../representative-managment";
 import { db } from "@/drizzle-db";
-import { publicVotes } from "./schema";
+import { publicPreferences, publicVotes } from "./schema";
 import { PUBLIC_VOTER } from "./types"; // Replace with actual path to PUBLIC_VOTER type
 import { faker } from "@faker-js/faker";
+import { eq, sql } from "drizzle-orm";
 
 export function createService(repository: Repository) {
   async function seedPublicVoters(numberOfVoters: number) {
@@ -117,11 +117,15 @@ export function createService(repository: Repository) {
     }
     try {
       await db.insert(publicVotes).values(votesData);
-      // await repository.addRepresentativePublicVotes(votesData);
       console.log(`${count} Representative Public Votes seeded successfully`);
     } catch (error) {
       console.error("Error seeding Representative Public Votes:", error);
     }
+  }
+
+  async function getHighestPreferredProposal(electionId: number) {
+    const result = await repository.getHighestPreferredProposal(electionId);
+    return result;
   }
   return {
     seedPublicVoters,
@@ -129,5 +133,6 @@ export function createService(repository: Repository) {
     seedVotes,
     seedPublicPreference,
     seedRepresentativePublicVotes,
+    getHighestPreferredProposal,
   };
 }

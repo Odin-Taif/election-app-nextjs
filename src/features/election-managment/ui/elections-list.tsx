@@ -1,11 +1,10 @@
 import { Heading } from "@/ui/components";
 import Link from "next/link";
-import { ProposalsList, AddProposal } from ".";
+import { ProposalsList, AddProposal, ElectionResult } from ".";
 import { AddRepresentative } from "@/features/representative-managment/ui";
 import RepresentativesList from "@/features/representative-managment/ui/representative-list";
 import { ELECTION } from "../types";
-
-import { RunElectionPubli } from "@/features/public-managment/ui/run-election";
+import { RunElectionPubli } from "@/features/election-managment/ui/run-election";
 
 type Props = {
   elections: ELECTION[];
@@ -39,6 +38,7 @@ export function ElectionsList({ elections }: Props) {
                 <RepresentativesList election_id={election.id} />
                 <AddRepresentative election_id={election.id} />
                 <RunElectionPubli election_id={election.id} />
+                <ElectionResult election_id={election.id} />
               </div>
             ))}
           </div>

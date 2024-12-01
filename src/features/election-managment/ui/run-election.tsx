@@ -1,5 +1,5 @@
 "use client";
-import { runElectionAction } from "../action";
+import { runElectionAction } from "../../public-managment/action";
 
 type Props = {
   election_id: number;

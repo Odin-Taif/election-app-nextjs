@@ -23,7 +23,6 @@ export function createRepository() {
       throw new Error("Failed to add proposal.");
     }
   }
-
   async function getElectionsFromDb() {
     try {
       return await db
@@ -48,19 +47,17 @@ export function createRepository() {
       throw new Error("Error fetching proposals for election");
     }
   }
-  async function getVoteCountsOnProposalFromDb() {
+
+  async function getProposalByIdFromDb(proposalId: number) {
     try {
-      const result = await db
-        .select({
-          election_proposal_id: votes.election_proposal_id,
-          count: db.$count(votes),
-        })
-        .from(votes)
-        .groupBy(votes.election_proposal_id);
-      return result;
+      const [proposal] = await db
+        .select()
+        .from(electionProposals)
+        .where(eq(electionProposals.id, proposalId));
+      return proposal;
     } catch (error) {
-      console.error("Error fetching vote counts:", error);
-      throw error;
+      console.error("Error fetching proposal:", error);
+      throw new Error("Error fetching proposals");
     }
   }
   return {
@@ -68,7 +65,7 @@ export function createRepository() {
     addProposalToElection,
     getElectionsFromDb,
     getProposalsForElectionFromDb,
-    getVoteCountsOnProposalFromDb,
+    getProposalByIdFromDb,
   };
 }
 

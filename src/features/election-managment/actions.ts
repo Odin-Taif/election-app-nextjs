@@ -46,3 +46,13 @@ export async function createProposalAction(
     };
   }
 }
+
+export async function runResultAction(election_id: number) {
+  try {
+    const electionResult = await electionFeature.service.getResult(election_id);
+    console.log("Election result:", electionResult);
+    revalidatePath("/elections-registry");
+  } catch (error) {
+    console.error("Error running election:", error);
+  }
+}

@@ -1,6 +1,7 @@
 import { publicPreferences, publicVoters, publicVotes } from "./schema";
 import { PREFERNCE, PUBLIC_VOTER, VOTE } from "./types";
 import { db } from "@/drizzle-db";
+import { eq, sql } from "drizzle-orm";
 
 export function createRepository() {
   async function seedVoterInDb({ name }: PUBLIC_VOTER) {
@@ -47,11 +48,28 @@ export function createRepository() {
       throw error;
     }
   }
+
+  async function getHighestPreferredProposal(electionId: number) {
+    const result = await db
+      .select({
+        preferredProposalId: publicPreferences.preferred_proposal_id,
+        proposalCount: sql<number>`COUNT(*)`.as("proposal_count"), // Alias explicitly
+      })
+      .from(publicPreferences)
+      .where(eq(publicPreferences.election_id, electionId))
+      .groupBy(publicPreferences.preferred_proposal_id)
+      .orderBy(sql`COUNT(*) DESC`) 
+      .limit(1);
+
+    return result[0] || null;
+  }
+
   return {
     seedVoterInDb,
     seedVotesInDb,
     getPublicVotersFromDb,
     addPublicPreferenceInDb,
+    getHighestPreferredProposal,
   };
 }
 

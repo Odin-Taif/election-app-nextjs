@@ -14,3 +14,12 @@ export const electionProposals = pgTable("election_proposals", {
     .references(() => elections.id),
   proposal: varchar("proposal", { length: 255 }).notNull(),
 });
+
+export const votes = pgTable("votes", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  public_voter_id: integer("public_voter_id").notNull(),
+  election_proposal_id: integer("election_proposal_id")
+    .notNull()
+    .references(() => electionProposals.id),
+  representative_id: integer("representative_id").notNull(),
+});
