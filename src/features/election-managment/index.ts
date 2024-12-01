@@ -1,1 +1,1 @@
-export { feature } from "./instance";
+export { electionFeature } from "./instance";

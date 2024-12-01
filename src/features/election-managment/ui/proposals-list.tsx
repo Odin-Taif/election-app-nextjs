@@ -1,13 +1,15 @@
 import { BiDownvote } from "react-icons/bi";
 import { SectionHeading } from "@/ui/components";
-import { feature } from "..";
+import { electionFeature } from "..";
 
 type ProposalsListProps = {
   election_id: number;
 };
 
 export async function ProposalsList({ election_id }: ProposalsListProps) {
-  const proposals = await feature.service.getProposalsForElection(election_id);
+  const proposals = await electionFeature.service.getProposalsForElection(
+    election_id
+  );
   return (
     <>
       {proposals && proposals.length > 0 ? (
