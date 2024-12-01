@@ -1,4 +1,4 @@
-import { electionProposals, elections, votes } from "./schemas";
+import { electionProposals, elections, votes } from "./schema";
 import { ELECTION_PROPOSAL } from "./types";
 import { db } from "@/drizzle-db";
 import { desc, eq } from "drizzle-orm";

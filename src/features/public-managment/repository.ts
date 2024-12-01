@@ -1,4 +1,4 @@
-import { publicPreferences, publicVoters, votes } from "./schemas";
+import { publicPreferences, publicVoters, votes } from "./schema";
 import { db } from "@/drizzle-db";
 import { PREFERNCE, PUBLIC_VOTER, VOTE } from "./types";
 

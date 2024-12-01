@@ -1,5 +1,4 @@
 import { Pool } from "pg";
-import * as schema from "./schema";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 const pool = new Pool({
@@ -32,4 +31,4 @@ const pool = new Pool({
 //   }
 // }
 // runQuery().catch((err) => console.error(err));
-export const db = drizzle(pool, { schema });
+export const db = drizzle(pool);

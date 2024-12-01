@@ -1,7 +1,7 @@
-import { representative } from "@/drizzle-db/schema";
 import { eq, desc, sql } from "drizzle-orm";
 import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
+import { representative } from "./schema";
 
 export function createRepository() {
   async function addRepresentativeInDb({
