@@ -5,18 +5,20 @@ import { desc, eq } from "drizzle-orm";
 
 export function createRepository() {
   async function initiateElectionInDb({ name }: { name: string }) {
-    return await db.insert(elections).values({ name });
+    try {
+      return await db.insert(elections).values({ name });
+    } catch (error) {
+      console.error("Error adding an election:", error);
+    }
   }
   async function addProposalToElection({
     election_id,
     proposal,
   }: ELECTION_PROPOSAL) {
     try {
-      console.log("Inserting proposal:", { election_id, proposal });
-      const result = await db
+      return await db
         .insert(electionProposals)
         .values({ election_id, proposal });
-      return result;
     } catch (error) {
       console.error("Error adding proposal to election:", error);
     }
@@ -63,8 +65,8 @@ export function createRepository() {
   }
   return {
     initiateElectionInDb,
-    getElectionsFromDb,
     addProposalToElection,
+    getElectionsFromDb,
     getProposalsForElectionFromDb,
     getVoteCountsOnProposalFromDb,
   };

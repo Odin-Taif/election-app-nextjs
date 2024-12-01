@@ -1,6 +1,6 @@
 import { BiDownvote } from "react-icons/bi";
 import { SectionHeading } from "@/ui/components";
-import { feature } from "../feature";
+import { feature } from "..";
 
 type ProposalsListProps = {
   election_id: number;
