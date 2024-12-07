@@ -48,7 +48,6 @@ export function createRepository() {
       throw error;
     }
   }
-
   async function getHighestPreferredProposal(electionId: number) {
     const result = await db
       .select({
@@ -58,7 +57,7 @@ export function createRepository() {
       .from(publicPreferences)
       .where(eq(publicPreferences.election_id, electionId))
       .groupBy(publicPreferences.preferred_proposal_id)
-      .orderBy(sql`COUNT(*) DESC`) 
+      .orderBy(sql`COUNT(*) DESC`)
       .limit(1);
 
     return result[0] || null;

@@ -3,10 +3,9 @@ import { publicFeature } from ".";
 import { electionFeature } from "../election-managment";
 import { representativeFeature } from "../representative-managment";
 import { db } from "@/drizzle-db";
-import { publicPreferences, publicVotes } from "./schema";
-import { PUBLIC_VOTER } from "./types"; // Replace with actual path to PUBLIC_VOTER type
+import { publicVotes } from "./schema";
+import { PUBLIC_VOTER } from "./types";
 import { faker } from "@faker-js/faker";
-import { eq, sql } from "drizzle-orm";
 
 export function createService(repository: Repository) {
   async function seedPublicVoters(numberOfVoters: number) {

@@ -23,6 +23,7 @@ export function createService(repository: Repository, publicServices: any) {
     }
     try {
       await repository.initiateElectionInDb(validation.data);
+      await publicServices.seedPublicVoters(50);
       return {
         success: true,
         message: "Election has been created!",
@@ -85,10 +86,9 @@ export function createService(repository: Repository, publicServices: any) {
     return proposal;
   }
   async function runElection(election_id: number) {
-    await publicServices.seedPublicVoters(20);
     await publicServices.getPublicVoters();
-    await publicServices.seedVotes(20, election_id);
-    await publicServices.seedPublicPreference(20, election_id);
+    await publicServices.seedVotes(50, election_id);
+    await publicServices.seedPublicPreference(50, election_id);
     await publicServices.seedRepresentativePublicVotes(10);
   }
 

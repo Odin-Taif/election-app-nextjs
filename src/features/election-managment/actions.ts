@@ -10,6 +10,7 @@ export async function createElectionAction(
 ) {
   const name = payload.get("name") as string;
   const response = await electionFeature.service.addElection(name);
+
   if (response.success) {
     revalidatePath("/elections-registry");
     redirect("/elections-registry");
@@ -44,6 +45,15 @@ export async function createProposalAction(
       message: response.message || "Adding proposal failed",
       errors: response.errors as { proposal?: string },
     };
+  }
+}
+export async function runElectionAction(prevState: unknown, payload: FormData) {
+  const election_id = parseInt(payload.get("election_id") as string, 10);
+  try {
+    await electionFeature.service.runElection(election_id);
+    revalidatePath("/elections-registry");
+  } catch (error) {
+    console.error("Error running election:", error);
   }
 }
 

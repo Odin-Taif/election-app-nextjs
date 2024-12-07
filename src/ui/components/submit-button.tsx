@@ -10,7 +10,11 @@ export function SubmitButton({ title, loading }: Props) {
       <button
         disabled={loading}
         type="submit"
-        className="bg-gray-700 hover:bg-black rounded-md font-bold w-full p-2 text-white shadow-md"
+        className={`rounded-md font-bold w-full p-2 text-white shadow-md ${
+          loading
+            ? "bg-gray-700 cursor-not-allowed"
+            : "bg-gray-700 hover:bg-black"
+        }`}
       >
         {title}
       </button>
