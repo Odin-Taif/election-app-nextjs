@@ -1,11 +1,10 @@
-import { publicFeature } from "../public-managment";
 import { createRepository } from "./repository";
 import { createService } from "./service";
+import { PUBLIC_SERVICE_METHODS } from "./types";
 
-export function craeteFeature() {
+export function createFeature(publicServicesMethods: PUBLIC_SERVICE_METHODS) {
   const repository = createRepository();
-  const publicServices = publicFeature.service;
-  const service = createService(repository, publicServices);
+  const service = createService(repository, publicServicesMethods);
   return {
     service,
   };

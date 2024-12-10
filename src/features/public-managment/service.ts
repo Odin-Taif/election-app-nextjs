@@ -16,10 +16,10 @@ export function createService(repository: Repository) {
     );
 
     for (const voter of voters) {
-      await repository.seedVoterInDb(voter); // Assumes this function seeds one voter at a time
+      await repository.seedVoterInDb(voter);
     }
 
-    return voters; // Optionally return the list of seeded voters if needed
+    return voters;
   }
   async function getPublicVoters() {
     return await repository.getPublicVotersFromDb();
@@ -69,29 +69,70 @@ export function createService(repository: Repository) {
     }
   }
   async function seedPublicPreference(count: number, electionId: number) {
-    const publicPreferences = [];
     const publicVoters = await publicFeature.service.getPublicVoters();
     const electionProposals =
       await electionFeature.service.getProposalsForElection(electionId);
+
     if (publicVoters.length === 0 || electionProposals.length === 0) {
       console.error("No public voters or election proposals found.");
       return;
     }
-    for (let i = 0; i < count; i++) {
-      const publicVoter =
-        publicVoters[Math.floor(Math.random() * publicVoters.length)];
+    const existingPreferences =
+      await repository.getPublicPreferencesForElection(electionId);
+    const existingVoterIds = new Set(
+      existingPreferences.map((p) => p.public_voter_id)
+    );
+    if (count > publicVoters.length) {
+      console.error(
+        "Requested count exceeds the number of available public voters."
+      );
+      return;
+    }
+    const publicPreferences = [];
+    const updatedPreferences = [];
+    for (const publicVoter of publicVoters) {
       const preferredProposal =
         electionProposals[Math.floor(Math.random() * electionProposals.length)];
-      publicPreferences.push({
-        public_voter_id: publicVoter.id,
-        election_proposal_id: preferredProposal.id,
-        electionId,
-      });
+
+      if (existingVoterIds.has(publicVoter.id)) {
+        updatedPreferences.push({
+          public_voter_id: publicVoter.id,
+          election_proposal_id: preferredProposal.id,
+          electionId,
+        });
+      } else {
+        if (publicPreferences.length < count) {
+          publicPreferences.push({
+            public_voter_id: publicVoter.id,
+            election_proposal_id: preferredProposal.id,
+            electionId,
+          });
+        }
+      }
     }
-    for (const preference of publicPreferences) {
-      await repository.addPublicPreferenceInDb(preference);
+    try {
+      if (publicPreferences.length > 0) {
+        for (const preference of publicPreferences) {
+          await repository.addPublicPreferenceInDb(preference);
+        }
+        console.log(
+          `${publicPreferences.length} new Public Preferences seeded successfully`
+        );
+      }
+      if (updatedPreferences.length > 0) {
+        for (const preference of updatedPreferences) {
+          await repository.updatePublicPreference(
+            preference.public_voter_id,
+            preference.election_proposal_id
+          );
+        }
+        console.log(
+          `${updatedPreferences.length} Public Preferences updated successfully`
+        );
+      }
+    } catch (error) {
+      console.error("Error seeding or updating Public Preferences:", error);
     }
-    console.log(`${count} Public Preferences seeded successfully`);
   }
   async function seedRepresentativePublicVotes(count: number) {
     const representatives =
@@ -121,7 +162,6 @@ export function createService(repository: Repository) {
       console.error("Error seeding Representative Public Votes:", error);
     }
   }
-
   async function getHighestPreferredProposal(electionId: number) {
     const result = await repository.getHighestPreferredProposal(electionId);
     return result;

@@ -62,6 +62,43 @@ export function createRepository() {
 
     return result[0] || null;
   }
+  async function updatePublicPreference(
+    publicVoterId: number,
+    electionProposalId: number
+  ) {
+    try {
+      await db
+        .update(publicPreferences)
+        .set({ preferred_proposal_id: electionProposalId })
+        .where(eq(publicPreferences.public_voter_id, publicVoterId));
+
+      console.log(`Public preference updated for voter ID: ${publicVoterId}`);
+    } catch (error) {
+      console.error(
+        `Error updating public preference for voter ID: ${publicVoterId}`,
+        error
+      );
+    }
+  }
+  async function getPublicPreferencesForElection(electionId: number) {
+    try {
+      const preferences = await db
+        .select()
+        .from(publicPreferences)
+        .where(eq(publicPreferences.election_id, electionId));
+
+      console.log(
+        `Fetched ${preferences.length} preferences for election ID: ${electionId}`
+      );
+      return preferences;
+    } catch (error) {
+      console.error(
+        `Error fetching public preferences for election ID: ${electionId}`,
+        error
+      );
+      throw error;
+    }
+  }
 
   return {
     seedVoterInDb,
@@ -69,6 +106,8 @@ export function createRepository() {
     getPublicVotersFromDb,
     addPublicPreferenceInDb,
     getHighestPreferredProposal,
+    updatePublicPreference,
+    getPublicPreferencesForElection,
   };
 }
 

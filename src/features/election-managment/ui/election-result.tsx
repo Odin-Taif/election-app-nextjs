@@ -6,6 +6,7 @@ type Props = {
 
 export async function ElectionResult({ election_id }: Props) {
   const result = await electionFeature.service.getResult(election_id);
+
   if (!result) {
     return (
       <div>

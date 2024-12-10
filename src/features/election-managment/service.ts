@@ -3,9 +3,12 @@ import {
   addProposalSchema,
 } from "@/zod-validation/validations-schema";
 import { Repository } from "./repository";
-import { ELECTION_PROPOSAL } from "./types";
+import { ELECTION_PROPOSAL, PUBLIC_SERVICE_METHODS } from "./types";
 
-export function createService(repository: Repository, publicServices: any) {
+export function createService(
+  repository: Repository,
+  publicServicesMethods: PUBLIC_SERVICE_METHODS
+) {
   async function addElection(name: string) {
     const validation = addElectionSchema.safeParse({ name });
     if (!validation.success) {
@@ -23,7 +26,7 @@ export function createService(repository: Repository, publicServices: any) {
     }
     try {
       await repository.initiateElectionInDb(validation.data);
-      await publicServices.seedPublicVoters(50);
+      await publicServicesMethods.seedPublicVoters(50);
       return {
         success: true,
         message: "Election has been created!",
@@ -85,15 +88,20 @@ export function createService(repository: Repository, publicServices: any) {
     const proposal = await repository.getProposalByIdFromDb(proposalId);
     return proposal;
   }
+
+  const executedElections = new Set<number>();
   async function runElection(election_id: number) {
-    await publicServices.getPublicVoters();
-    await publicServices.seedVotes(50, election_id);
-    await publicServices.seedPublicPreference(50, election_id);
-    await publicServices.seedRepresentativePublicVotes(10);
+    await publicServicesMethods.getPublicVoters();
+    if (!executedElections.has(election_id)) {
+      executedElections.add(election_id);
+      await publicServicesMethods.seedVotes(50, election_id);
+      await publicServicesMethods.seedPublicPreference(50, election_id);
+    }
+    await publicServicesMethods.seedRepresentativePublicVotes(10);
   }
 
   async function getResult(election_id: number) {
-    return await publicServices.getHighestPreferredProposal(election_id);
+    return await publicServicesMethods.getHighestPreferredProposal(election_id);
   }
 
   return {
