@@ -1,4 +1,4 @@
-import { electionProposals, elections, votes } from "./schema";
+import { electionProposals, elections } from "./schema";
 import { ELECTION_PROPOSAL } from "./types";
 import { db } from "@/drizzle-db";
 import { desc, eq } from "drizzle-orm";
@@ -47,7 +47,6 @@ export function createRepository() {
       throw new Error("Error fetching proposals for election");
     }
   }
-
   async function getProposalByIdFromDb(proposalId: number) {
     try {
       const [proposal] = await db

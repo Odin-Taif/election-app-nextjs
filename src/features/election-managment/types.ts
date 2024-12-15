@@ -13,7 +13,7 @@ export type ELECTION_PROPOSAL = {
   proposal: string;
 };
 
-export type PUBLIC_SERVICE_METHODS = {
+export type SERVICE_METHODS = {
   seedPublicVoters: (numberOfVoters: number) => Promise<PUBLIC_VOTER[]>;
   getPublicVoters: () => Promise<
     {
@@ -23,8 +23,7 @@ export type PUBLIC_SERVICE_METHODS = {
       created_at: Date | null;
     }[]
   >;
-  seedPublicPreference: (count: number, electionId: number) => Promise<unknown>;
-  seedRepresentativePublicVotes: (count: number) => Promise<unknown>;
-  seedVotes: (count: number, electionId: number) => Promise<unknown>;
+  seedPublicProposalPreference: (electionId: number) => Promise<unknown>;
+  seedRepresentativePublicPreference: (electionId: number) => Promise<unknown>;
   getHighestPreferredProposal: (electionId: number) => Promise<unknown>;
 };

@@ -1,1 +1,1 @@
-export { publicFeature } from "./feature";
+export { publicFeature } from "./instance";

@@ -1,2 +1,3 @@
-import { craeteFeature } from "./feature";
-export const representativeFeature = craeteFeature();
+import { createReprenstativeFeature } from "./feature";
+
+export const representativeFeature = createReprenstativeFeature();

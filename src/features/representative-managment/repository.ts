@@ -1,4 +1,4 @@
-import { eq, desc, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
 import { representative } from "./schema";

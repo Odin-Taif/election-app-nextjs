@@ -13,11 +13,5 @@ export const publicPreferences = pgTable("public_preferences", {
     .references(() => publicVoters.id),
   election_id: integer("election_id").notNull(),
   preferred_proposal_id: integer("preferred_proposal_id"),
-});
-
-export const publicVotes = pgTable("public_votes", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  public_voter_id: integer("public_voter_id").notNull(),
-  election_proposal_id: integer("election_proposal_id"),
   representative_id: integer("representative_id"),
 });

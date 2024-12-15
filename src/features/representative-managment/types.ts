@@ -7,3 +7,7 @@ export type REPRESENTATIVE = {
 export type ELECTION_SELECTION = {
   name: string;
 };
+
+export type PUBLIC_SERVICE_METHODS = {
+  seedRepresentativePublicPreference: (electionId: number) => Promise<unknown>;
+};

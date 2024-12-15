@@ -3,11 +3,11 @@ import {
   addProposalSchema,
 } from "@/zod-validation/validations-schema";
 import { Repository } from "./repository";
-import { ELECTION_PROPOSAL, PUBLIC_SERVICE_METHODS } from "./types";
+import { ELECTION_PROPOSAL, SERVICE_METHODS } from "./types";
 
 export function createService(
   repository: Repository,
-  publicServicesMethods: PUBLIC_SERVICE_METHODS
+  serviceMethods: SERVICE_METHODS
 ) {
   async function addElection(name: string) {
     const validation = addElectionSchema.safeParse({ name });
@@ -26,7 +26,7 @@ export function createService(
     }
     try {
       await repository.initiateElectionInDb(validation.data);
-      await publicServicesMethods.seedPublicVoters(50);
+      await serviceMethods.seedPublicVoters(50);
       return {
         success: true,
         message: "Election has been created!",
@@ -61,6 +61,7 @@ export function createService(
     }
     try {
       await repository.addProposalToElection({ election_id, proposal });
+      await serviceMethods.seedPublicProposalPreference(election_id);
       return {
         success: true,
         message: "Proposal has been added!",
@@ -75,6 +76,9 @@ export function createService(
       };
     }
   }
+  async function choseRepresentative(election_id: number) {
+    await serviceMethods.seedRepresentativePublicPreference(election_id);
+  }
   async function getElections() {
     return await repository.getElectionsFromDb();
   }
@@ -88,29 +92,17 @@ export function createService(
     const proposal = await repository.getProposalByIdFromDb(proposalId);
     return proposal;
   }
-
-  const executedElections = new Set<number>();
-  async function runElection(election_id: number) {
-    await publicServicesMethods.getPublicVoters();
-    if (!executedElections.has(election_id)) {
-      executedElections.add(election_id);
-      await publicServicesMethods.seedVotes(50, election_id);
-      await publicServicesMethods.seedPublicPreference(50, election_id);
-    }
-    await publicServicesMethods.seedRepresentativePublicVotes(10);
-  }
-
   async function getResult(election_id: number) {
-    return await publicServicesMethods.getHighestPreferredProposal(election_id);
+    console.log("result", election_id);
   }
 
   return {
     addElection,
     getElections,
     addProposal,
+    choseRepresentative,
     getProposalsForElection,
-    runElection,
-    getResult,
     getProposalById,
+    getResult,
   };
 }

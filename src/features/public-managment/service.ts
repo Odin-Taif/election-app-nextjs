@@ -3,9 +3,10 @@ import { publicFeature } from ".";
 import { electionFeature } from "../election-managment";
 import { representativeFeature } from "../representative-managment";
 import { db } from "@/drizzle-db";
-import { publicVotes } from "./schema";
+import { publicPreferences } from "./schema";
 import { PUBLIC_VOTER } from "./types";
 import { faker } from "@faker-js/faker";
+import { eq, and } from "drizzle-orm";
 
 export function createService(repository: Repository) {
   async function seedPublicVoters(numberOfVoters: number) {
@@ -24,51 +25,11 @@ export function createService(repository: Repository) {
   async function getPublicVoters() {
     return await repository.getPublicVotersFromDb();
   }
-  async function seedVotes(count: number, electionId: number) {
-    try {
-      const publicVoters = await publicFeature.service.getPublicVoters();
-      const electionProposals =
-        await electionFeature.service.getProposalsForElection(electionId);
-      const representatives =
-        await representativeFeature.service.getAllRepresentatives();
-      if (
-        !publicVoters.length ||
-        !electionProposals.length ||
-        !representatives.length
-      ) {
-        console.error(
-          "Missing data: Ensure voters, proposals, and representatives are seeded first."
-        );
-        return;
-      }
-      const votesData = Array.from({ length: count }).map(() => {
-        const public_voter_id =
-          publicVoters[Math.floor(Math.random() * publicVoters.length)].id;
-        const election_proposal_id =
-          electionProposals[
-            Math.floor(Math.random() * electionProposals.length)
-          ].id;
-        const representative_id =
-          representatives[Math.floor(Math.random() * representatives.length)]
-            .id;
-
-        return {
-          public_voter_id,
-          election_proposal_id,
-          representative_id,
-        };
-      });
-
-      for (const vote of votesData) {
-        await repository.seedVotesInDb(vote);
-      }
-      console.log(`${count} votes seeded successfully.`);
-    } catch (error) {
-      console.error("Error seeding votes:", error);
-      throw error;
-    }
+  async function getHighestPreferredProposal(electionId: number) {
+    const result = await repository.getHighestPreferredProposal(electionId);
+    return result;
   }
-  async function seedPublicPreference(count: number, electionId: number) {
+  async function seedPublicProposalPreference(electionId: number) {
     const publicVoters = await publicFeature.service.getPublicVoters();
     const electionProposals =
       await electionFeature.service.getProposalsForElection(electionId);
@@ -82,14 +43,9 @@ export function createService(repository: Repository) {
     const existingVoterIds = new Set(
       existingPreferences.map((p) => p.public_voter_id)
     );
-    if (count > publicVoters.length) {
-      console.error(
-        "Requested count exceeds the number of available public voters."
-      );
-      return;
-    }
     const publicPreferences = [];
     const updatedPreferences = [];
+
     for (const publicVoter of publicVoters) {
       const preferredProposal =
         electionProposals[Math.floor(Math.random() * electionProposals.length)];
@@ -101,31 +57,35 @@ export function createService(repository: Repository) {
           electionId,
         });
       } else {
-        if (publicPreferences.length < count) {
-          publicPreferences.push({
-            public_voter_id: publicVoter.id,
-            election_proposal_id: preferredProposal.id,
-            electionId,
-          });
-        }
+        publicPreferences.push({
+          public_voter_id: publicVoter.id,
+          election_proposal_id: preferredProposal.id,
+          electionId,
+        });
       }
     }
+
     try {
       if (publicPreferences.length > 0) {
-        for (const preference of publicPreferences) {
-          await repository.addPublicPreferenceInDb(preference);
-        }
+        await Promise.all(
+          publicPreferences.map((preference) =>
+            repository.addPublicPreferenceInDb(preference)
+          )
+        );
         console.log(
           `${publicPreferences.length} new Public Preferences seeded successfully`
         );
       }
+
       if (updatedPreferences.length > 0) {
-        for (const preference of updatedPreferences) {
-          await repository.updatePublicPreference(
-            preference.public_voter_id,
-            preference.election_proposal_id
-          );
-        }
+        await Promise.all(
+          updatedPreferences.map((preference) =>
+            repository.updatePublicPreference(
+              preference.public_voter_id,
+              preference.election_proposal_id
+            )
+          )
+        );
         console.log(
           `${updatedPreferences.length} Public Preferences updated successfully`
         );
@@ -134,7 +94,7 @@ export function createService(repository: Repository) {
       console.error("Error seeding or updating Public Preferences:", error);
     }
   }
-  async function seedRepresentativePublicVotes(count: number) {
+  async function seedRepresentativePublicPreference(electionId: number) {
     const representatives =
       await representativeFeature.service.getAllRepresentatives();
     const publicVoters = await publicFeature.service.getPublicVoters();
@@ -143,35 +103,88 @@ export function createService(repository: Repository) {
       console.error("No representatives or public voters found.");
       return;
     }
-    const votesData = [];
-    for (let i = 0; i < count; i++) {
-      const representative =
-        representatives[Math.floor(Math.random() * representatives.length)];
-      const publicVoter =
-        publicVoters[Math.floor(Math.random() * publicVoters.length)];
 
-      votesData.push({
-        representative_id: representative.id,
-        public_voter_id: publicVoter.id,
-      });
+    const existingPreferences = await db
+      .select({
+        public_voter_id: publicPreferences.public_voter_id,
+        representative_id: publicPreferences.representative_id,
+      })
+      .from(publicPreferences)
+      .where(eq(publicPreferences.election_id, electionId));
+    const existingVoterIds = new Set(
+      existingPreferences.map((preference) => preference.public_voter_id)
+    );
+
+    const newPreferences = [];
+    const updatedPreferences = [];
+
+    for (const publicVoter of publicVoters) {
+      const randomRepresentative =
+        representatives[Math.floor(Math.random() * representatives.length)];
+
+      if (existingVoterIds.has(publicVoter.id)) {
+        // Update the representative preference for existing voter
+        updatedPreferences.push({
+          public_voter_id: publicVoter.id,
+          representative_id: randomRepresentative.id,
+          election_id: electionId,
+        });
+      } else {
+        // Add a new preference for voters without representatives
+        newPreferences.push({
+          public_voter_id: publicVoter.id,
+          representative_id: randomRepresentative.id,
+          election_id: electionId,
+        });
+      }
     }
+
     try {
-      await db.insert(publicVotes).values(votesData);
-      console.log(`${count} Representative Public Votes seeded successfully`);
+      // Add new preferences
+      if (newPreferences.length > 0) {
+        await db.insert(publicPreferences).values(newPreferences);
+        console.log(
+          `${newPreferences.length} new Representative Public Preferences seeded successfully`
+        );
+      }
+
+      // Update existing preferences
+      if (updatedPreferences.length > 0) {
+        await Promise.all(
+          updatedPreferences.map((preference) =>
+            db
+              .update(publicPreferences)
+              .set({
+                representative_id: preference.representative_id,
+              })
+              .where(
+                and(
+                  eq(
+                    publicPreferences.public_voter_id,
+                    preference.public_voter_id
+                  ),
+                  eq(publicPreferences.election_id, preference.election_id)
+                )
+              )
+          )
+        );
+        console.log(
+          `${updatedPreferences.length} Representative Public Preferences updated successfully`
+        );
+      }
     } catch (error) {
-      console.error("Error seeding Representative Public Votes:", error);
+      console.error(
+        "Error seeding or updating Representative Public Preferences:",
+        error
+      );
     }
   }
-  async function getHighestPreferredProposal(electionId: number) {
-    const result = await repository.getHighestPreferredProposal(electionId);
-    return result;
-  }
+
   return {
     seedPublicVoters,
     getPublicVoters,
-    seedVotes,
-    seedPublicPreference,
-    seedRepresentativePublicVotes,
+    seedPublicProposalPreference,
+    seedRepresentativePublicPreference,
     getHighestPreferredProposal,
   };
 }

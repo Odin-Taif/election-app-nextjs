@@ -1,15 +1,15 @@
 import { publicFeature } from "../public-managment";
-import { createFeature } from "./feature";
+import { createElectionFeature } from "./feature";
 
-const publicServiceMethods = {
+const serviceMethods = {
   seedPublicVoters: publicFeature.service.seedPublicVoters,
   getPublicVoters: publicFeature.service.getPublicVoters,
-  seedPublicPreference: publicFeature.service.seedPublicPreference,
-  seedRepresentativePublicVotes:
-    publicFeature.service.seedRepresentativePublicVotes,
-  seedVotes: publicFeature.service.seedVotes as () => Promise<unknown>,
+  seedPublicProposalPreference:
+    publicFeature.service.seedPublicProposalPreference,
+  seedRepresentativePublicPreference:
+    publicFeature.service.seedRepresentativePublicPreference,
   getHighestPreferredProposal: publicFeature.service
     .getHighestPreferredProposal as () => Promise<unknown>,
 };
 
-export const electionFeature = createFeature(publicServiceMethods);
+export const electionFeature = createElectionFeature(serviceMethods);
