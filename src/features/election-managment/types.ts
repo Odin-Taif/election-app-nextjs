@@ -29,4 +29,5 @@ export type SERVICE_METHODS = {
   getRepresentativesByElection: (election_id: number) => Promise<unknown>;
   getReprensentativeById: (id: number) => Promise<unknown>;
   getRepresentativeWithMostVotes: (election_id: number) => Promise<unknown>;
+
 };

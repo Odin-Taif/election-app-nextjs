@@ -35,7 +35,7 @@ export function createRepository() {
     const result = await db
       .select({
         preferredProposalId: publicPreferences.preferred_proposal_id,
-        proposalCount: sql<number>`COUNT(*)`.as("proposal_count"), // Alias explicitly
+        proposalCount: sql<number>`COUNT(*)`.as("proposal_count"),
       })
       .from(publicPreferences)
       .where(eq(publicPreferences.election_id, electionId))

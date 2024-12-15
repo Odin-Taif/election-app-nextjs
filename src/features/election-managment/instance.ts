@@ -4,8 +4,8 @@ import { createElectionFeature } from "./feature";
 
 const serviceMethods = {
   seedPublicVoters: publicFeature.service.seedPublicVoters,
-
   getPublicVoters: publicFeature.service.getPublicVoters,
+
   seedPublicProposalPreference:
     publicFeature.service.seedPublicProposalPreference,
   seedRepresentativePublicPreference:

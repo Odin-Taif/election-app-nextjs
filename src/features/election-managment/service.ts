@@ -128,16 +128,13 @@ export function createService(
   async function getResult(election_id: number) {
     const winnerRepresentaive =
       await serviceMethods.getRepresentativeWithMostVotes(election_id);
-
     if (!winnerRepresentaive) {
-      console.log("No representative received votes for this election.");
       return {
         proposalChosen: null,
         winnerRepresentaive: null,
         winner: null,
       };
     }
-
     const winner = await serviceMethods.getReprensentativeById(
       winnerRepresentaive.representative_id
     );
@@ -164,6 +161,77 @@ export function createService(
     };
   }
 
+  async function seedRepresentativePreference(election_id: number) {
+    const representatives = await serviceMethods.getRepresentativesByElection(
+      election_id
+    );
+    const electionProposals = await getProposalsForElection(election_id);
+
+    if (representatives.length === 0 || electionProposals.length === 0) {
+      console.error("No representatives or election proposals found.");
+      return;
+    }
+
+    const existingPreferences =
+      await repository.getRepresentativePreferencesForElection(election_id);
+    const existingRepresentativeIds = new Set(
+      existingPreferences.map((p) => p.representative_id)
+    );
+    const newPreferences = [];
+    const updatedPreferences = [];
+
+    for (const representative of representatives) {
+      const preferredProposal =
+        electionProposals[Math.floor(Math.random() * electionProposals.length)];
+
+      if (existingRepresentativeIds.has(representative.id)) {
+        updatedPreferences.push({
+          representative_id: representative.id,
+          election_proposal_id: preferredProposal.id,
+          election_id,
+        });
+      } else {
+        newPreferences.push({
+          representative_id: representative.id,
+          election_proposal_id: preferredProposal.id,
+          election_id,
+        });
+      }
+    }
+
+    try {
+      if (newPreferences.length > 0) {
+        await Promise.all(
+          newPreferences.map((preference) =>
+            repository.addRepresentativePreferenceInDb(preference)
+          )
+        );
+        console.log(
+          `${newPreferences.length} new Representative Preferences seeded successfully`
+        );
+      }
+
+      if (updatedPreferences.length > 0) {
+        await Promise.all(
+          updatedPreferences.map((preference) =>
+            repository.updateRepresentativePreference(
+              preference.representative_id,
+              preference.election_proposal_id
+            )
+          )
+        );
+        console.log(
+          `${updatedPreferences.length} Representative Preferences updated successfully`
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Error seeding or updating Representative Preferences:",
+        error
+      );
+    }
+  }
+
   return {
     addElection,
     getElections,
@@ -173,5 +241,6 @@ export function createService(
     getProposalById,
     getResult,
     runElection,
+    seedRepresentativePreference,
   };
 }
