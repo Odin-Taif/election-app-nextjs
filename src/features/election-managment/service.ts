@@ -41,6 +41,9 @@ export function createService(
       };
     }
   }
+  async function getElections() {
+    return await repository.getElectionsFromDb();
+  }
   async function addProposal({ election_id, proposal }: ELECTION_PROPOSAL) {
     const validation = addProposalSchema.safeParse({
       election_id,
@@ -77,11 +80,9 @@ export function createService(
       };
     }
   }
-  async function choseRepresentative(election_id: number) {
-    await serviceMethods.seedRepresentativePublicPreference(election_id);
-  }
-  async function getElections() {
-    return await repository.getElectionsFromDb();
+  async function getProposalById(proposalId: number) {
+    const proposal = await repository.getProposalByIdFromDb(proposalId);
+    return proposal;
   }
   async function getProposalsForElection(election_id: number) {
     const preferredProposalId = await repository.getProposalsForElectionFromDb(
@@ -89,78 +90,9 @@ export function createService(
     );
     return preferredProposalId;
   }
-  async function getProposalById(proposalId: number) {
-    const proposal = await repository.getProposalByIdFromDb(proposalId);
-    return proposal;
+  async function choseRepresentative(election_id: number) {
+    await serviceMethods.seedRepresentativePublicPreference(election_id);
   }
-  async function runElection(election_id: number) {
-    const representatives = await serviceMethods.getRepresentativesByElection(
-      election_id
-    );
-    if (representatives.length === 0) {
-      console.error("No representatives found for the election.");
-      return;
-    }
-    const electionProposals = await getProposalsForElection(election_id);
-    if (electionProposals.length === 0) {
-      console.error("No proposals found for the election.");
-      return;
-    }
-
-    const votesData = representatives.map((representative) => {
-      const randomProposal =
-        electionProposals[Math.floor(Math.random() * electionProposals.length)];
-      return {
-        representative_id: representative.id,
-        election_proposal_id: randomProposal.id,
-      };
-    });
-
-    try {
-      await db.insert(votes).values(votesData);
-      console.log(
-        `All representatives have voted for proposals in election ${election_id}.`
-      );
-    } catch (error) {
-      console.error("Error saving votes for the election:", error);
-    }
-  }
-  async function getResult(election_id: number) {
-    const winnerRepresentaive =
-      await serviceMethods.getRepresentativeWithMostVotes(election_id);
-    if (!winnerRepresentaive) {
-      return {
-        proposalChosen: null,
-        winnerRepresentaive: null,
-        winner: null,
-      };
-    }
-    const winner = await serviceMethods.getReprensentativeById(
-      winnerRepresentaive.representative_id
-    );
-
-    const proposal = await serviceMethods.getHighestPreferredProposal(
-      election_id
-    );
-
-    if (!proposal) {
-      console.log("No preferred proposal found for this election.");
-      return {
-        proposalChosen: null,
-        winnerRepresentaive,
-        winner,
-      };
-    }
-
-    const proposalChosen = await getProposalById(proposal.preferredProposalId);
-
-    return {
-      proposalChosen,
-      winnerRepresentaive,
-      winner,
-    };
-  }
-
   async function seedRepresentativePreference(election_id: number) {
     const representatives = await serviceMethods.getRepresentativesByElection(
       election_id
@@ -173,7 +105,7 @@ export function createService(
     }
 
     const existingPreferences =
-      await repository.getRepresentativePreferencesForElection(election_id);
+      await serviceMethods.getRepresentativePreferencesForElection(election_id);
     const existingRepresentativeIds = new Set(
       existingPreferences.map((p) => p.representative_id)
     );
@@ -203,7 +135,7 @@ export function createService(
       if (newPreferences.length > 0) {
         await Promise.all(
           newPreferences.map((preference) =>
-            repository.addRepresentativePreferenceInDb(preference)
+            serviceMethods.addRepresentativePreferenceInDb(preference)
           )
         );
         console.log(
@@ -214,7 +146,7 @@ export function createService(
       if (updatedPreferences.length > 0) {
         await Promise.all(
           updatedPreferences.map((preference) =>
-            repository.updateRepresentativePreference(
+            serviceMethods.updateRepresentativePreference(
               preference.representative_id,
               preference.election_proposal_id
             )
@@ -231,7 +163,71 @@ export function createService(
       );
     }
   }
+  async function runElection(election_id: number) {
+    console.log("run election");
+    // const representatives = await serviceMethods.getRepresentativesByElection(
+    //   election_id
+    // );
+    // if (representatives.length === 0) {
+    //   console.error("No representatives found for the election.");
+    //   return;
+    // }
+    // const electionProposals = await getProposalsForElection(election_id);
+    // if (electionProposals.length === 0) {
+    //   console.error("No proposals found for the election.");
+    //   return;
+    // }
 
+    // const votesData = representatives.map((representative) => {
+    //   const randomProposal =
+    //     electionProposals[Math.floor(Math.random() * electionProposals.length)];
+    //   return {
+    //     representative_id: representative.id,
+    //     election_proposal_id: randomProposal.id,
+    //   };
+    // });
+
+    // try {
+    //   await db.insert(votes).values(votesData);
+    //   console.log(
+    //     `All representatives have voted for proposals in election ${election_id}.`
+    //   );
+    // } catch (error) {
+    //   console.error("Error saving votes for the election:", error);
+    // }
+  }
+  async function getResult(election_id: number) {
+    console.log("result");
+    // const winnerRepresentaive =
+    //   await serviceMethods.getRepresentativeWithMostVotes(election_id);
+    // if (!winnerRepresentaive) {
+    //   return {
+    //     proposalChosen: null,
+    //     winnerRepresentaive: null,
+    //     winner: null,
+    //   };
+    // }
+    // const winner = await serviceMethods.getReprensentativeById(
+    //   winnerRepresentaive.representative_id
+    // );
+    // const proposal = await serviceMethods.getHighestPreferredProposal(
+    //   election_id
+    // );
+    // if (!proposal) {
+    //   console.log("No preferred proposal found for this election.");
+    //   return {
+    //     proposalChosen: null,
+    //     winnerRepresentaive,
+    //     winner,
+    //   };
+    // }
+    // const proposalChosen = await getProposalById(proposal.preferredProposalId);
+    // return {
+    //   proposalChosen,
+    //   winnerRepresentaive,
+    //   winner,
+    // };
+  }
   return {
     addElection,
     getElections,

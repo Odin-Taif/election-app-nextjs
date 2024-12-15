@@ -7,7 +7,6 @@ export function createRepository() {
   async function seedVoterInDb({ name }: PUBLIC_VOTER) {
     await db.insert(publicVoters).values({ name });
   }
-
   async function getPublicVotersFromDb() {
     const voters = await db.select().from(publicVoters);
     return voters;

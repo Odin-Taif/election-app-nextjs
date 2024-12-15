@@ -1,11 +1,9 @@
 import { publicFeature } from "../public-managment";
-import { representativeFeature } from "../representative-managment";
 import { createElectionFeature } from "./feature";
 
 const serviceMethods = {
   seedPublicVoters: publicFeature.service.seedPublicVoters,
   getPublicVoters: publicFeature.service.getPublicVoters,
-
   seedPublicProposalPreference:
     publicFeature.service.seedPublicProposalPreference,
   seedRepresentativePublicPreference:
@@ -14,9 +12,6 @@ const serviceMethods = {
     .getHighestPreferredProposal as () => Promise<unknown>,
   getRepresentativeWithMostVotes:
     publicFeature.service.getRepresentativeWithMostVotes,
-  getRepresentativesByElection:
-    representativeFeature.service.getRepresentativesByElection,
-  getReprensentativeById: representativeFeature.service.getReprensentativeById,
 };
 
 export const electionFeature = createElectionFeature(serviceMethods);

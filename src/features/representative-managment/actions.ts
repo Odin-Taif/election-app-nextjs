@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { representativeFeature } from ".";
-import { electionFeature } from "../election-managment";
 
 export async function createRepresentativeAction(
   prevState: unknown,
@@ -18,7 +17,6 @@ export async function createRepresentativeAction(
     election_id,
   });
   if (response.success) {
-    await electionFeature.service.choseRepresentative(election_id);
     revalidatePath("/elections-registry");
     return {
       success: true,

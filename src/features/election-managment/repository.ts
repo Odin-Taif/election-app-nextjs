@@ -59,6 +59,7 @@ export function createRepository() {
       throw new Error("Error fetching proposals");
     }
   }
+
   return {
     initiateElectionInDb,
     addProposalToElection,

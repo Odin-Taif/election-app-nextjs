@@ -1,14 +1,15 @@
 import { eq } from "drizzle-orm";
 import { REPRESENTATIVE } from "./types";
 import { db } from "@/drizzle-db";
-import { representative } from "./schema";
+import { representative, representativePreferences } from "./schema";
 
 export function createRepository() {
-  async function addRepresentativeInDb({
-    name,
-    email,
-    election_id,
-  }: REPRESENTATIVE) {
+  async function addRepresentativeInDb(
+    name: string,
+    email: string,
+    election_id: number,
+    randomProposal_id: number
+  ) {
     try {
       const existingRepresentative = await db
         .select()
@@ -25,6 +26,7 @@ export function createRepository() {
         name,
         email,
         election_id: election_id ?? null,
+        preferred_proposal_id: randomProposal_id,
       });
       return {
         success: true,
@@ -60,12 +62,28 @@ export function createRepository() {
   async function getReprensentativeById(id: number) {
     return db.select().from(representative).where(eq(representative.id, id));
   }
+  async function getRepresentativePreferencesForElection(election_id: number) {
+    try {
+      return await db
+        .select({
+          representative_id: representativePreferences.representative_id,
+          preferred_proposal_id:
+            representativePreferences.preferred_proposal_id,
+        })
+        .from(representativePreferences)
+        .where(eq(representativePreferences.election_id, election_id));
+    } catch (error) {
+      console.error("Error fetching representative preferences:", error);
+      return [];
+    }
+  }
 
   return {
     addRepresentativeInDb,
     getRepresentativesByElectionNameFromDb,
     getAllRepresentativesFromDb,
     getReprensentativeById,
+    getRepresentativePreferencesForElection,
   };
 }
 

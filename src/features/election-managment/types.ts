@@ -27,7 +27,4 @@ export type SERVICE_METHODS = {
   seedRepresentativePublicPreference: (electionId: number) => Promise<unknown>;
   getHighestPreferredProposal: (electionId: number) => Promise<unknown>;
   getRepresentativesByElection: (election_id: number) => Promise<unknown>;
-  getReprensentativeById: (id: number) => Promise<unknown>;
-  getRepresentativeWithMostVotes: (election_id: number) => Promise<unknown>;
-
 };
