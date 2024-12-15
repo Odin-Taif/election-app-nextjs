@@ -50,7 +50,7 @@ export async function createProposalAction(
 export async function runElectionAction(prevState: unknown, payload: FormData) {
   const election_id = parseInt(payload.get("election_id") as string, 10);
   try {
-    // await electionFeature.service.runElection(election_id);
+    await electionFeature.service.runElection(election_id);
     revalidatePath("/elections-registry");
   } catch (error) {
     console.error("Error running election:", error);

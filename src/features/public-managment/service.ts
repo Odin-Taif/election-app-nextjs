@@ -7,6 +7,7 @@ import { publicPreferences } from "./schema";
 import { PUBLIC_VOTER } from "./types";
 import { faker } from "@faker-js/faker";
 import { eq, and } from "drizzle-orm";
+import { count, desc } from "drizzle-orm";
 
 export function createService(repository: Repository) {
   async function seedPublicVoters(numberOfVoters: number) {
@@ -179,6 +180,35 @@ export function createService(repository: Repository) {
       );
     }
   }
+  async function getRepresentativeWithMostVotes(election_id: number) {
+    try {
+      const results = await db
+        .select({
+          representative_id: publicPreferences.representative_id,
+          votes_count: count(publicPreferences.id).as("votes_count"),
+        })
+        .from(publicPreferences)
+        .where(eq(publicPreferences.election_id, election_id))
+        .groupBy(publicPreferences.representative_id)
+        .orderBy(desc(count(publicPreferences.id)))
+        .limit(1);
+
+      if (results.length > 0) {
+        console.log(
+          `The representative with the most votes is representative ID ${results[0].representative_id}, with ${results[0].votes_count} votes.`
+        );
+        return results[0];
+      } else {
+        console.log("No votes found for this election.");
+        return null;
+      }
+    } catch (error) {
+      console.error(
+        "Error determining the representative with most votes:",
+        error
+      );
+    }
+  }
 
   return {
     seedPublicVoters,
@@ -186,5 +216,6 @@ export function createService(repository: Repository) {
     seedPublicProposalPreference,
     seedRepresentativePublicPreference,
     getHighestPreferredProposal,
+    getRepresentativeWithMostVotes,
   };
 }

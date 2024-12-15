@@ -60,14 +60,14 @@ export function createService(repository: Repository) {
   async function getAllRepresentatives() {
     return await repository.getAllRepresentativesFromDb();
   }
-  // async function getElectionWinners() {
-  //   return await repository.getElectionWinners();
-  // }
+  async function getReprensentativeById(id: number) {
+    return await repository.getReprensentativeById(id);
+  }
 
   return {
     addRepresentative,
     getRepresentativesByElection,
     getAllRepresentatives,
-    // getElectionWinners,
+    getReprensentativeById,
   };
 }
